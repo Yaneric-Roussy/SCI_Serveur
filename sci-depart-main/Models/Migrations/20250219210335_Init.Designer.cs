@@ -12,8 +12,8 @@ using Super_Cartes_Infinies.Data;
 namespace Models.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240902193349_initiale")]
-    partial class initiale
+    [Migration("20250219210335_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,17 +157,39 @@ namespace Models.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "15737eb5-ccbd-41a5-95c3-7673da11002d",
+                            ConcurrencyStamp = "b34a8b1a-9d50-4696-8dec-a02ae27106f9",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEt7UDtdSyqqUKMmHWzVERMzmHzxy4pGYGlf51nBOnxe5heThQge9I6h4clZYHwhEw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFH607rSvuHppbIJevZiQvH0H/az7UFlCn9DlwBxflsWCg8Z6wo1DPALJcp6HDdKvA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9543085e-f54c-4442-9e5d-efecb7a7d684",
+                            SecurityStamp = "6b07c460-6ac8-423e-ab0c-ae3a5e70a44a",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
+                        },
+                        new
+                        {
+                            Id = "User1Id",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e15c9626-dea4-4575-b4fd-553523f1d9cc",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "1174e100-1437-45b7-afb2-e712297ced1f",
+                            TwoFactorEnabled = false
+                        },
+                        new
+                        {
+                            Id = "User2Id",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "458264bb-58f4-4a6a-bf81-9578ff1d1beb",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "0f1f675b-7d10-4549-8038-e41d2581cf5f",
+                            TwoFactorEnabled = false
                         });
                 });
 
@@ -199,12 +221,10 @@ namespace Models.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -248,12 +268,10 @@ namespace Models.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -307,7 +325,7 @@ namespace Models.Migrations
                             Id = 2,
                             Attack = 2,
                             Cost = 3,
-                            Health = 4,
+                            Health = 5,
                             ImageUrl = "https://i0.wp.com/thediscerningcat.com/wp-content/uploads/2021/02/tabby-cat-wearing-sunglasses.jpg",
                             Name = "Chat Awesome"
                         },
@@ -323,18 +341,18 @@ namespace Models.Migrations
                         new
                         {
                             Id = 4,
-                            Attack = 7,
+                            Attack = 8,
                             Cost = 4,
-                            Health = 6,
+                            Health = 4,
                             ImageUrl = "https://wallpapers.com/images/hd/epic-cat-poster-baavft05ylgta4j8.jpg",
                             Name = "Chat Spacial"
                         },
                         new
                         {
                             Id = 5,
-                            Attack = 8,
+                            Attack = 7,
                             Cost = 5,
-                            Health = 8,
+                            Health = 7,
                             ImageUrl = "https://i.etsystatic.com/6230905/r/il/32aa5a/3474618751/il_fullxfull.3474618751_mfvf.jpg",
                             Name = "Chat Guerrier"
                         },
@@ -342,7 +360,7 @@ namespace Models.Migrations
                         {
                             Id = 6,
                             Attack = 4,
-                            Cost = 3,
+                            Cost = 2,
                             Health = 2,
                             ImageUrl = "https://store.playstation.com/store/api/chihiro/00_09_000/container/AU/en/99/EP2402-CUSA05624_00-ETH0000000002875/0/image?_version=00_09_000&platform=chihiro&bg_color=000000&opacity=100&w=720&h=720",
                             Name = "Chat Laser"
@@ -362,15 +380,15 @@ namespace Models.Migrations
                             Attack = 1,
                             Cost = 2,
                             Health = 9,
-                            ImageUrl = "https://i.ytimg.com/vi/2I7pZlUhZak/maxresdefault.jpg",
+                            ImageUrl = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c89c9a3c-7848-4bd5-9306-417c97096ae5/dh8sghm-7bebd975-51f2-4728-87bc-fb3cef176af5.jpg/v1/fit/w_750,h_1000,q_70,strp/another_lucifur_blob_by_slugyyycat_dh8sghm-375w-2x.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTAwMCIsInBhdGgiOiJcL2ZcL2M4OWM5YTNjLTc4NDgtNGJkNS05MzA2LTQxN2M5NzA5NmFlNVwvZGg4c2dobS03YmViZDk3NS01MWYyLTQ3MjgtODdiYy1mYjNjZWYxNzZhZjUuanBnIiwid2lkdGgiOiI8PTc1MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.7oGugpkEX4yqfhiOXlo4TfqzatOuHaCu2aEi-Lnw_40",
                             Name = "Blob Chat"
                         },
                         new
                         {
                             Id = 9,
-                            Attack = 4,
+                            Attack = 5,
                             Cost = 2,
-                            Health = 2,
+                            Health = 1,
                             ImageUrl = "https://townsquare.media/site/142/files/2011/08/jedicats.jpg?w=980&q=75",
                             Name = "Jedi Chatton"
                         },
@@ -514,6 +532,20 @@ namespace Models.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Players");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Test player 1",
+                            UserId = "User1Id"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Test player 2",
+                            UserId = "User2Id"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
