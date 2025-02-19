@@ -20,6 +20,7 @@ builder.Services.AddCors(options =>
         policy.WithOrigins("http://localhost:4200", "https://localhost:4200");
         policy.AllowAnyHeader();
         policy.AllowAnyMethod();
+        policy.AllowCredentials();
     });
 });
 
@@ -30,7 +31,6 @@ builder.Services.AddSingleton<WaitingUserService>();
 builder.Services.AddScoped<MatchesService>();
 builder.Services.AddScoped<StartingCardsService>();
 builder.Services.AddScoped<MatchConfigurationService>();
-
 builder.Services.AddSignalR();
 
 builder.Services.AddControllers();
@@ -54,6 +54,11 @@ app.UseCors("AllowAll");
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{Controller=Home}/{Action=Index}/{id?}"
+);
 
 app.MapHub<MatchHub>("/matchHub");
 
