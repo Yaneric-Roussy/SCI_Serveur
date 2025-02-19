@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Super_Cartes_Infinies.Services;
 using Super_Cartes_Infinies.Models;
+using Models.Models.Dtos;
+using Microsoft.EntityFrameworkCore;
 
 namespace Super_Cartes_Infinies.Controllers
 {
@@ -40,6 +42,29 @@ namespace Super_Cartes_Infinies.Controllers
                 return User.FindFirstValue(ClaimTypes.NameIdentifier)!; ;
             }
         }
+        [HttpPost]
+        public async Task<ActionResult> Register(RegisterDTO register)
+        {
+            if (register.Password != register.PasswordConfirm)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest,
+                    new { Message = "Les deux mots de passe spécifiés sont différents." });
+            }
+    
+            
+            
+
+            
+            
+               
+
+                return Ok(new { Message = "Inscription réussie ! 🥳" });
+            }
+
+        }
+
+           
+
     }
-}
+
 
