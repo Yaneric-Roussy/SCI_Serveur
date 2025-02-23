@@ -43,7 +43,7 @@ namespace Super_Cartes_Infinies.Controllers
             }
         }
         [HttpPost]
-        public async ActionResult Register(RegisterDTO register)
+        public async Task<ActionResult> Register(RegisterDTO register)
         {
             if (register.Password != register.PasswordConfirm)
             {
@@ -51,13 +51,13 @@ namespace Super_Cartes_Infinies.Controllers
                     new { Message = "Les deux mots de passe spécifiés sont différents." });
             }
 
-            IdentityUser user = new IdentityUser();
+            IdentityUser user = new IdentityUser
             {
-                user.UserName = register.Username;
-                user.Email = register.Email;
-            }
-            
-        IdentityResult identityResult = await playersService.CreatePlayer(user);
+                UserName = register.Username,
+                Email = register.Email
+            };
+
+            IdentityResult identityResult = await playersService.CreateAssync(user);
 
             if (!identityResult.Succeeded)
             {
@@ -65,15 +65,10 @@ namespace Super_Cartes_Infinies.Controllers
                     new { Message = "La création de l'utilisateur a échoué." });
             }
 
-
-
-
-
             return Ok(new { Message = "Inscription réussie ! 🥳" });
         }
     }
-
-    }
+}
 
            
 
