@@ -12,11 +12,14 @@ namespace WebApi.Controllers
     {
         public PlayersService playersService;
         readonly UserManager<Player> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-            public UsersController(UserManager<Player> userManager, PlayersService playersService)
+
+        public UsersController(UserManager<Player> userManager, PlayersService playersService, SignInManager<IdentityUser> signInManager)
             {
                 _userManager = userManager;
             this.playersService = playersService;
+            _signInManager = signInManager;
 
         }
      
@@ -45,6 +48,7 @@ namespace WebApi.Controllers
 
             return Ok(new { Message = "Inscription réussie ! 🥳" });
         }
+
 
     }
 
