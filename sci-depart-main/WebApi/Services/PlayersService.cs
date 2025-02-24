@@ -41,6 +41,25 @@ namespace Super_Cartes_Infinies.Services
         {
             return _dbContext.Players.Single(p => p.User!.UserName == userName);
         }
+        public async Task<IdentityResult> CreateAssync(IdentityUser user)
+        {
+            // Vous pouvez ajouter des validations supplémentaires ici si nécessaire
+
+            Player p = new Player()
+            {
+                Id = 0,
+                UserId = user.Id,
+                Name = user.Email!
+            };
+
+            // TODO: Utilisez le service StartingCardsService pour obtenir les cartes de départ
+            // TODO: Ajoutez ces cartes au joueur en utilisant le modèle OwnedCard que vous allez devoir ajouter
+
+            _dbContext.Add(p);
+            _dbContext.SaveChanges();
+
+            return null;
+        }
     }
 }
 
