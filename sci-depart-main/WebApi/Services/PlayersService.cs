@@ -41,7 +41,7 @@ namespace Super_Cartes_Infinies.Services
         {
             return _dbContext.Players.Single(p => p.User!.UserName == userName);
         }
-        public async Task<IdentityResult> CreateAssync(IdentityUser user)
+        public async Task CreateAssync(IdentityUser user)
         {
             // Vous pouvez ajouter des validations supplémentaires ici si nécessaire
 
@@ -58,7 +58,7 @@ namespace Super_Cartes_Infinies.Services
             _dbContext.Add(p);
             _dbContext.SaveChanges();
 
-            return null;
+            
         }
     }
 }
