@@ -12,13 +12,13 @@ namespace MVCEtWebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class AccountController : ControllerBase
+    public class UsersController: ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly PlayersService _playersService;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, PlayersService playersService)
+        public UsersController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, PlayersService playersService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -45,7 +45,7 @@ namespace MVCEtWebAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Error = identityResult.Errors });
             }
 
-            await _playersService.CreateAssync(user);
+           // _playersService.CreatePlayer(user);
 
             return Ok();
         }
@@ -65,7 +65,7 @@ namespace MVCEtWebAPI.Controllers
 
                 var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("C'est tellement la meilleure cle qui a jamais ete cree dans l'histoire de l'humanite (doit etre longue)"));
                 var token = new JwtSecurityToken(
-                    issuer: "https://localhost:7119",
+                    issuer: "https://localhost:7179",
                     audience: null,
                     claims: authClaims,
                     expires: DateTime.Now.AddMinutes(30),

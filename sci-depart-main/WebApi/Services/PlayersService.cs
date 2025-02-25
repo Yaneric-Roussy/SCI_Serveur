@@ -23,6 +23,7 @@ namespace Super_Cartes_Infinies.Services
                 Name = user.Email!
             };
 
+       
             // TODO: Utilisez le service StartingCardsService pour obtenir les cartes de départ
             // TODO: Ajoutez ces cartes au joueur en utilisant le modèle OwnedCard que vous allez devoir ajouter
 
