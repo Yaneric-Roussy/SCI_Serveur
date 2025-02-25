@@ -21,7 +21,7 @@ namespace Super_Cartes_Infinies.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Card>> GetAllCards(int champ, int ordre)
+        public ActionResult<IEnumerable<Card>> GetAllCards(int? champ, int? ordre)
         {
             if(ordre == 1)
             {
@@ -35,6 +35,10 @@ namespace Super_Cartes_Infinies.Controllers
                         return Ok(_cardsService.GetAllCards().OrderByDescending(i => i.Cost));
                 }
                     
+            }
+            if (ordre == null && ordre == null)
+            {
+                return Ok(_cardsService.GetPlayersCards("TheIdOfTheUser"));
             }
             switch (champ)
             {
@@ -53,6 +57,10 @@ namespace Super_Cartes_Infinies.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Card>> GetPlayersCards(int? champ, int? ordre)
         {
+            if (ordre == null && ordre == null)
+            {
+                return Ok(_cardsService.GetPlayersCards("TheIdOfTheUser"));
+            }
             if (ordre == 1)
             {
                 switch (champ)
@@ -65,10 +73,6 @@ namespace Super_Cartes_Infinies.Controllers
                         return Ok(_cardsService.GetPlayersCards("TheIdOfTheUser").OrderByDescending(i => i.Cost));
                 }
 
-            }
-            if(ordre == null && ordre == null)
-            {
-                return Ok(_cardsService.GetPlayersCards("TheIdOfTheUser"));
             }
             switch (champ)
             {
