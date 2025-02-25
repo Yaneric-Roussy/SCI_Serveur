@@ -14,10 +14,19 @@ namespace Super_Cartes_Infinies.Services
 
         public IEnumerable<Card> GetPlayersCards(string userId)
         {
-            // Stub: Pour l'intant, le stub retourne simplement les 8 premières cartes
-            // L'implémentation réelle devra utiliser un service et retourner les cartes qu'un joueur possède
-            // L'implémentation est la responsabilité de la personne en charge de la partie [Enregistrement et connexion]
-            return _dbContext.Cards.Take(8).ToList();
+            // Récupérer les cartes possédées par le joueur en utilisant l'ID de l'utilisateur
+            var player = _dbContext.Players.FirstOrDefault(p => p.UserId == userId);
+            if (player == null)
+            {
+                return new List<Card>();
+            }
+
+            var ownedCards = _dbContext.OwnedCard
+                .Where(oc => oc.Player.Id == player.Id)
+                .Select(oc => oc.Card)
+                .ToList();
+
+            return ownedCards;
         }
 
         public IEnumerable<Card> GetAllCards()
