@@ -46,7 +46,7 @@ namespace MVCEtWebAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Error = identityResult.Errors });
             }
 
-           // _playersService.CreatePlayer(user);
+            var player = _playersService.CreatePlayer(user);
 
             return Ok();
         }
@@ -58,7 +58,7 @@ namespace MVCEtWebAPI.Controllers
 
             if (result.Succeeded)
             {
-                var user = await _userManager.FindByNameAsync(loginDTO.Username);
+                var user = await _userManager.FindByEmailAsync(loginDTO.Username);
                 var authClaims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.Id)

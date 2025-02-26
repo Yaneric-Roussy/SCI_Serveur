@@ -15,6 +15,7 @@ namespace Super_Cartes_Infinies.Services
         public PlayersService(ApplicationDbContext context,StartingCardsService startingcardService)
         {
             _dbContext = context;
+            _startingCard = startingcardService;
         }
 
         public Player CreatePlayer(IdentityUser user)
