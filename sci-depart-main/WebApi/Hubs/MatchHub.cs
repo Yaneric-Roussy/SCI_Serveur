@@ -18,10 +18,14 @@ public class MatchHub : Hub
         _context = context;
         _matchesService = matchesService;
     }
-
-    public string userSignalRId
+    private string userSignalRId
     {
         get { return Context.ConnectionId!; }
+    }
+
+    private string groupName(int matchId)
+    {
+        return "Match_" + matchId.ToString();
     }
 
     public override async Task OnConnectedAsync()
@@ -47,6 +51,13 @@ public class MatchHub : Hub
     public async Task StartMatch(Match match)
     {
         var startMatchEvent = await _matchesService.StartMatch(userSignalRId, match);
+        await Groups.AddToGroupAsync(userSignalRId, groupName(match.Id));
         await Clients.Client(userSignalRId).SendAsync("StartMatchInfo", startMatchEvent);
+    }
+
+    public async Task EndTurn(string userId, int matchId)
+    {
+        var playerEndTurnEvent = await _matchesService.EndTurn(userId, matchId);
+        await Clients.Group(groupName(matchId)).SendAsync("PlayerEndTurn", playerEndTurnEvent);
     }
 }
