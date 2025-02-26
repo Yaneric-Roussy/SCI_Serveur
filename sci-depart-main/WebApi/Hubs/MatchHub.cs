@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Identity.Client;
+using Super_Cartes_Infinies.Combat;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Models.Dtos;
@@ -23,7 +24,7 @@ public class MatchHub : Hub
         get { return Context.ConnectionId!; }
     }
 
-    private string groupName(int matchId)
+    private string groupName(int? matchId)
     {
         return "Match_" + matchId.ToString();
     }
@@ -40,6 +41,8 @@ public class MatchHub : Hub
 
         if(joiningMatchData != null)
         {
+            //string group = groupName(joiningMatchData.Match.Id);
+            //await Groups.AddToGroupAsync(userSignalRId, group);
             await Clients.Client(userSignalRId).SendAsync("JoiningMatchData", joiningMatchData);
         }
         else
@@ -51,13 +54,18 @@ public class MatchHub : Hub
     public async Task StartMatch(Match match)
     {
         var startMatchEvent = await _matchesService.StartMatch(userSignalRId, match);
-        await Groups.AddToGroupAsync(userSignalRId, groupName(match.Id));
+        
+        string group = groupName(match.Id);
+        await Groups.AddToGroupAsync(userSignalRId, group);
+
         await Clients.Client(userSignalRId).SendAsync("StartMatchInfo", startMatchEvent);
     }
 
     public async Task EndTurn(string userId, int matchId)
     {
         var playerEndTurnEvent = await _matchesService.EndTurn(userId, matchId);
-        await Clients.Group(groupName(matchId)).SendAsync("PlayerEndTurn", playerEndTurnEvent);
+        //await Clients.Group(groupName(matchId)).SendAsync("PlayerEndTurn", playerEndTurnEvent);
+        string group = groupName(matchId);
+        await Clients.Group(group).SendAsync("PlayerEndTurn", playerEndTurnEvent);
     }
 }
