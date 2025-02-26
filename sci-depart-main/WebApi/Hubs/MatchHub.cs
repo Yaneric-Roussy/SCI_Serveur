@@ -31,7 +31,7 @@ public class MatchHub : Hub
 
         if(joiningMatchData != null)
         {
-            await Clients.User(userSignalRId).SendAsync("JoiningMatchData", joiningMatchData.Match.Id);
+            await Clients.User(userSignalRId).SendAsync("JoiningMatchData", joiningMatchData);
         }
         else
         {
