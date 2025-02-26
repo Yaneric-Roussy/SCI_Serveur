@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Identity.Client;
 using Super_Cartes_Infinies.Data;
+using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Models.Dtos;
 using Super_Cartes_Infinies.Services;
 
@@ -16,6 +17,11 @@ public class MatchHub : Hub
     {
         _context = context;
         _matchesService = matchesService;
+    }
+
+    public string userId
+    {
+        get { return Context.UserIdentifier!; }
     }
 
     public override async Task OnConnectedAsync()
@@ -37,5 +43,11 @@ public class MatchHub : Hub
         {
             await Clients.User(userSignalRId).SendAsync("LookingForOtherPlayer", "Waiting on another player for match.");
         }
+    }
+
+    public async Task StartMatch(Match match)
+    {
+        var startMatchEvent = await _matchesService.StartMatch(userId, match);
+        await Clients.User(userId).SendAsync("StartMatchInfo", startMatchEvent);
     }
 }
