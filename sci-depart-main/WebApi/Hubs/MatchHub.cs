@@ -20,14 +20,22 @@ public class MatchHub : Hub
 
     public override async Task OnConnectedAsync()
     {
+        //Console.WriteLine($"User Connected: {Context.UserIdentifier}, Connection ID: {Context.ConnectionId}");
         await base.OnConnectedAsync();
     }
 
-    public async Task JoinMatch(string userId, string connectionId, int specificMatchId)
+    public async Task JoinMatch(string userId, string? connectionId, int? specificMatchId)
     {
-        await _matchesService.JoinMatch(userId, connectionId, specificMatchId);
+        JoiningMatchData? joiningMatchData = await _matchesService.JoinMatch(userId, connectionId, specificMatchId);
+        string userSignalRId = Context.UserIdentifier;
 
-        string test = "Il se passe qqch.";
-        await Clients.User(userId).SendAsync("JoinMatch", test);
+        if(joiningMatchData != null)
+        {
+            await Clients.User(userSignalRId).SendAsync("JoiningMatchData", joiningMatchData.Match.Id);
+        }
+        else
+        {
+            await Clients.User(userSignalRId).SendAsync("LookingForOtherPlayer", "Waiting on another player for match.");
+        }
     }
 }
