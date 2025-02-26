@@ -19,9 +19,9 @@ public class MatchHub : Hub
         _matchesService = matchesService;
     }
 
-    public string userId
+    public string userSignalRId
     {
-        get { return Context.UserIdentifier!; }
+        get { return Context.ConnectionId!; }
     }
 
     public override async Task OnConnectedAsync()
@@ -33,21 +33,20 @@ public class MatchHub : Hub
     public async Task JoinMatch(string userId, string? connectionId, int? specificMatchId)
     {
         JoiningMatchData? joiningMatchData = await _matchesService.JoinMatch(userId, connectionId, specificMatchId);
-        string userSignalRId = Context.UserIdentifier;
 
         if(joiningMatchData != null)
         {
-            await Clients.User(userSignalRId).SendAsync("JoiningMatchData", joiningMatchData);
+            await Clients.Client(userSignalRId).SendAsync("JoiningMatchData", joiningMatchData);
         }
         else
         {
-            await Clients.User(userSignalRId).SendAsync("LookingForOtherPlayer", "Waiting on another player for match.");
+            await Clients.Client(userSignalRId).SendAsync("LookingForOtherPlayer", "Waiting on another player for match.");
         }
     }
 
     public async Task StartMatch(Match match)
     {
-        var startMatchEvent = await _matchesService.StartMatch(userId, match);
-        await Clients.User(userId).SendAsync("StartMatchInfo", startMatchEvent);
+        var startMatchEvent = await _matchesService.StartMatch(userSignalRId, match);
+        await Clients.Client(userSignalRId).SendAsync("StartMatchInfo", startMatchEvent);
     }
 }
