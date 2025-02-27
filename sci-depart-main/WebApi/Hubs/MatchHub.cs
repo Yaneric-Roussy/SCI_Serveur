@@ -68,4 +68,12 @@ public class MatchHub : Hub
         string group = groupName(matchId);
         await Clients.Group(group).SendAsync("PlayerEndTurn", playerEndTurnEvent);
     }
+
+    public async Task Surrender(string userId, int matchId)
+    {
+        var surrenderEvent = await _matchesService.Surrender(userId, matchId);
+        
+        string group = groupName(matchId);
+        await Clients.Group(group).SendAsync("SurrenderReturn", surrenderEvent);
+    }
 }
