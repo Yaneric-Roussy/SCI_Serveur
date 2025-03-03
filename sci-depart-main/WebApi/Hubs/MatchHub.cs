@@ -41,9 +41,14 @@ public class MatchHub : Hub
 
         if(joiningMatchData != null)
         {
-            //string group = groupName(joiningMatchData.Match.Id);
-            //await Groups.AddToGroupAsync(userSignalRId, group);
             await Clients.Client(userSignalRId).SendAsync("JoiningMatchData", joiningMatchData);
+
+            //On envoie les bonnes données à l'autre joueur.
+            JoiningMatchData? joiningMatchDataOtherPlayer = await _matchesService.JoinMatch(
+                joiningMatchData.PlayerA.UserId,
+                joiningMatchData.OtherPlayerConnectionId,
+                joiningMatchData.Match.Id);
+            await Clients.Client(joiningMatchData.OtherPlayerConnectionId).SendAsync("joiningMatchData", joiningMatchDataOtherPlayer);
         }
         else
         {
