@@ -12,8 +12,13 @@ using Super_Cartes_Infinies.Data;
 namespace Models.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
+<<<<<<<< HEAD:sci-depart-main/Models/Migrations/20250303161225_init.Designer.cs
     [Migration("20250303161225_init")]
     partial class init
+========
+    [Migration("20250303142300_ng")]
+    partial class ng
+>>>>>>>> main:sci-depart-main/Models/Migrations/20250303142300_ng.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,15 +162,25 @@ namespace Models.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
+<<<<<<<< HEAD:sci-depart-main/Models/Migrations/20250303161225_init.Designer.cs
                             ConcurrencyStamp = "f03b31cb-b031-4d26-936a-c8e6fc7f4495",
+========
+                            ConcurrencyStamp = "d8fcf48a-de36-460e-a6bc-8f9f48c09c7d",
+>>>>>>>> main:sci-depart-main/Models/Migrations/20250303142300_ng.Designer.cs
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
+<<<<<<<< HEAD:sci-depart-main/Models/Migrations/20250303161225_init.Designer.cs
                             PasswordHash = "AQAAAAIAAYagAAAAEAqwty4JTlmnOix+7ztz1moLR5P1SDrYHCJ7iK4NnZHLPTEDFr/j20SkeFziF4uthg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "99495965-129a-4ecb-a164-3d483be44dc7",
+========
+                            PasswordHash = "AQAAAAIAAYagAAAAELCOfiS+nORp9kRqtoechwh86OvIgyMCNQOMlTQ1k61Bt83s4cIm3gKgWtHo2Slnwg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "a4d13de7-a05d-4144-849b-560a77e25c2b",
+>>>>>>>> main:sci-depart-main/Models/Migrations/20250303142300_ng.Designer.cs
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         },
@@ -173,22 +188,38 @@ namespace Models.Migrations
                         {
                             Id = "User1Id",
                             AccessFailedCount = 0,
+<<<<<<<< HEAD:sci-depart-main/Models/Migrations/20250303161225_init.Designer.cs
                             ConcurrencyStamp = "a6a8b2cc-0455-4b3b-a0f2-05a36cbca17e",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "c6100262-252c-4a7e-b0c2-7688eb371aed",
+========
+                            ConcurrencyStamp = "e55216b1-0756-4662-84cd-d5b09fb9070f",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "97b3f61a-2660-4c16-a341-8ece9de783fb",
+>>>>>>>> main:sci-depart-main/Models/Migrations/20250303142300_ng.Designer.cs
                             TwoFactorEnabled = false
                         },
                         new
                         {
                             Id = "User2Id",
                             AccessFailedCount = 0,
+<<<<<<<< HEAD:sci-depart-main/Models/Migrations/20250303161225_init.Designer.cs
                             ConcurrencyStamp = "6417118d-634a-4159-8a7b-12088652a789",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "5a55aa07-4079-4a07-82a7-71f5e0bb6ab0",
+========
+                            ConcurrencyStamp = "a978a331-d219-421e-9191-74ea826be534",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "e9e7276b-b067-4c91-9395-537504d09ea5",
+>>>>>>>> main:sci-depart-main/Models/Migrations/20250303142300_ng.Designer.cs
                             TwoFactorEnabled = false
                         });
                 });
@@ -285,7 +316,11 @@ namespace Models.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+<<<<<<<< HEAD:sci-depart-main/Models/Migrations/20250303161225_init.Designer.cs
             modelBuilder.Entity("Models.Models.StartingCard", b =>
+========
+            modelBuilder.Entity("Models.Models.OwnedCard", b =>
+>>>>>>>> main:sci-depart-main/Models/Migrations/20250303142300_ng.Designer.cs
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -293,13 +328,21 @@ namespace Models.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+<<<<<<<< HEAD:sci-depart-main/Models/Migrations/20250303161225_init.Designer.cs
                     b.Property<int>("CardId")
+========
+                    b.Property<int?>("CardId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PlayerId")
+>>>>>>>> main:sci-depart-main/Models/Migrations/20250303142300_ng.Designer.cs
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CardId");
 
+<<<<<<<< HEAD:sci-depart-main/Models/Migrations/20250303161225_init.Designer.cs
                     b.ToTable("StartingCards");
 
                     b.HasData(
@@ -348,6 +391,11 @@ namespace Models.Migrations
                             Id = 9,
                             CardId = 7
                         });
+========
+                    b.HasIndex("PlayerId");
+
+                    b.ToTable("OwnedCard");
+>>>>>>>> main:sci-depart-main/Models/Migrations/20250303142300_ng.Designer.cs
                 });
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Card", b =>
@@ -687,6 +735,7 @@ namespace Models.Migrations
                         .IsRequired();
                 });
 
+<<<<<<<< HEAD:sci-depart-main/Models/Migrations/20250303161225_init.Designer.cs
             modelBuilder.Entity("Models.Models.StartingCard", b =>
                 {
                     b.HasOne("Super_Cartes_Infinies.Models.Card", "Card")
@@ -696,6 +745,21 @@ namespace Models.Migrations
                         .IsRequired();
 
                     b.Navigation("Card");
+========
+            modelBuilder.Entity("Models.Models.OwnedCard", b =>
+                {
+                    b.HasOne("Super_Cartes_Infinies.Models.Card", "Card")
+                        .WithMany()
+                        .HasForeignKey("CardId");
+
+                    b.HasOne("Super_Cartes_Infinies.Models.Player", "Player")
+                        .WithMany("OwnedCards")
+                        .HasForeignKey("PlayerId");
+
+                    b.Navigation("Card");
+
+                    b.Navigation("Player");
+>>>>>>>> main:sci-depart-main/Models/Migrations/20250303142300_ng.Designer.cs
                 });
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Match", b =>
@@ -775,6 +839,11 @@ namespace Models.Migrations
                     b.Navigation("Graveyard");
 
                     b.Navigation("Hand");
+                });
+
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.Player", b =>
+                {
+                    b.Navigation("OwnedCards");
                 });
 #pragma warning restore 612, 618
         }

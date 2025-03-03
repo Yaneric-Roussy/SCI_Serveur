@@ -17,7 +17,7 @@ namespace Models.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.11")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -154,15 +154,15 @@ namespace Models.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f03b31cb-b031-4d26-936a-c8e6fc7f4495",
+                            ConcurrencyStamp = "d8fcf48a-de36-460e-a6bc-8f9f48c09c7d",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAqwty4JTlmnOix+7ztz1moLR5P1SDrYHCJ7iK4NnZHLPTEDFr/j20SkeFziF4uthg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELCOfiS+nORp9kRqtoechwh86OvIgyMCNQOMlTQ1k61Bt83s4cIm3gKgWtHo2Slnwg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "99495965-129a-4ecb-a164-3d483be44dc7",
+                            SecurityStamp = "a4d13de7-a05d-4144-849b-560a77e25c2b",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         },
@@ -170,22 +170,22 @@ namespace Models.Migrations
                         {
                             Id = "User1Id",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a6a8b2cc-0455-4b3b-a0f2-05a36cbca17e",
+                            ConcurrencyStamp = "e55216b1-0756-4662-84cd-d5b09fb9070f",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c6100262-252c-4a7e-b0c2-7688eb371aed",
+                            SecurityStamp = "97b3f61a-2660-4c16-a341-8ece9de783fb",
                             TwoFactorEnabled = false
                         },
                         new
                         {
                             Id = "User2Id",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6417118d-634a-4159-8a7b-12088652a789",
+                            ConcurrencyStamp = "a978a331-d219-421e-9191-74ea826be534",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5a55aa07-4079-4a07-82a7-71f5e0bb6ab0",
+                            SecurityStamp = "e9e7276b-b067-4c91-9395-537504d09ea5",
                             TwoFactorEnabled = false
                         });
                 });
@@ -282,7 +282,7 @@ namespace Models.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Models.Models.StartingCard", b =>
+            modelBuilder.Entity("Models.Models.OwnedCard", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -290,61 +290,19 @@ namespace Models.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CardId")
+                    b.Property<int?>("CardId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PlayerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CardId");
 
-                    b.ToTable("StartingCards");
+                    b.HasIndex("PlayerId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CardId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CardId = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CardId = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CardId = 4
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CardId = 4
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CardId = 5
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CardId = 6
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CardId = 7
-                        },
-                        new
-                        {
-                            Id = 9,
-                            CardId = 7
-                        });
+                    b.ToTable("OwnedCard");
                 });
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Card", b =>
@@ -467,25 +425,6 @@ namespace Models.Migrations
                             ImageUrl = "https://cdn.theatlantic.com/thumbor/fOZjgqHH0RmXA1A5ek-yDz697W4=/133x0:2091x1020/1200x625/media/img/mt/2015/12/RTRD62Q/original.jpg",
                             Name = "Chat Furtif"
                         });
-                });
-
-            modelBuilder.Entity("Super_Cartes_Infinies.Models.GameConfig", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Mana")
-                        .HasColumnType("int");
-
-                    b.Property<int>("nbCardsToDraw")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GameConfig");
                 });
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Match", b =>
@@ -684,15 +623,19 @@ namespace Models.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Models.Models.StartingCard", b =>
+            modelBuilder.Entity("Models.Models.OwnedCard", b =>
                 {
                     b.HasOne("Super_Cartes_Infinies.Models.Card", "Card")
                         .WithMany()
-                        .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CardId");
+
+                    b.HasOne("Super_Cartes_Infinies.Models.Player", "Player")
+                        .WithMany("OwnedCards")
+                        .HasForeignKey("PlayerId");
 
                     b.Navigation("Card");
+
+                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Match", b =>
@@ -772,6 +715,11 @@ namespace Models.Migrations
                     b.Navigation("Graveyard");
 
                     b.Navigation("Hand");
+                });
+
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.Player", b =>
+                {
+                    b.Navigation("OwnedCards");
                 });
 #pragma warning restore 612, 618
         }

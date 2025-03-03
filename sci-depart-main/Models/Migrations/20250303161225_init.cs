@@ -8,7 +8,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Models.Migrations
 {
     /// <inheritdoc />
+<<<<<<<< HEAD:sci-depart-main/Models/Migrations/20250303161225_init.cs
     public partial class init : Migration
+========
+    public partial class ng : Migration
+>>>>>>>> main:sci-depart-main/Models/Migrations/20250303142300_ng.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -250,6 +254,30 @@ namespace Models.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OwnedCard",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CardId = table.Column<int>(type: "int", nullable: true),
+                    PlayerId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OwnedCard", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OwnedCard_Cards_CardId",
+                        column: x => x.CardId,
+                        principalTable: "Cards",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_OwnedCard_Players_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Players",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Matches",
                 columns: table => new
                 {
@@ -333,9 +361,15 @@ namespace Models.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
+<<<<<<<< HEAD:sci-depart-main/Models/Migrations/20250303161225_init.cs
                     { "11111111-1111-1111-1111-111111111111", 0, "f03b31cb-b031-4d26-936a-c8e6fc7f4495", "admin@admin.com", true, true, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEAqwty4JTlmnOix+7ztz1moLR5P1SDrYHCJ7iK4NnZHLPTEDFr/j20SkeFziF4uthg==", null, false, "99495965-129a-4ecb-a164-3d483be44dc7", false, "admin@admin.com" },
                     { "User1Id", 0, "a6a8b2cc-0455-4b3b-a0f2-05a36cbca17e", null, false, false, null, null, null, null, null, false, "c6100262-252c-4a7e-b0c2-7688eb371aed", false, null },
                     { "User2Id", 0, "6417118d-634a-4159-8a7b-12088652a789", null, false, false, null, null, null, null, null, false, "5a55aa07-4079-4a07-82a7-71f5e0bb6ab0", false, null }
+========
+                    { "11111111-1111-1111-1111-111111111111", 0, "d8fcf48a-de36-460e-a6bc-8f9f48c09c7d", "admin@admin.com", true, true, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAELCOfiS+nORp9kRqtoechwh86OvIgyMCNQOMlTQ1k61Bt83s4cIm3gKgWtHo2Slnwg==", null, false, "a4d13de7-a05d-4144-849b-560a77e25c2b", false, "admin@admin.com" },
+                    { "User1Id", 0, "e55216b1-0756-4662-84cd-d5b09fb9070f", null, false, false, null, null, null, null, null, false, "97b3f61a-2660-4c16-a341-8ece9de783fb", false, null },
+                    { "User2Id", 0, "a978a331-d219-421e-9191-74ea826be534", null, false, false, null, null, null, null, null, false, "e9e7276b-b067-4c91-9395-537504d09ea5", false, null }
+>>>>>>>> main:sci-depart-main/Models/Migrations/20250303142300_ng.cs
                 });
 
             migrationBuilder.InsertData(
@@ -369,6 +403,7 @@ namespace Models.Migrations
                     { 2, "Test player 2", "User2Id" }
                 });
 
+<<<<<<<< HEAD:sci-depart-main/Models/Migrations/20250303161225_init.cs
             migrationBuilder.InsertData(
                 table: "StartingCards",
                 columns: new[] { "Id", "CardId" },
@@ -385,6 +420,8 @@ namespace Models.Migrations
                     { 9, 7 }
                 });
 
+========
+>>>>>>>> main:sci-depart-main/Models/Migrations/20250303142300_ng.cs
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -437,6 +474,16 @@ namespace Models.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_MatchPlayersData_PlayerId",
                 table: "MatchPlayersData",
+                column: "PlayerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OwnedCard_CardId",
+                table: "OwnedCard",
+                column: "CardId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OwnedCard_PlayerId",
+                table: "OwnedCard",
                 column: "PlayerId");
 
             migrationBuilder.CreateIndex(
@@ -498,6 +545,9 @@ namespace Models.Migrations
 
             migrationBuilder.DropTable(
                 name: "Matches");
+
+            migrationBuilder.DropTable(
+                name: "OwnedCard");
 
             migrationBuilder.DropTable(
                 name: "PlayableCard");
