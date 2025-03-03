@@ -40,15 +40,14 @@ public class MatchHub : Hub
         JoiningMatchData? joiningMatchData = await _matchesService.JoinMatch(userId, connectionId, specificMatchId);
 
         if(joiningMatchData != null)
-        {
+        {           
+            //Données joueur opposé.
+            if(joiningMatchData.OtherPlayerConnectionId != null)
+            {
+                await Clients.Client(joiningMatchData.OtherPlayerConnectionId).SendAsync("joiningMatchData", joiningMatchData);
+            }
+            //Données joueur actuel.
             await Clients.Client(userSignalRId).SendAsync("JoiningMatchData", joiningMatchData);
-
-            //On envoie les bonnes données à l'autre joueur.
-            JoiningMatchData? joiningMatchDataOtherPlayer = await _matchesService.JoinMatch(
-                joiningMatchData.PlayerA.UserId,
-                joiningMatchData.OtherPlayerConnectionId,
-                joiningMatchData.Match.Id);
-            await Clients.Client(joiningMatchData.OtherPlayerConnectionId).SendAsync("joiningMatchData", joiningMatchDataOtherPlayer);
         }
         else
         {
