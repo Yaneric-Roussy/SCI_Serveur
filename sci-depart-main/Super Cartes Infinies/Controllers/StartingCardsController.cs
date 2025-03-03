@@ -16,6 +16,7 @@ namespace Super_Cartes_Infinies.Controllers
     {
         private readonly ApplicationDbContext _context;
 
+
         public StartingCardsController(ApplicationDbContext context)
         {
             _context = context;

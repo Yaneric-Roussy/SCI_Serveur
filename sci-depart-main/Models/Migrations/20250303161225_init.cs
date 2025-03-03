@@ -70,6 +70,20 @@ namespace Models.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GameConfig",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nbCardsToDraw = table.Column<int>(type: "int", nullable: false),
+                    Mana = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameConfig", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -201,14 +215,14 @@ namespace Models.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CardID = table.Column<int>(type: "int", nullable: false)
+                    CardId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_StartingCards", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StartingCards_Cards_CardID",
-                        column: x => x.CardID,
+                        name: "FK_StartingCards_Cards_CardId",
+                        column: x => x.CardId,
                         principalTable: "Cards",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -319,9 +333,9 @@ namespace Models.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "11111111-1111-1111-1111-111111111111", 0, "7c2adeba-af08-4da4-b1db-94444fa6bdcf", "admin@admin.com", true, true, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEFgvNeNRuhjm86IrESzGKsfYhxN4T7TW9bYStJoG7Kf2RLUujKU5EQE7vNjUxyg3ZQ==", null, false, "bafb6fea-480a-4abf-97dc-db49ca8b1ebe", false, "admin@admin.com" },
-                    { "User1Id", 0, "55d8af3c-d27b-42a4-9167-a376654bfc0b", null, false, false, null, null, null, null, null, false, "334e34a7-a0cd-4074-ba73-4bdc009288ca", false, null },
-                    { "User2Id", 0, "ac38b8da-a1f2-4df7-ac18-4215995e942e", null, false, false, null, null, null, null, null, false, "47bb6fa1-583f-4e1e-ab1d-12d1edc4821b", false, null }
+                    { "11111111-1111-1111-1111-111111111111", 0, "f03b31cb-b031-4d26-936a-c8e6fc7f4495", "admin@admin.com", true, true, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEAqwty4JTlmnOix+7ztz1moLR5P1SDrYHCJ7iK4NnZHLPTEDFr/j20SkeFziF4uthg==", null, false, "99495965-129a-4ecb-a164-3d483be44dc7", false, "admin@admin.com" },
+                    { "User1Id", 0, "a6a8b2cc-0455-4b3b-a0f2-05a36cbca17e", null, false, false, null, null, null, null, null, false, "c6100262-252c-4a7e-b0c2-7688eb371aed", false, null },
+                    { "User2Id", 0, "6417118d-634a-4159-8a7b-12088652a789", null, false, false, null, null, null, null, null, false, "5a55aa07-4079-4a07-82a7-71f5e0bb6ab0", false, null }
                 });
 
             migrationBuilder.InsertData(
@@ -353,6 +367,22 @@ namespace Models.Migrations
                 {
                     { 1, "Test player 1", "User1Id" },
                     { 2, "Test player 2", "User2Id" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "StartingCards",
+                columns: new[] { "Id", "CardId" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 2, 2 },
+                    { 3, 3 },
+                    { 4, 4 },
+                    { 5, 4 },
+                    { 6, 5 },
+                    { 7, 6 },
+                    { 8, 7 },
+                    { 9, 7 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -440,9 +470,9 @@ namespace Models.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StartingCards_CardID",
+                name: "IX_StartingCards_CardId",
                 table: "StartingCards",
-                column: "CardID");
+                column: "CardId");
         }
 
         /// <inheritdoc />
@@ -462,6 +492,9 @@ namespace Models.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "GameConfig");
 
             migrationBuilder.DropTable(
                 name: "Matches");

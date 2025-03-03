@@ -20,6 +20,7 @@ public class ApplicationDbContext : IdentityDbContext
         base.OnModelCreating(builder);
 
         builder.Entity<Card>().HasData(Seed.SeedCards());
+        builder.Entity<StartingCard>().HasData(Seed.SeedStartingCards());
 
         builder.Entity<IdentityUser>().HasData(Seed.SeedUsers());
         builder.Entity<IdentityRole>().HasData(Seed.SeedRoles());

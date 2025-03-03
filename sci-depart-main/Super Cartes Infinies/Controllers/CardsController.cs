@@ -157,8 +157,8 @@ namespace Super_Cartes_Infinies.Controllers
             return _context.Cards.Any(e => e.Id == id);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> CreateStartingCard(int id)
+     
+        public async Task<IActionResult> CreateStarting(int id)
         {
 
             var card = await _context.Cards
