@@ -36,7 +36,8 @@ namespace MVCEtWebAPI.Controllers
 
             IdentityUser user = new IdentityUser()
             {
-                UserName = registerDTO.Username,
+                UserName = registerDTO.Email,
+
                 Email = registerDTO.Email
             };
             IdentityResult identityResult = await _userManager.CreateAsync(user, registerDTO.Password);
@@ -54,11 +55,11 @@ namespace MVCEtWebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> Login(LoginDTO loginDTO)
         {
-            var result = await _signInManager.PasswordSignInAsync(loginDTO.Username, loginDTO.Password, true, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(loginDTO.Email, loginDTO.Password, true, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
-                var user = await _userManager.FindByEmailAsync(loginDTO.Username);
+                var user = await _userManager.FindByEmailAsync(loginDTO.Email);
                 var authClaims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.Id)
