@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Super_Cartes_Infinies.Services;
 using Super_Cartes_Infinies.Models;
+using Models.Models.Dtos;
+using Microsoft.EntityFrameworkCore;
 
 namespace Super_Cartes_Infinies.Controllers
 {
@@ -40,6 +42,12 @@ namespace Super_Cartes_Infinies.Controllers
                 return User.FindFirstValue(ClaimTypes.NameIdentifier)!; ;
             }
         }
+       
     }
 }
+
+           
+
+    
+
 
