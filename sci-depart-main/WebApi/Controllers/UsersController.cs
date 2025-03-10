@@ -49,7 +49,7 @@ namespace MVCEtWebAPI.Controllers
 
             await _playersService.CreatePlayer(user);
 
-            return Ok();
+            return Ok(true);
         }
 
         [HttpPost]
