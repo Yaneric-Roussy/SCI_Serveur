@@ -47,7 +47,7 @@ namespace MVCEtWebAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Error = identityResult.Errors });
             }
 
-            var player = _playersService.CreatePlayer(user);
+            await _playersService.CreatePlayer(user);
 
             return Ok();
         }
