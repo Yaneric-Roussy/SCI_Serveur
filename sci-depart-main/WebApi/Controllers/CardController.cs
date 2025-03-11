@@ -9,15 +9,16 @@ namespace Super_Cartes_Infinies.Controllers
 
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class CardController : ControllerBase
+    public class CardController : BaseController
     {
         private ApplicationDbContext _dbContext;
         private CardsService _cardsService;
 
-        public CardController(ApplicationDbContext dbContext, CardsService cardsService)
+        public CardController(ApplicationDbContext dbContext, CardsService cardsService, PlayersService playersService):base(playersService)
         {
             _dbContext = dbContext;
             _cardsService = cardsService;
+            
         }
 
         [HttpGet]

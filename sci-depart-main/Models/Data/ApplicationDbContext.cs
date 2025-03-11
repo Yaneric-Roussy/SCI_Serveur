@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Models.Models;
 using Super_Cartes_Infinies.Models;
 
 namespace Super_Cartes_Infinies.Data;
@@ -49,6 +50,9 @@ public class ApplicationDbContext : IdentityDbContext
 
     public DbSet<Match> Matches { get; set; } = default!;
 
+    public DbSet<OwnedCard> OwnedCard { get; set; } = default!;
+
     public DbSet<MatchPlayerData> MatchPlayersData { get; set; } = default!;
+    
 }
 

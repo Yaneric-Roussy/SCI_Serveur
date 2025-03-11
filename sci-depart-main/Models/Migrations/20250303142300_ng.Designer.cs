@@ -12,8 +12,13 @@ using Super_Cartes_Infinies.Data;
 namespace Models.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
+<<<<<<<< HEAD:sci-depart-main/Models/Migrations/20250219211428_init.Designer.cs
     [Migration("20250219211428_init")]
     partial class init
+========
+    [Migration("20250303142300_ng")]
+    partial class ng
+>>>>>>>> 107c16a3b7b78fe61dc96324439e1c10d24c8f16:sci-depart-main/Models/Migrations/20250303142300_ng.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,15 +162,25 @@ namespace Models.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
+<<<<<<<< HEAD:sci-depart-main/Models/Migrations/20250219211428_init.Designer.cs
                             ConcurrencyStamp = "159a0637-895d-40e2-ad9b-5fa8f5bfa061",
+========
+                            ConcurrencyStamp = "d8fcf48a-de36-460e-a6bc-8f9f48c09c7d",
+>>>>>>>> 107c16a3b7b78fe61dc96324439e1c10d24c8f16:sci-depart-main/Models/Migrations/20250303142300_ng.Designer.cs
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
+<<<<<<<< HEAD:sci-depart-main/Models/Migrations/20250219211428_init.Designer.cs
                             PasswordHash = "AQAAAAIAAYagAAAAEDbpyNsTkm+gbJC35+0CMQ/MIw3zpQ8Q+y5i1elf+m9apFlm78LldIv7R0dz3Fs0Ug==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "386699b4-2bd9-498b-ab93-b76c5d0294aa",
+========
+                            PasswordHash = "AQAAAAIAAYagAAAAELCOfiS+nORp9kRqtoechwh86OvIgyMCNQOMlTQ1k61Bt83s4cIm3gKgWtHo2Slnwg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "a4d13de7-a05d-4144-849b-560a77e25c2b",
+>>>>>>>> 107c16a3b7b78fe61dc96324439e1c10d24c8f16:sci-depart-main/Models/Migrations/20250303142300_ng.Designer.cs
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         },
@@ -173,22 +188,38 @@ namespace Models.Migrations
                         {
                             Id = "User1Id",
                             AccessFailedCount = 0,
+<<<<<<<< HEAD:sci-depart-main/Models/Migrations/20250219211428_init.Designer.cs
                             ConcurrencyStamp = "4e97ec9f-ae9b-4295-9171-b030b9aee1cc",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7e6f0320-09d5-426f-a55d-8c66dd86c065",
+========
+                            ConcurrencyStamp = "e55216b1-0756-4662-84cd-d5b09fb9070f",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "97b3f61a-2660-4c16-a341-8ece9de783fb",
+>>>>>>>> 107c16a3b7b78fe61dc96324439e1c10d24c8f16:sci-depart-main/Models/Migrations/20250303142300_ng.Designer.cs
                             TwoFactorEnabled = false
                         },
                         new
                         {
                             Id = "User2Id",
                             AccessFailedCount = 0,
+<<<<<<<< HEAD:sci-depart-main/Models/Migrations/20250219211428_init.Designer.cs
                             ConcurrencyStamp = "2e0f36a0-5dd6-4e9b-bc7e-41abc590b087",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "fb98338c-c20a-4f68-9caa-04d590097551",
+========
+                            ConcurrencyStamp = "a978a331-d219-421e-9191-74ea826be534",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "e9e7276b-b067-4c91-9395-537504d09ea5",
+>>>>>>>> 107c16a3b7b78fe61dc96324439e1c10d24c8f16:sci-depart-main/Models/Migrations/20250303142300_ng.Designer.cs
                             TwoFactorEnabled = false
                         });
                 });
@@ -283,6 +314,29 @@ namespace Models.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Models.Models.OwnedCard", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CardId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PlayerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardId");
+
+                    b.HasIndex("PlayerId");
+
+                    b.ToTable("OwnedCard");
                 });
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Card", b =>
@@ -603,6 +657,21 @@ namespace Models.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Models.Models.OwnedCard", b =>
+                {
+                    b.HasOne("Super_Cartes_Infinies.Models.Card", "Card")
+                        .WithMany()
+                        .HasForeignKey("CardId");
+
+                    b.HasOne("Super_Cartes_Infinies.Models.Player", "Player")
+                        .WithMany("OwnedCards")
+                        .HasForeignKey("PlayerId");
+
+                    b.Navigation("Card");
+
+                    b.Navigation("Player");
+                });
+
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Match", b =>
                 {
                     b.HasOne("Super_Cartes_Infinies.Models.MatchPlayerData", "PlayerDataA")
@@ -680,6 +749,11 @@ namespace Models.Migrations
                     b.Navigation("Graveyard");
 
                     b.Navigation("Hand");
+                });
+
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.Player", b =>
+                {
+                    b.Navigation("OwnedCards");
                 });
 #pragma warning restore 612, 618
         }
