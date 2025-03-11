@@ -12,6 +12,6 @@ namespace Models.Models.Dtos
         [Required]
         public string Token { get; set; } = null!;
         public string Email { get; set; } = null!;
-        public int PlayerId { get; set; }
+        public string PlayerId { get; set; } = null!;
     }
 }
