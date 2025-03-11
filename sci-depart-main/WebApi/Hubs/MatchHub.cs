@@ -9,7 +9,7 @@ using Super_Cartes_Infinies.Services;
 
 namespace Super_Cartes_Infinies.Hubs;
 
-//[Authorize]
+[Authorize]
 public class MatchHub : Hub
 {
     ApplicationDbContext _context;
