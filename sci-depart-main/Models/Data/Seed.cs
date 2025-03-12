@@ -9,6 +9,19 @@ namespace Super_Cartes_Infinies.Data
     {
         public Seed() { }
 
+        public static GameConfig[] SeedGameConfig()
+        {
+
+            return new GameConfig[] { 
+            new GameConfig
+            {
+                Id = 1,
+                nbCardsToDraw = 4,
+                Mana = 3
+            }
+            };
+    
+        }
         public static Card[] SeedCards()
         {
             return new Card[] {
