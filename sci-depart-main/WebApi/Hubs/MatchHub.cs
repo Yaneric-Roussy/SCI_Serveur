@@ -35,6 +35,11 @@ public class MatchHub : Hub
         await base.OnConnectedAsync();
     }
 
+    public override async Task OnDisconnectedAsync(Exception? exception)
+    {
+        await base.OnDisconnectedAsync(exception);
+    }
+
     public async Task JoinMatch(string userId, string? connectionId, int? specificMatchId)
     {
         JoiningMatchData? joiningMatchData = await _matchesService.JoinMatch(userId, connectionId, specificMatchId);
