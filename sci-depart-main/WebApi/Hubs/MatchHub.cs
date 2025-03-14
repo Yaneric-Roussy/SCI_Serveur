@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Identity.Client;
 using Super_Cartes_Infinies.Combat;
 using Super_Cartes_Infinies.Data;
@@ -19,70 +21,46 @@ public class MatchHub : Hub
         _context = context;
         _matchesService = matchesService;
     }
-    private string userSignalRId
+    private static Dictionary<string, string> _userConnections = new();
+    private string signalRId
     {
         get { return Context.ConnectionId!; }
     }
-
-    private string groupName(int? matchId)
+    private string userId
     {
-        return "Match_" + matchId.ToString();
+        get { return Context.UserIdentifier!; }
     }
 
     public override async Task OnConnectedAsync()
     {
-        //Console.WriteLine($"User Connected: {Context.UserIdentifier}, Connection ID: {Context.ConnectionId}");
+        //Add user to dictionnary
+        var userId = Context.UserIdentifier; 
+        _userConnections[userId] = Context.ConnectionId!;
         await base.OnConnectedAsync();
     }
 
-    public override async Task OnDisconnectedAsync(Exception? exception)
+    public async Task JoinMatch()
     {
-        await base.OnDisconnectedAsync(exception);
-    }
-
-    public async Task JoinMatch(string userId, string? connectionId, int? specificMatchId)
-    {
-        JoiningMatchData? joiningMatchData = await _matchesService.JoinMatch(userId, connectionId, specificMatchId);
-
-        if(joiningMatchData != null)
-        {           
-            //Données joueur opposé.
-            if(joiningMatchData.OtherPlayerConnectionId != null)
+        JoiningMatchData? joiningMatchData = await _matchesService.JoinMatch(userId,signalRId,null);
+        if(joiningMatchData == null)
+        {
+            await Clients.Client(signalRId).SendAsync("JoiningMatchData", null);
+        }
+        else if(joiningMatchData != null)
+        {
+            if (joiningMatchData.OtherPlayerConnectionId != null)
             {
                 await Clients.Client(joiningMatchData.OtherPlayerConnectionId).SendAsync("joiningMatchData", joiningMatchData);
             }
-            //Données joueur actuel.
-            await Clients.Client(userSignalRId).SendAsync("JoiningMatchData", joiningMatchData);
-        }
-        else
-        {
-            await Clients.Client(userSignalRId).SendAsync("LookingForOtherPlayer", "Waiting on another player for match.");
+            await Clients.Client(signalRId).SendAsync("JoiningMatchData", joiningMatchData);
         }
     }
 
-    public async Task StartMatch(Match match)
-    {
-        var startMatchEvent = await _matchesService.StartMatch(userSignalRId, match);
-        
-        string group = groupName(match.Id);
-        await Groups.AddToGroupAsync(userSignalRId, group);
 
-        await Clients.Client(userSignalRId).SendAsync("StartMatchInfo", startMatchEvent);
-    }
-
-    public async Task EndTurn(string userId, int matchId)
+    public override Task OnDisconnectedAsync(Exception? exception)
     {
-        var playerEndTurnEvent = await _matchesService.EndTurn(userId, matchId);
-        //await Clients.Group(groupName(matchId)).SendAsync("PlayerEndTurn", playerEndTurnEvent);
-        string group = groupName(matchId);
-        await Clients.Group(group).SendAsync("PlayerEndTurn", playerEndTurnEvent);
-    }
-
-    public async Task Surrender(string userId, int matchId)
-    {
-        var surrenderEvent = await _matchesService.Surrender(userId, matchId);
-        
-        string group = groupName(matchId);
-        await Clients.Group(group).SendAsync("SurrenderReturn", surrenderEvent);
+        var userId = Context.UserIdentifier;
+        _userConnections.Remove(userId);
+        return base.OnDisconnectedAsync(exception); 
     }
 }
