@@ -8,6 +8,7 @@ using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Models.Dtos;
 using Super_Cartes_Infinies.Services;
+using System.ComponentModel;
 
 namespace Super_Cartes_Infinies.Hubs;
 
@@ -30,7 +31,7 @@ public class MatchHub : Hub
     {
         get { return Context.UserIdentifier!; }
     }
-    private string writeGroupName(int id)
+    private string WriteGroupName(int id)
     {
         return "match_" + id;
     }
@@ -53,7 +54,7 @@ public class MatchHub : Hub
         {
             if (joiningMatchData.OtherPlayerConnectionId != null)
             {
-                string groupName = writeGroupName(joiningMatchData.Match.Id);
+                string groupName = WriteGroupName(joiningMatchData.Match.Id);
                 
                 //Add both users to a group. Should only happen once (when starting the game)
                 await Groups.AddToGroupAsync(signalRId, groupName);
@@ -70,6 +71,13 @@ public class MatchHub : Hub
         StartMatchEvent startMatchEvent = await _matchesService.StartMatch(userId, match);
 
         await Clients.Client(signalRId).SendAsync("ApplyEvents", startMatchEvent);
+    }
+
+    public async Task EndTurn(int matchId)
+    {
+        PlayerEndTurnEvent endTurnEvent = await _matchesService.EndTurn(userId, matchId);
+        string groupName = WriteGroupName(matchId);
+        await Clients.Group(groupName).SendAsync("PlayerEndedTurn", endTurnEvent);
     }
 
 
