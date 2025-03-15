@@ -30,7 +30,10 @@ public class MatchHub : Hub
     {
         get { return Context.UserIdentifier!; }
     }
-
+    private string writeGroupName(int id)
+    {
+        return "match_" + id;
+    }
     public override async Task OnConnectedAsync()
     {
         //Add user to dictionnary
@@ -50,10 +53,23 @@ public class MatchHub : Hub
         {
             if (joiningMatchData.OtherPlayerConnectionId != null)
             {
+                string groupName = writeGroupName(joiningMatchData.Match.Id);
+                
+                //Add both users to a group. Should only happen once (when starting the game)
+                await Groups.AddToGroupAsync(signalRId, groupName);
+                await Groups.AddToGroupAsync(joiningMatchData.OtherPlayerConnectionId, groupName);
+
                 await Clients.Client(joiningMatchData.OtherPlayerConnectionId).SendAsync("joiningMatchData", joiningMatchData);
             }
             await Clients.Client(signalRId).SendAsync("JoiningMatchData", joiningMatchData);
         }
+    }
+
+    public async Task StartMatchEvent(Match match)
+    {
+        StartMatchEvent startMatchEvent = await _matchesService.StartMatch(userId, match);
+
+        await Clients.Client(signalRId).SendAsync("ApplyEvents", startMatchEvent);
     }
 
 
