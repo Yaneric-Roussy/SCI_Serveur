@@ -14,6 +14,9 @@ namespace Super_Cartes_Infinies.Combat
 
             // TODO: Faire piger UNE carte (celle qui est pigé à chaque début de tour)
             // TODO: Faire gagner le Mana selon la configuration
+
+            Events.Add(new DrawCardEvent(playerData));
+            Events.Add(new GainManaEvent(playerData, nbManaPerTurn));
         }
 
     }

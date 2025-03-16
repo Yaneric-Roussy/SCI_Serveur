@@ -10,6 +10,9 @@ namespace Models.Models.Dtos
     public class LoginSuccessDTO
     {
         [Required]
-        public string Token { get; set; } = "";
+        public string Token { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public string PlayerId { get; set; } = null!;
+        public int PlayerNumId { get; set; }
     }
 }
