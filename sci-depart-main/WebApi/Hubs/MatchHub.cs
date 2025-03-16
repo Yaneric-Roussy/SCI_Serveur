@@ -80,6 +80,13 @@ public class MatchHub : Hub
         await Clients.Group(groupName).SendAsync("PlayerEndedTurn", endTurnEvent);
     }
 
+    public async Task Surrender(int matchId)
+    {
+        SurrenderEvent playerSurrenderEvent = await _matchesService.Surrender(userId, matchId);
+        string groupName = WriteGroupName(matchId);
+        await Clients.Group(groupName).SendAsync("PlayerSurrendered", playerSurrenderEvent);
+    }
+
 
     public override Task OnDisconnectedAsync(Exception? exception)
     {
