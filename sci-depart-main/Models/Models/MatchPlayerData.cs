@@ -37,8 +37,9 @@ namespace Super_Cartes_Infinies.Models
         public int PlayerId { get; set; }
 
         // TODO: Il faut ordonner correctement toutes ces listes/stacks qui pourraient avoir un ordre différent quand on les obtient de la BD (mettre des indexes partout...)
-        public virtual List<PlayableCard> CardsPile { get; set; }
+        
         public virtual List<PlayableCard> Hand { get; set; }
+        public virtual List<PlayableCard> CardsPile { get; set; }
 
         public virtual List<PlayableCard> BattleField { get; set; }
         public virtual List<PlayableCard> Graveyard { get; set; }
