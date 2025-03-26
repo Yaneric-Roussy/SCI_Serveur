@@ -15,6 +15,6 @@ namespace Models.Models
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
-        //public string 
+        public string IconeURL { get; set; } = null!;
     }
 }
