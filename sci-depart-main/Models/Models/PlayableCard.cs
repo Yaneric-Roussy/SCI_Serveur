@@ -1,4 +1,5 @@
 ﻿using Models.Interfaces;
+using Models.Models;
 
 namespace Super_Cartes_Infinies.Models
 {
@@ -19,6 +20,31 @@ namespace Super_Cartes_Infinies.Models
 		public virtual Card Card { get; set; }
 		public int Health { get; set; }
         public int Attack { get; set; }
+
+        public bool HasPower(int powerId)
+        {
+            foreach(CardPower cardPower in Card.CardPowers)
+            {
+                if (cardPower.PowerId == powerId)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public int GetPowerValue(int powerId)
+        {
+            if (HasPower(powerId))
+            {
+                CardPower cardPower = Card.CardPowers.Find(c => c.PowerId == powerId)!;
+                return cardPower.Value;
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }
 
