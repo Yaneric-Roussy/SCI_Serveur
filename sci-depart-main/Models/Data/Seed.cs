@@ -9,6 +9,19 @@ namespace Super_Cartes_Infinies.Data
     {
         public Seed() { }
 
+        public static GameConfig[] SeedGameConfig()
+        {
+
+            return new GameConfig[] {
+            new GameConfig
+            {
+                Id = 1,
+                nbCardsToDraw = 4,
+                Mana = 3
+            }
+            };
+
+        }
         public static Card[] SeedCards()
         {
             return new Card[] {
@@ -139,101 +152,46 @@ namespace Super_Cartes_Infinies.Data
         }
 
         public static object[] SeedStartingCards()
-
         {
-
-
             return new object[] {
+                new {
+                    Id = 1,
+                    CardId = SeedCards()[0].Id  // Assigning the cardID value
+                },
+                new {
+                    Id = 2,
+                    CardId = SeedCards()[1].Id  // Assigning the cardID value
+                },
+                new {
+                    Id = 3,
+                    CardId = SeedCards()[2].Id  // Assigning the cardID value
+                },
+                new {
+                    Id = 4,
+                    CardId = SeedCards()[3].Id  // Assigning the cardID value
+                },
+                new {
+                    Id = 5,
+                    CardId = SeedCards()[4].Id  // Assigning the cardID value
+                },
+                new {
+                    Id = 6,
+                    CardId = SeedCards()[5].Id  // Assigning the cardID value
+                },
+                new {
+                    Id = 7,
+                    CardId = SeedCards()[6].Id  // Assigning the cardID value
+                },
+                new {
+                    Id = 8,
+                    CardId = SeedCards()[7].Id  // Assigning the cardID value
+                },
+                new {
+                    Id = 9,
+                    CardId = SeedCards()[8].Id  // Assigning the cardID value
+                }
 
-
-       new
-
-       {
-
-           Id = 1,
-
-
-
-           CardId = SeedCards()[0].Id  // Assigning the cardID value
-                                       }
-                                      ,
-
-          new       {
-
-           Id = 2,
-
- 
-
-           CardId = SeedCards()[1].Id  // Assigning the cardID value
-                                       },
-
-             new       {
-
-           Id = 3,
-
-
-           CardId = SeedCards()[2].Id  // Assigning the cardID value 
-
-       },
-
-                new       {
-
-           Id = 4,
-
-  
-
-           CardId = SeedCards()[3].Id  // Assigning the cardID value
-                                       }
-
-         ,          new       {
-
-           Id = 5,
-
-
-           CardId = SeedCards()[3].Id  // Assigning the cardID value
-                                       },
-
-                      new       {
-
-           Id = 6,
-
-
-           CardId = SeedCards()[4].Id  // Assigning the cardID value
-                                       },
-
-                         new       {
-
-           Id = 7,
-
-         
-
-           CardId = SeedCards()[5].Id  // Assigning the cardID value
-                                       },
-
-                             new       {
-
-           Id = 8,
-
-     
-
-           CardId = SeedCards()[6].Id  // Assigning the cardID value
-                                       },
-
-                         new       {
-
-           Id = 9,
-
-    
-
-           CardId = SeedCards()[6].Id  // Assigning the cardID value
-                                       }
-
-
-
-
-
-
-       };
+            };
         }
 
         public static IdentityUser[] SeedTestUsers()

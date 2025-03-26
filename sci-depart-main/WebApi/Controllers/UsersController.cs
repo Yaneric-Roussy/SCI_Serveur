@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Models.Models.Dtos;
-
+using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -40,6 +40,7 @@ namespace MVCEtWebAPI.Controllers
 
                 Email = registerDTO.Email
             };
+
             IdentityResult identityResult = await _userManager.CreateAsync(user, registerDTO.Password);
 
             if (!identityResult.Succeeded)
@@ -47,9 +48,9 @@ namespace MVCEtWebAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Error = identityResult.Errors });
             }
 
-            var player = _playersService.CreatePlayer(user);
+            await _playersService.CreatePlayer(user);
 
-            return Ok();
+            return Ok(true);
         }
 
         [HttpPost]
@@ -74,7 +75,9 @@ namespace MVCEtWebAPI.Controllers
                     signingCredentials: new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256Signature)
                 );
 
-                return Ok(new LoginSuccessDTO { Token = new JwtSecurityTokenHandler().WriteToken(token) });
+                Player player = _playersService.GetPlayerFromUserId(user.Id);
+
+                return Ok(new LoginSuccessDTO { Token = new JwtSecurityTokenHandler().WriteToken(token), Email = user.Email, PlayerId = player.UserId, PlayerNumId = player.Id });
             }
 
             return NotFound(new { Error = "L'utilisateur est introuvable ou le mot de passe ne concorde pas" });

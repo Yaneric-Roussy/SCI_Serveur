@@ -97,9 +97,6 @@ namespace Super_Cartes_Infinies.Services
         // L'action retourne le json de l'event de création de match (StartMatchEvent)
         public async Task<StartMatchEvent> StartMatch(string currentUserId, Match match)
         {
-            if ((match.UserAId == currentUserId) != match.IsPlayerATurn)
-                throw new Exception("Ce n'est pas le tour de ce joueur");
-
             MatchPlayerData currentPlayerData;
             MatchPlayerData opposingPlayerData;
 
