@@ -13,7 +13,7 @@ namespace Models.Models
         public int CardId { get; set; }
         public virtual Card Card { get; set; }
         public int PowerId { get; set; }
-        public Power Power { get; set; }
+        public virtual Power Power { get; set; }
         public int Value { get; set; }
     }
 }
