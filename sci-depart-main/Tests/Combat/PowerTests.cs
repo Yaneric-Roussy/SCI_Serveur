@@ -255,6 +255,101 @@ namespace Tests.Services
             Assert.AreEqual(1, _opposingPlayerData.BattleField.Count);
             Assert.AreEqual(0, _opposingPlayerData.Graveyard.Count);
         }
+
+        //Partie ajouté pour le tp
+        [TestMethod]
+        public void HasPowerFalse()
+        {
+            Power healPower = new Power
+            {
+                Id = Power.HEAL_ID
+            };
+            CardPower cardPower = new CardPower
+            {
+                Power = healPower,
+                Card = _cardB,
+                Value = 3
+            };
+            _cardA.CardPowers = new List<CardPower> { cardPower };
+            
+            PlayableCard _card = new PlayableCard(_cardA)
+            {
+                Id=1,
+            };
+            Assert.IsFalse(_card.HasPower(1));
+        }
+
+        [TestMethod]
+        public void HasPowerTrue()
+        {
+            Power healPower = new Power
+            {
+                Id = Power.HEAL_ID
+            };
+            CardPower cardPower = new CardPower
+            {
+                Power = healPower,
+                Card = _cardB,
+                Value = 3
+            };
+            //Card card = new Card
+            //{
+            //    Id = 10,
+            //    CardPowers = new List<CardPower> { cardPower }
+            //};
+            _cardA.CardPowers = new List<CardPower> { cardPower };
+
+            PlayableCard _card = new PlayableCard(_cardA)
+            {
+                Id = 1,
+            };
+            Assert.IsTrue(_card.HasPower(3));
+        }
+
+        [TestMethod]
+        public void GetPowerValueFalse()
+        {
+            Power healPower = new Power
+            {
+                Id = Power.HEAL_ID
+            };
+            CardPower cardPower = new CardPower
+            {
+                Power = healPower,
+                Card = _cardB,
+                Value = 3
+            };
+            _cardA.CardPowers = new List<CardPower> { cardPower };
+
+            PlayableCard _card = new PlayableCard(_cardA)
+            {
+                Id = 1,
+            };
+            Assert.AreEqual(_card.GetPowerValue(2),0);
+        }
+
+        [TestMethod]
+        public void GetPowerValueTrue()
+        {
+            Power healPower = new Power
+            {
+                Id = Power.HEAL_ID
+            };
+            CardPower cardPower = new CardPower
+            {
+                Power = healPower,
+                Card = _cardB,
+                Value = 4
+            };
+            _cardA.CardPowers = new List<CardPower> { cardPower };
+
+            PlayableCard _card = new PlayableCard(_cardA)
+            {
+                Id = 1,
+            };
+            Assert.IsTrue(_card.HasPower(3));
+            Assert.AreEqual(_card.GetPowerValue(3), 4);
+        }
     }
 }
 
