@@ -3,6 +3,7 @@ using Models.Models;
 using Super_Cartes_Infinies.Controllers;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Services;
+using System.Security.Claims;
 using WebApi.Services;
 
 namespace WebApi.Controllers
@@ -20,11 +21,11 @@ namespace WebApi.Controllers
             _deckService.AjoutDeck(name);
             return Ok();
         }
-        [HttpGet]
-        public async Task<ActionResult> GetDeck(string name)
+        [HttpGet("{name}")]
+        public async Task<ActionResult> GetDeck()
         {
-            _deckService.getDeck( name);
-            return Ok();
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            return Ok(_deckService.getDeck(userId));
         }
 
         public DeckController(ApplicationDbContext dbContext, DecksService decksService)

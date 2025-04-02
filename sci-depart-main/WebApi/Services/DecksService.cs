@@ -24,10 +24,7 @@ namespace WebApi.Services
         }
         public IEnumerable<Deck> getDeck(string userId)
         {
-            var player = _dbContext.Players.FirstOrDefault(p => p.UserId == userId);
-    
-                return _dbContext.Decks.Where(d => d.user.Id == userId).Include(s=>s.CarteJoueurs).ToList();
-           
+                return _dbContext.Decks.Where(d => d.user.Id == userId).Include(s=>s.CarteJoueurs).ThenInclude(Cj=> Cj.Card).ToList();
         }
        
     }
