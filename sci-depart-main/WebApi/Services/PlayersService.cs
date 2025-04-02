@@ -41,6 +41,7 @@ namespace Super_Cartes_Infinies.Services
                 deck.CarteJoueurs.Add(ownedCard);
                
             }
+            
             await _dbContext.Decks.AddAsync(deck);
           
             
