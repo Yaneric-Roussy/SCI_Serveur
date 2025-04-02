@@ -16,10 +16,10 @@ namespace WebApi.Controllers
         private CardsService _cardsService;
         private DecksService _deckService;
         [HttpGet]
-        public async Task<ActionResult> Adddeck(string name)
+        public async Task<ActionResult> Adddeck(string name,string userid)
         {
-            
-            return Ok(_deckService.AjoutDeck(name));
+            _deckService.AjoutDeck(name,userid);
+            return Ok();
             
         }
         [HttpGet("{name}")]
