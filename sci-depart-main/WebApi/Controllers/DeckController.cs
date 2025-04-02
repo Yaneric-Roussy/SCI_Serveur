@@ -18,8 +18,9 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult> Adddeck(string name)
         {
-            _deckService.AjoutDeck(name);
-            return Ok();
+            
+            return Ok(_deckService.AjoutDeck(name));
+            
         }
         [HttpGet("{name}")]
         public async Task<ActionResult> GetDeck()

@@ -15,17 +15,26 @@ namespace WebApi.Services
             _dbContext = dbContext;
         }
         
-        public async Task AjoutDeck(string name)
+        public async Task AjoutDeck(string name,string userid)
         {
             Deck newDeck = new Deck();
             newDeck.Name = name;
-            await _dbContext.Decks.AddAsync(newDeck);
+       
             await _dbContext.SaveChangesAsync();
         }
         public IEnumerable<Deck> getDeck(string userId)
         {
                 return _dbContext.Decks.Where(d => d.user.Id == userId).Include(s=>s.CarteJoueurs).ThenInclude(Cj=> Cj.Card).ToList();
         }
+        public void DeleteDeck(Deck deck)
+        {
+            if (deck.Courant!=true)
+            {
+                _dbContext.Remove(deck);
+                _dbContext.SaveChanges();
+            }
+        }
+
        
     }
     
