@@ -16,6 +16,9 @@ namespace Models.Models
         public virtual Card? Card  { get; set; }
         [JsonIgnore]
         public virtual Player? Player{ get; set; }
+      
+        
+
      
 
     }

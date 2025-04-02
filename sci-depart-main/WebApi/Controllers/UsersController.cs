@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Models.Models;
 using Models.Models.Dtos;
 using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Services;
@@ -49,6 +50,8 @@ namespace MVCEtWebAPI.Controllers
             }
 
             await _playersService.CreatePlayer(user);
+            
+
 
             return Ok(true);
         }

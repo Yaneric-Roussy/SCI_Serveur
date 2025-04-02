@@ -25,14 +25,26 @@ namespace Super_Cartes_Infinies.Services
             // TODO: Utilisez le service StartingCardsService pour obtenir les cartes de départ
             // TODO: Ajoutez ces cartes au joueur en utilisant le modèle OwnedCard que vous allez devoir ajouter
             await _dbContext.Players.AddAsync(player);
+            Deck deck = new Deck();
+            deck.Name = "Depart";
+            deck.user = user;
+            deck.Courant = true;
+            deck.CarteJoueurs = new List<OwnedCard>();
 
             List<StartingCard> startingCards = await _startingCard.GetStartingCards();
+
             foreach (var startingCard in startingCards)
             {
-                OwnedCard ownedCard = new OwnedCard() { Card = startingCard.Card, Player = player };              
-                await _dbContext.OwnedCard.AddAsync(ownedCard); 
+                OwnedCard ownedCard = new OwnedCard() { Card = startingCard.Card, Player = player };
+               
+                await _dbContext.OwnedCard.AddAsync(ownedCard);
+                deck.CarteJoueurs.Add(ownedCard);
+               
             }
+            await _dbContext.Decks.AddAsync(deck);
+          
             
+          
             await _dbContext.SaveChangesAsync();
             return player;
         }

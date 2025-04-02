@@ -60,5 +60,7 @@ public class ApplicationDbContext : IdentityDbContext
     
 
     public DbSet<GameConfig> GameConfig { get; set; } = default!;
+    public DbSet<Deck> Decks { get; set; } = default!;
+    
 }
 
