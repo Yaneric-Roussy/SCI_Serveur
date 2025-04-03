@@ -20,7 +20,10 @@ namespace Models.Models
         public bool Courant { get; set; }
 
 
-
+        public Deck()
+        {
+                nbMaxCarte=CarteJoueurs.Count();
+        }
 
     }
 }

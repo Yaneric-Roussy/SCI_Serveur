@@ -17,10 +17,18 @@ namespace WebApi.Services
         
         public async Task AjoutDeck(string name,string userid)
         {
+            var gameCnfigue = _dbContext.GameConfig.First();
             Deck newDeck = new Deck();
-            newDeck.Name = name;
-       
-            await _dbContext.SaveChangesAsync();
+            if (newDeck.nbMaxCarte!=gameCnfigue.nbMaxCartesDecks)
+            {
+                newDeck.Name = name;
+
+
+                await _dbContext.SaveChangesAsync();
+
+            }
+           
+           
         }
         public IEnumerable<Deck> getDeck(string userId)
         {
