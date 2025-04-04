@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Identity;
+using Models.Models;
 using Super_Cartes_Infinies.Models;
 
 namespace Super_Cartes_Infinies.Data
@@ -22,6 +24,110 @@ namespace Super_Cartes_Infinies.Data
             };
 
         }
+        public static CardPower[] SeedCardPowers()
+        {
+            return new CardPower[]
+            {
+                //Ajout pour carte avec Id 1
+                new CardPower
+                {
+                    Id = 1,
+                    CardId = 1,
+                    PowerId = Power.FIRST_STRIKE_ID,
+                    Value = 0
+                }, new CardPower
+                {
+                    Id = 2,
+                    CardId = 1,
+                    PowerId = Power.HEAL_ID,
+                    Value = 1
+                }, new CardPower
+                {
+                    Id = 3,
+                    CardId = 1,
+                    PowerId = Power.ATTACK_BOOST_ID,
+                    Value = 4
+                },
+                //Ajout pour carte avec Id 2
+                new CardPower
+                {
+                    Id = 4,
+                    CardId = 2,
+                    PowerId = Power.THORNS_ID,
+                    Value = 2
+                },
+                new CardPower
+                {
+                    Id = 5,
+                    CardId = 2,
+                    PowerId = Power.HEAL_ID,
+                    Value = 1
+                },
+                //Ajout pour carte avec Id 3 à 6
+                new CardPower
+                {
+                    Id = 6,
+                    CardId = 3,
+                    PowerId = Power.FIRST_STRIKE_ID,
+                    Value = 0
+                }, new CardPower
+                {
+                    Id = 7,
+                    CardId = 4,
+                    PowerId = Power.ATTACK_BOOST_ID,
+                    Value = 5
+                },
+                new CardPower
+                {
+                    Id = 8,
+                    CardId = 5,
+                    PowerId = Power.THORNS_ID,
+                    Value = 3
+                },
+                new CardPower
+                {
+                    Id = 9,
+                    CardId = 6,
+                    PowerId = Power.HEAL_ID,
+                    Value = 2
+                }
+            };
+        }
+        public static Power[] SeedPowers()
+        {
+            return new Power[]
+            {
+                new Power
+                {
+                    Id = Power.FIRST_STRIKE_ID,
+                    Name = "First strike",
+                    Description = "Permet à une carte d’attaquer en « premier » et de ne pas recevoir de dégât si elle tue la carte de l’adversaire.",
+                    IconeURL = "🥇"
+                },
+                new Power
+                {
+                    Id = Power.THORNS_ID,
+                    Name = "Thorns",
+                    Description = "Lorsqu’une carte défend, elle inflige X de dégâts AVANT de recevoir des dégâts. Si l’attaquant est tué par ces dégâts, l’attaque s’arrête et le défenseur ne reçoit pas de dégâts.",
+                    IconeURL = "🌹"
+                },
+                new Power
+                {
+                    Id = Power.HEAL_ID,
+                    Name = "Heal",
+                    Description = "soigne les cartes alliées de X incluant elle-même AVANT d’attaquer (mais les cartes ne peuvent pas avoir plus de health qu’au départ.)",
+                    IconeURL = "❤"
+                },
+                new Power
+                {
+                    Id = Power.ATTACK_BOOST_ID,
+                    Name = "Attack boost",
+                    Description ="Augmente de X les dégâts que la carte inflige quand elle attaque.",
+                    IconeURL = "🐱‍🏍"
+                }
+            };
+        }
+
         public static Card[] SeedCards()
         {
             return new Card[] {

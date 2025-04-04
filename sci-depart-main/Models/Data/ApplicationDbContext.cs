@@ -22,12 +22,11 @@ public class ApplicationDbContext : IdentityDbContext
         builder.Entity<Card>().HasData(Seed.SeedCards());
         builder.Entity<GameConfig>().HasData(Seed.SeedGameConfig());
         builder.Entity<StartingCard>().HasData(Seed.SeedStartingCards());
-        builder.Entity<Power>();
-        builder.Entity<CardPower>();
+        builder.Entity<Power>().HasData(Seed.SeedPowers());
+        builder.Entity<CardPower>().HasData(Seed.SeedCardPowers());
         builder.Entity<IdentityUser>().HasData(Seed.SeedUsers());
         builder.Entity<IdentityRole>().HasData(Seed.SeedRoles());
         builder.Entity<IdentityUserRole<string>>().HasData(Seed.SeedUserRoles());
-
         builder.Entity<IdentityUser>().HasData(Seed.SeedTestUsers());
         builder.Entity<Player>().HasData(Seed.SeedTestPlayers());
 
