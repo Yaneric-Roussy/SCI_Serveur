@@ -25,7 +25,7 @@ namespace Super_Cartes_Infinies.Models
         {
             foreach(CardPower cardPower in Card.CardPowers)
             {
-                if (cardPower.PowerId == powerId)
+                if (cardPower.PowerId == powerId || cardPower.Power.Id == powerId)
                 {
                     return true;
                 }
@@ -37,7 +37,7 @@ namespace Super_Cartes_Infinies.Models
         {
             if (HasPower(powerId))
             {
-                CardPower cardPower = Card.CardPowers.Find(c => c.PowerId == powerId)!;
+                CardPower cardPower = Card.CardPowers.Find(c => c.Power.Id == powerId)!;
                 return cardPower.Value;
             }
             else
