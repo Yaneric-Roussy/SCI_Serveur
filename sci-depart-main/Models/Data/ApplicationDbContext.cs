@@ -47,18 +47,13 @@ public class ApplicationDbContext : IdentityDbContext
     }
 
     public DbSet<Card> Cards { get; set; } = default!;
-
     public DbSet<Player> Players { get; set; } = default!;
-
     public DbSet<Match> Matches { get; set; } = default!;
-
     public DbSet<OwnedCard> OwnedCard { get; set; } = default!;
-
     public DbSet<StartingCard> StartingCards { get; set; } = default!;
-
     public DbSet<MatchPlayerData> MatchPlayersData { get; set; } = default!;
-    
-
     public DbSet<GameConfig> GameConfig { get; set; } = default!;
+    public DbSet<Power> Power { get; set; } = default!;
+    public DbSet<CardPower> CardPower { get; set; } = default!;
 }
 
