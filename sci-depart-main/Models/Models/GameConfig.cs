@@ -6,6 +6,8 @@ namespace Super_Cartes_Infinies.Models
 {
     public class GameConfig : IModel
     {
+
+
         public GameConfig() { }
 
         public int Id { get; set; }
