@@ -12,6 +12,8 @@ namespace Super_Cartes_Infinies.Combat
         {
             if(playerData.CardsPile.Count > 0) {
                 int lastElementIndex = playerData.CardsPile.Count() - 1;
+                
+
                 var playableCard = playerData.CardsPile[lastElementIndex];
 
                 PlayerId = playerData.PlayerId;
