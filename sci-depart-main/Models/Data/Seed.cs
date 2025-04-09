@@ -116,7 +116,7 @@ namespace Super_Cartes_Infinies.Data
                     Id = Power.HEAL_ID,
                     Name = "Heal",
                     Description = "soigne les cartes alliées de X incluant elle-même AVANT d’attaquer (mais les cartes ne peuvent pas avoir plus de health qu’au départ.)",
-                    IconeURL = "❤"
+                    IconeURL = "💖"
                 },
                 new Power
                 {
