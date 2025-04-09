@@ -27,7 +27,7 @@ namespace WebApi.Controllers
         public async Task<ActionResult> GetDeck()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            return Ok(_deckService.getDeck(userId));
+            return Ok(await _deckService.getDeck(userId));
         }
 
         public DeckController(ApplicationDbContext dbContext, DecksService decksService)

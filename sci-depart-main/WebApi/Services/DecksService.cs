@@ -22,7 +22,7 @@ namespace WebApi.Services
         public async Task AjoutDeck(string name,string userID )
             
         {
-            Player? player = _dbContext.Players.SingleOrDefault(p=>p.UserId ==userID);
+            Player player = _dbContext.Players.SingleOrDefault(p=>p.UserId ==userID);
             var nbDeck = _dbContext.GameConfig.Select(x=>x.nbMaxDecks).FirstOrDefault();
             if (player.listeDeck.Count()<nbDeck)
             {
@@ -41,9 +41,10 @@ namespace WebApi.Services
 
            
         }
-        public IEnumerable<Deck> getDeck(string userId)
+        public async Task<IEnumerable<Deck>> getDeck(string userId)
         {
-                return _dbContext.Decks.Where(d => d.user.Id == userId).Include(s=>s.CarteJoueurs).ThenInclude(Cj=> Cj.Card).ToList();
+            List<Deck> deck = await _dbContext.Decks.Where(d => d.user.Id == userId).Include(s => s.CarteJoueurs).ThenInclude(Cj => Cj.Card).ToListAsync();
+            return deck;
         }
         public void DeleteDeck(Deck deck)
         {

@@ -12,7 +12,7 @@ namespace Models.Models
     public class OwnedCard
     {
         public int Id { get; set; }
-        [JsonIgnore]
+      
         public virtual Card? Card  { get; set; }
         [JsonIgnore]
         public virtual Player? Player{ get; set; }
