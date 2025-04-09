@@ -9,6 +9,12 @@ using WebApi.Services;
 
 namespace WebApi.Controllers
 {
+    public class Temp
+    {
+        public string Name { get; set; }
+        public int PlayerId { get; set; }
+    }
+
     [ApiController]
     [Route("api/[controller]/[action]")]
     public class DeckController : ControllerBase
@@ -17,17 +23,18 @@ namespace WebApi.Controllers
         private CardsService _cardsService;
         private DecksService _deckService;
         [HttpPost]
-        public async Task<ActionResult> CreateDeck(string name , string UserId)
+        public async Task<ActionResult> CreateDeck(Temp objet)
         {
-
-            return Ok(_deckService.AjoutDeck(name, UserId));
+            await _deckService.AjoutDeck(objet.Name, objet.PlayerId);
+            return Ok();
 
         }
-        [HttpGet("{name}")]
-        public async Task<ActionResult> GetDeck()
+        [HttpGet("{playerId}")]
+        public async Task<ActionResult> GetDeck(int playerId)
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            return Ok(await _deckService.getDeck(userId));
+            //var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            return Ok(await _deckService.getDeck(playerId));
         }
 
         public DeckController(ApplicationDbContext dbContext, DecksService decksService)

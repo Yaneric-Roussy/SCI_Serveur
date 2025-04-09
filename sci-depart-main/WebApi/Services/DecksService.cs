@@ -19,16 +19,16 @@ namespace WebApi.Services
             _dbContext = dbContext;
         }
 
-        public async Task AjoutDeck(string name,string userID )
-            
+        public async Task AjoutDeck(string name,int playerId )
         {
-            Player player = _dbContext.Players.SingleOrDefault(p=>p.UserId ==userID);
-            var nbDeck = _dbContext.GameConfig.Select(x=>x.nbMaxDecks).FirstOrDefault();
-            if (player.listeDeck.Count()<nbDeck)
+            Player player = await _dbContext.Players.SingleOrDefaultAsync(p=>p.Id == playerId);
+            var nbDeck =  await _dbContext.GameConfig.Select(x=>x.nbMaxDecks).FirstOrDefaultAsync();
+            if (player.listeDeck.Count() < nbDeck)
             {
                 Deck newDeck = new Deck();
                 newDeck.Name = name;
                 newDeck.Courant = false;
+                newDeck.PlayerId = playerId;
 
 
                 player.listeDeck.Add(newDeck);
@@ -41,9 +41,9 @@ namespace WebApi.Services
 
            
         }
-        public async Task<IEnumerable<Deck>> getDeck(string userId)
+        public async Task<IEnumerable<Deck>> getDeck(int playerId)
         {
-            List<Deck> deck = await _dbContext.Decks.Where(d => d.user.Id == userId).Include(s => s.CarteJoueurs).ThenInclude(Cj => Cj.Card).ToListAsync();
+            List<Deck> deck = await _dbContext.Decks.Where(d => d.PlayerId == playerId).ToListAsync();
             return deck;
         }
         public void DeleteDeck(Deck deck)

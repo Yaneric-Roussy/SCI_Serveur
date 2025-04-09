@@ -27,7 +27,8 @@ namespace Super_Cartes_Infinies.Services
             await _dbContext.Players.AddAsync(player);
             Deck deck = new Deck();
             deck.Name = "Depart";
-            deck.user = user;
+            deck.PlayerId = player.Id;
+            deck.Player = player;
             deck.Courant = true;
             deck.CarteJoueurs = new List<OwnedCard>();
             player.listeDeck = new List<Deck> ();
@@ -53,6 +54,11 @@ namespace Super_Cartes_Infinies.Services
           
             await _dbContext.SaveChangesAsync();
             return player;
+        }
+
+        public async Task AddDeckDepart(string userId)
+        {
+
         }
 
 
