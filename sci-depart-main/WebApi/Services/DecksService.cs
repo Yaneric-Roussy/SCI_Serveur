@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 using Models.Models;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Services;
@@ -18,18 +17,14 @@ namespace WebApi.Services
         
         //public async Task AjoutDeck(string name,string userid)
         //{
-        //    var gameCnfigue = _dbContext.GameConfig.First();
         //    Deck newDeck = new Deck();
-        //    _dbContext.Decks.AddAsync(newDeck);
+        //    newDeck.Name = name;
+       
         //    await _dbContext.SaveChangesAsync();
-
         //}
-        public async Task<List<Deck>> getDeck(string userId)
+        public IEnumerable<Deck> getDeck(string userId)
         {
-
-            //var temp = await _dbContext.Decks.Where(d => d.UserId == userId).ToListAsync();
-            var haha = _dbContext.Decks.Where(d => d.UserId == userId).ToListAsync();
-            return await _dbContext.Decks.Where(d => d.UserId == userId).ToListAsync();
+                return _dbContext.Decks.Where(d => d.user.Id == userId).Include(s=>s.CarteJoueurs).ThenInclude(Cj=> Cj.Card).ToList();
         }
         public void DeleteDeck(Deck deck)
         {
