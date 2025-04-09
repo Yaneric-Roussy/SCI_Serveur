@@ -30,6 +30,11 @@ namespace Super_Cartes_Infinies.Services
             deck.user = user;
             deck.Courant = true;
             deck.CarteJoueurs = new List<OwnedCard>();
+            player.listeDeck = new List<Deck> ();
+
+            player.listeDeck.Add(deck);
+           
+         
 
             List<StartingCard> startingCards = await _startingCard.GetStartingCards();
 
