@@ -14,6 +14,12 @@ namespace WebApi.Controllers
         public string Name { get; set; }
         public int PlayerId { get; set; }
     }
+    public class AjoutCarte
+    {
+        public int PlayerId { get; set; }
+        public int CarteID { get; set; }
+        public int DeckID { get; set; }
+    }
 
     [ApiController]
     [Route("api/[controller]/[action]")]
@@ -35,6 +41,11 @@ namespace WebApi.Controllers
             //var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             return Ok(await _deckService.getDeck(playerId));
+        }
+        [HttpPost]
+        public async Task<ActionResult>AjoutDeck(AjoutCarte ajout)
+        {
+            return Ok(_deckService.AddCarte( ajout.PlayerId,ajout.CarteID, ajout.DeckID));
         }
 
         public DeckController(ApplicationDbContext dbContext, DecksService decksService)
