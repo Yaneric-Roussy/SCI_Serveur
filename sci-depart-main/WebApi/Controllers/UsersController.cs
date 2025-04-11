@@ -78,7 +78,7 @@ namespace MVCEtWebAPI.Controllers
 
                 Player player = _playersService.GetPlayerFromUserId(user.Id);
 
-                return Ok(new LoginSuccessDTO { Token = new JwtSecurityTokenHandler().WriteToken(token), Email = user.Email, PlayerId = player.UserId, PlayerNumId = player.Id });
+                return Ok(new LoginSuccessDTO { Token = new JwtSecurityTokenHandler().WriteToken(token), Email = user.Email, PlayerId = player.UserId, PlayerNumId = player.Id, Money = player.Money });
             }
 
             return NotFound(new { Error = "L'utilisateur est introuvable ou le mot de passe ne concorde pas" });

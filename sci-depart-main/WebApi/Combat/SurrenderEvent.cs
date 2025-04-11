@@ -14,7 +14,7 @@ namespace Super_Cartes_Infinies.Combat
             SurrenderingPlayerId = surrenderingPlayerData.Player.Id;
             this.Events = new List<MatchEvent>()
             {
-                new EndMatchEvent(match, opposingPlayerData, surrenderingPlayerData)
+                new EndMatchEvent(match, opposingPlayerData, surrenderingPlayerData,10,2)
             };
         }
     }

@@ -19,6 +19,7 @@ namespace Super_Cartes_Infinies.Models
             Hand = new List<PlayableCard>();
             BattleField = new List<PlayableCard>();
             Graveyard = new List<PlayableCard>();
+
         }
 
         public MatchPlayerData(Player p, IEnumerable<Card> cardList) : this(p.Id)

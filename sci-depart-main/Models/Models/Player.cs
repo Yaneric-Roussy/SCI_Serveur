@@ -14,6 +14,7 @@ namespace Super_Cartes_Infinies.Models
 		public int Id { get; set; }
 		public string Name { get; set; } = "";
 		public required string UserId { get; set; }
+		public int Money { get; set; } = 20;
 		[JsonIgnore]
 		public virtual IdentityUser User { get; set; }
 		public virtual List<OwnedCard> OwnedCards { get; set; } = null!;
