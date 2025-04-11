@@ -92,7 +92,8 @@ namespace WebApi.Services
             Deck deckCourant = await _dbContext.Decks.FirstOrDefaultAsync(d=>d.Id ==DeckID);
             OwnedCard carteAsuprrimé = await _dbContext.OwnedCard.FirstOrDefaultAsync(d => d.Id == ownedCardId);
             deckCourant.CarteJoueurs.Remove(carteAsuprrimé);
-
+             await _dbContext.SaveChangesAsync();
+   
             return deckCourant;
 
 

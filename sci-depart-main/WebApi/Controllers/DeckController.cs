@@ -56,7 +56,8 @@ namespace WebApi.Controllers
         [HttpDelete]
         public async Task<ActionResult<Deck>> DeleteCarte(int deckID , int OwnedCardId)
         {
-            return Ok (_deckService.DeleteCarte(deckID, OwnedCardId));
+
+            return Ok (await _deckService.DeleteCarte(deckID, OwnedCardId));
         }
 
     }
