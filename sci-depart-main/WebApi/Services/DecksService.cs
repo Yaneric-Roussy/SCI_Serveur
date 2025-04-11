@@ -24,7 +24,7 @@ namespace WebApi.Services
 
         public async Task <Deck> AjoutDeck(string name,int playerId )
         {
-            Player player = await _dbContext.Players.SingleOrDefaultAsync(p=>p.Id == playerId+1);
+            Player player = await _dbContext.Players.SingleOrDefaultAsync(p=>p.Id == playerId);
             var nbDeck =  await _dbContext.GameConfig.Select(x=>x.nbMaxDecks).FirstOrDefaultAsync();
             Deck newDeck = new Deck();
             if (player.listeDeck.Count() < nbDeck)
