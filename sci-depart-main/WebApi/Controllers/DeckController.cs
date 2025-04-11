@@ -45,7 +45,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult>AjoutDcarte(AjoutCarte ajout)
         {
-            return Ok(_deckService.AddCarte(ajout.PlayerId,ajout.CarteID,ajout.DeckID ));
+            return Ok(await _deckService.AddCarte(ajout.PlayerId,ajout.CarteID,ajout.DeckID ));
         }
 
         public DeckController(ApplicationDbContext dbContext, DecksService decksService)
