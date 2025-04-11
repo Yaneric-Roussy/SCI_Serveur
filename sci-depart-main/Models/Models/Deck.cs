@@ -15,6 +15,7 @@ namespace Models.Models
         [JsonIgnore]
         public virtual Player Player { get; set; }
         public bool Courant { get; set; }
+        public virtual List<OwnedCard> CarteSuprimé { get; set; }
 
 
 

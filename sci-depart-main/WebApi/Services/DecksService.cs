@@ -11,6 +11,7 @@ namespace WebApi.Services
     public class DecksService
         
     {
+       
 
         private ApplicationDbContext _dbContext;
         private CardsService _cardsService;
@@ -27,7 +28,7 @@ namespace WebApi.Services
             Player player = await _dbContext.Players.SingleOrDefaultAsync(p=>p.Id == playerId);
             var nbDeck =  await _dbContext.GameConfig.Select(x=>x.nbMaxDecks).FirstOrDefaultAsync();
             Deck newDeck = new Deck();
-            if (player.listeDeck.Count() < nbDeck)
+            if (player.listeDeck.Count() <= nbDeck)
             {
                
                 newDeck.Name = name;
@@ -64,24 +65,34 @@ namespace WebApi.Services
 
         {
             var maxCartes = await _dbContext.GameConfig.Select(x => x.nbMaxCartesDecks).FirstOrDefaultAsync();
-            Player player = await _dbContext.Players.SingleOrDefaultAsync(p => p.Id == playerId + 1);
-           List<Card>Cartes= _cardsService.GetAllCards().ToList();
-            Card carteSelectione = Cartes.FirstOrDefault(x => x.Id == CarteID);
-            Deck deck = _dbContext.Decks.FirstOrDefault(d => d.Id == DeckID);
-            OwnedCard ownedCarte = new OwnedCard();
+            // Player player = await _dbContext.Players.SingleOrDefaultAsync(p => p.Id == playerId + 1);
+            //List<Card>Cartes= _cardsService.GetAllCards().ToList();
+            // Card carteSelectione = Cartes.FirstOrDefault(x => x.Id == CarteID);
+            // Deck deck =  await _dbContext.Decks.FirstOrDefaultAsync(d => d.Id == DeckID);
+            // OwnedCard ownedCarte = new OwnedCard();
 
-            if (player.OwnedCards.Count()<maxCartes)
+            // if (player.OwnedCards.Count()<maxCartes)
+            // {
+            //     ownedCarte.Card = carteSelectione;
+            //      deck.CarteJoueurs.Add(ownedCarte);
+            //     _dbContext.OwnedCard.Add(ownedCarte);
+
+            //      await _dbContext.SaveChangesAsync();
+
+
+
+            // }
+            // return deck;
+            Deck deckCourant = await _dbContext.Decks.FirstOrDefaultAsync(d => d.Id == DeckID);
+            if (deckCourant.CarteJoueurs.Count()<=maxCartes)
             {
-                ownedCarte.Card = carteSelectione;
-                 deck.CarteJoueurs.Add(ownedCarte);
-                _dbContext.OwnedCard.Add(ownedCarte);
-                
-                _dbContext.SaveChangesAsync();
-              
-               
 
             }
-            return deck;
+
+            
+
+
+            return deckCourant;
 
 
 
@@ -92,6 +103,7 @@ namespace WebApi.Services
             Deck deckCourant = await _dbContext.Decks.FirstOrDefaultAsync(d=>d.Id ==DeckID);
             OwnedCard carteAsuprrimé = await _dbContext.OwnedCard.FirstOrDefaultAsync(d => d.Id == ownedCardId);
             deckCourant.CarteJoueurs.Remove(carteAsuprrimé);
+            deckCourant.CarteSuprimé.Add(carteAsuprrimé);
              await _dbContext.SaveChangesAsync();
    
             return deckCourant;
