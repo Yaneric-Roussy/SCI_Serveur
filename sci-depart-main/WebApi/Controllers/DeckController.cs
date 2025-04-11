@@ -29,10 +29,10 @@ namespace WebApi.Controllers
         private CardsService _cardsService;
         private DecksService _deckService;
         [HttpPost]
-        public async Task<ActionResult> CreateDeck(Temp objet)
+        public async Task<ActionResult<Deck>> CreateDeck(Temp objet)
         {
-            await _deckService.AjoutDeck(objet.Name, objet.PlayerId);
-            return Ok();
+           
+            return Ok(await _deckService.AjoutDeck(objet.Name, objet.PlayerId));
 
         }
         [HttpGet("{playerId}")]
@@ -52,6 +52,11 @@ namespace WebApi.Controllers
         {
             _dbContext = dbContext;
             _deckService = decksService;
+        }
+        [HttpDelete]
+        public async Task<ActionResult<Deck>> DeleteCarte(int deckID , int OwnedCardId)
+        {
+            return Ok (_deckService.DeleteCarte(deckID, OwnedCardId));
         }
 
     }

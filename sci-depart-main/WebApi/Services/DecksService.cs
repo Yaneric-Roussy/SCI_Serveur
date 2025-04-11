@@ -22,13 +22,14 @@ namespace WebApi.Services
             _cardsService = cardsService;
         }
 
-        public async Task AjoutDeck(string name,int playerId )
+        public async Task <Deck> AjoutDeck(string name,int playerId )
         {
             Player player = await _dbContext.Players.SingleOrDefaultAsync(p=>p.Id == playerId+1);
             var nbDeck =  await _dbContext.GameConfig.Select(x=>x.nbMaxDecks).FirstOrDefaultAsync();
+            Deck newDeck = new Deck();
             if (player.listeDeck.Count() < nbDeck)
             {
-                Deck newDeck = new Deck();
+               
                 newDeck.Name = name;
                 newDeck.Courant = false;
                 newDeck.PlayerId = playerId;
@@ -40,6 +41,7 @@ namespace WebApi.Services
                 
 
             }
+            return newDeck;
             
 
            
@@ -54,7 +56,7 @@ namespace WebApi.Services
             if (deck.Courant!=true)
             {
                 _dbContext.Remove(deck);
-                _dbContext.SaveChanges();
+                _dbContext.SaveChangesAsync();
             }
         }
 
@@ -74,7 +76,7 @@ namespace WebApi.Services
                  deck.CarteJoueurs.Add(ownedCarte);
                 _dbContext.OwnedCard.Add(ownedCarte);
                 
-                _dbContext.SaveChanges();
+                _dbContext.SaveChangesAsync();
               
                
 
@@ -85,6 +87,17 @@ namespace WebApi.Services
 
 
         }
+        public async Task <Deck> DeleteCarte(int DeckID , int ownedCardId)
+        {
+            Deck deckCourant = await _dbContext.Decks.FirstOrDefaultAsync(d=>d.Id ==DeckID);
+            OwnedCard carteAsuprrimé = await _dbContext.OwnedCard.FirstOrDefaultAsync(d => d.Id == ownedCardId);
+            deckCourant.CarteJoueurs.Remove(carteAsuprrimé);
+
+            return deckCourant;
+
+
+        }
+
 
 
     }
