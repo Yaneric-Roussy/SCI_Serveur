@@ -17,17 +17,16 @@ namespace WebApi.Combat
             {
                 this.Events.Add(new FirstStrikeEvent());
             }
-            else if(card.HasPower(Power.THORNS_ID)){
+            if(card.HasPower(Power.THORNS_ID)){
                 this.Events.Add(new ThornsEvent());
             }
-            else if (card.HasPower(Power.HEAL_ID))
+            if (card.HasPower(Power.HEAL_ID))
             {
                 this.Events.Add(new HealEvent());
             }
-            else
+            if (card.HasPower(4))
             {
                 this.Events.Add(new FirstStrikeEvent());
-
             }
 
             this.Events.Add(new AttackEvent(ennemyCard, card.Attack,cardPos));
