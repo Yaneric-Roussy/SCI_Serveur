@@ -94,9 +94,10 @@ namespace WebApi.Services
             OwnedCard carteAsuprrimé = await _dbContext.OwnedCard.FirstOrDefaultAsync(d => d.Id == ownedCardId);
             deckCourant.CarteJoueurs.Remove(carteAsuprrimé);
             deckCourant.CarteSuprime.Add(carteAsuprrimé);
-             await _dbContext.SaveChangesAsync();
-   
+            await _dbContext.SaveChangesAsync();
+
             return deckCourant;
+           
 
 
         }
