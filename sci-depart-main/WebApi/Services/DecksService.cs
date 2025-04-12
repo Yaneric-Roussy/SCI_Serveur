@@ -61,35 +61,25 @@ namespace WebApi.Services
             }
         }
 
-        public async Task <Deck>  AddCarte(int playerId, int CarteID , int DeckID)
+        public async Task <Deck>  AddCarte(  int DeckID, Card card)
 
         {
             var maxCartes = await _dbContext.GameConfig.Select(x => x.nbMaxCartesDecks).FirstOrDefaultAsync();
-            // Player player = await _dbContext.Players.SingleOrDefaultAsync(p => p.Id == playerId + 1);
-            //List<Card>Cartes= _cardsService.GetAllCards().ToList();
-            // Card carteSelectione = Cartes.FirstOrDefault(x => x.Id == CarteID);
-            // Deck deck =  await _dbContext.Decks.FirstOrDefaultAsync(d => d.Id == DeckID);
-            // OwnedCard ownedCarte = new OwnedCard();
-
-            // if (player.OwnedCards.Count()<maxCartes)
-            // {
-            //     ownedCarte.Card = carteSelectione;
-            //      deck.CarteJoueurs.Add(ownedCarte);
-            //     _dbContext.OwnedCard.Add(ownedCarte);
-
-            //      await _dbContext.SaveChangesAsync();
-
-
-
-            // }
-            // return deck;
+         
             Deck deckCourant = await _dbContext.Decks.FirstOrDefaultAsync(d => d.Id == DeckID);
+            OwnedCard ownedCard = new OwnedCard();
             if (deckCourant.CarteJoueurs.Count()<=maxCartes)
             {
+              
+                ownedCard.Card = card;
+               deckCourant.CarteJoueurs.Add(ownedCard);
+                
+                
 
             }
+            await _dbContext.OwnedCard.AddAsync(ownedCard);
+            await _dbContext.SaveChangesAsync();
 
-            
 
 
             return deckCourant;
@@ -103,7 +93,7 @@ namespace WebApi.Services
             Deck deckCourant = await _dbContext.Decks.FirstOrDefaultAsync(d=>d.Id ==DeckID);
             OwnedCard carteAsuprrimé = await _dbContext.OwnedCard.FirstOrDefaultAsync(d => d.Id == ownedCardId);
             deckCourant.CarteJoueurs.Remove(carteAsuprrimé);
-            deckCourant.CarteSuprimé.Add(carteAsuprrimé);
+            deckCourant.CarteSuprime.Add(carteAsuprrimé);
              await _dbContext.SaveChangesAsync();
    
             return deckCourant;
