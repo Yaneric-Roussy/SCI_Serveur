@@ -1,6 +1,6 @@
 ﻿using Super_Cartes_Infinies.Combat;
 
-namespace WebApi.Combat
+namespace Super_Cartes_Infinies.Combat
 {
     public class ThornsEvent : MatchEvent
     {

@@ -1,5 +1,4 @@
 ﻿using Super_Cartes_Infinies.Models;
-using WebApi.Combat;
 
 namespace Super_Cartes_Infinies.Combat
 {

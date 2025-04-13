@@ -2,7 +2,6 @@
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Models.Dtos;
-using WebApi.Combat;
 
 namespace Super_Cartes_Infinies.Services
 {

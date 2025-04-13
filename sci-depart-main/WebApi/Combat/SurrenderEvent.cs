@@ -1,5 +1,4 @@
 ﻿using Super_Cartes_Infinies.Models;
-using System.Text.Json.Serialization;
 
 namespace Super_Cartes_Infinies.Combat
 {
