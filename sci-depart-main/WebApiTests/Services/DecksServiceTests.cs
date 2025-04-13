@@ -39,6 +39,15 @@ namespace DeckService.Tests
         PlayerId = 1,
         CarteJoueurs = new List<OwnedCard>(),
         CarteSuprime = new List<OwnedCard>()
+    },
+    new Deck
+    {
+        Id = 2,
+        Name = "Deck 3",
+        Courant = false,
+        PlayerId = 1,
+        CarteJoueurs = new List<OwnedCard>(),
+        CarteSuprime = new List<OwnedCard>()
     }
 };
 
@@ -84,7 +93,10 @@ namespace DeckService.Tests
         [TestMethod()]
         public void DeleteDeckTest()
         {
-            Assert.Fail();
+            DecksService decksService = new DecksService(_db, null);
+            decksService.DeleteDeck(_db.Decks.FirstOrDefault(d => d.Id == 2));
+            Assert.IsNull(_db.Decks.FirstOrDefault(d => d.Id == 2));
+
         }
 
         [TestMethod()]
