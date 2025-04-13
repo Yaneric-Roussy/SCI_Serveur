@@ -123,7 +123,7 @@ namespace DeckService.Tests
             };
             
             
-                decksService.DeletePlayerDeck(3,4); // Supposons que la méthode prend un joueurId
+                decksService.DeletePlayerDeck(3,4); 
             Assert.IsNotNull(_db.Decks.FirstOrDefault(d => d.Id == 3));
             
             
