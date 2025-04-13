@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Models.Models;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
@@ -61,12 +62,13 @@ namespace WebApi.Services
             }
         }
 
-        public async Task <Deck>  AddCarte(  int DeckID, Card card)
+        public async Task <Deck>  AddCarte(int DeckID, Card card)
 
         {
             var maxCartes = await _dbContext.GameConfig.Select(x => x.nbMaxCartesDecks).FirstOrDefaultAsync();
-         
+
             Deck deckCourant = await _dbContext.Decks.FirstOrDefaultAsync(d => d.Id == DeckID);
+
             OwnedCard ownedCard = new OwnedCard();
             if (deckCourant.CarteJoueurs.Count()<=maxCartes)
             {
@@ -101,6 +103,17 @@ namespace WebApi.Services
 
 
         }
+        public async Task<Deck> Deletedeck(int deckID)
+        {
+            Deck deck = await _dbContext.Decks.FirstOrDefaultAsync(d => d.Id == deckID);
+            if (deck.Courant != true)
+            {
+                _dbContext.Remove(deck);
+                await _dbContext.SaveChangesAsync();
+            }
+            return deck;
+        }   
+       
 
 
 

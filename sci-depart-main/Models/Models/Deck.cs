@@ -16,6 +16,8 @@ namespace Models.Models
         public virtual Player Player { get; set; }
         public bool Courant { get; set; }
         public virtual List<OwnedCard> CarteSuprime { get; set; }
+      
+       
 
 
 
