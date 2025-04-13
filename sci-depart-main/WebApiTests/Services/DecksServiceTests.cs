@@ -48,7 +48,16 @@ namespace DeckService.Tests
         PlayerId = 1,
         CarteJoueurs = new List<OwnedCard>(),
         CarteSuprime = new List<OwnedCard>()
-    }
+    },
+     new Deck
+    {
+        Id = 3,
+        Name = "Deck 3",
+        Courant = false,
+        PlayerId = 1,
+        CarteJoueurs = new List<OwnedCard>(),
+        CarteSuprime = new List<OwnedCard>()
+    },
 };
 
             _db.AddRange(deck);
@@ -98,6 +107,33 @@ namespace DeckService.Tests
             Assert.IsNull(_db.Decks.FirstOrDefault(d => d.Id == 2));
 
         }
+        [TestMethod]
+        public void deleteDeckAuthorise()
+        {
+            DecksService decksService = new DecksService(_db, null);
+            Player player = new Player
+            {
+                Id = 3,
+                UserId = "user1",
+                listeDeck = new List<Deck>
+                {
+                    new Deck { Id = 4, Name = "Deck 1", Courant = true },
+                    new Deck { Id = 5, Name = "Deck 2", Courant = false }
+                }
+            };
+            
+            
+                decksService.DeletePlayerDeck(3,4); // Supposons que la méthode prend un joueurId
+            Assert.IsNotNull(_db.Decks.FirstOrDefault(d => d.Id == 3));
+            
+            
+
+
+
+
+
+
+        }   
 
 
         [TestMethod()]
@@ -116,7 +152,7 @@ namespace DeckService.Tests
         public void DeletedeckTest()
         {
             Assert.Fail();
-        }
+        }s
 
         [TestMethod()]
         public void SetCourantDeckTest()

@@ -123,7 +123,18 @@ namespace WebApi.Services
                 await _dbContext.SaveChangesAsync();
             }
             return deck;
-        }   
+           
+        }
+        public async Task<Deck> DeletePlayerDeck(int deckId,int playerId) {
+            Deck deck = await _dbContext.Decks.FirstOrDefaultAsync(d => d.Id == deckId);
+            if (deck.PlayerId==playerId)
+            {
+                _dbContext.Remove(deck);
+                await _dbContext.SaveChangesAsync();
+            }
+            return deck;
+           
+        }
        
 
 
