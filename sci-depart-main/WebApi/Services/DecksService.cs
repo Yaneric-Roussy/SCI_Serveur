@@ -62,9 +62,10 @@ namespace WebApi.Services
             }
         }
 
-        public async Task <Deck>  AddCarte(int DeckID, Card card)
+        public async Task <Deck>  AddCarte(int DeckID, int cardID)
 
         {
+            Card card = await _dbContext.Cards.FirstOrDefaultAsync(c => c.Id == cardID);
             var maxCartes = await _dbContext.GameConfig.Select(x => x.nbMaxCartesDecks).FirstOrDefaultAsync();
 
             Deck deckCourant = await _dbContext.Decks.FirstOrDefaultAsync(d => d.Id == DeckID);

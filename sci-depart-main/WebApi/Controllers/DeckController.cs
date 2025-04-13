@@ -15,12 +15,7 @@ namespace WebApi.Controllers
         public string Name { get; set; }
         public int PlayerId { get; set; }
     }
-    public class AjoutCarte
-    {
-       
-        public int DeckID { get; set; }
-        public  Card carte { get; set; }
-    }
+  
 
     [ApiController]
     [Route("api/[controller]/[action]")]
@@ -44,9 +39,9 @@ namespace WebApi.Controllers
             return Ok(await _deckService.getDeck(playerId));
         }
         [HttpPost]
-        public async Task<ActionResult>AjoutDcarte(AjoutCarte ajoutecrte)
+        public async Task<ActionResult>AjoutDcarte(int DeckID, int cardID)
         {
-            return Ok(await _deckService.AddCarte(ajoutecrte.DeckID,ajoutecrte.carte));
+            return Ok(await _deckService.AddCarte(DeckID,  cardID));
         }
 
         public DeckController(ApplicationDbContext dbContext, DecksService decksService)
