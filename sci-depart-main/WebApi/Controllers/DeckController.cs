@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Models.Models;
 using Super_Cartes_Infinies.Controllers;
 using Super_Cartes_Infinies.Data;
@@ -60,6 +61,7 @@ namespace WebApi.Controllers
             return Ok (await _deckService.DeleteCarte(deckID, OwnedCardId));
         }
         [HttpDelete]
+        [Authorize]
         public async Task<ActionResult<Deck>> Deletedeck(int deckID)
         {
 
