@@ -71,11 +71,7 @@ namespace DeckService.Tests
 }
         
       
-        [TestMethod()]
-        public void DecksServiceTest()
-        {
-            Assert.Fail();
-        }
+       
 
 
         [TestMethod()]
@@ -93,12 +89,7 @@ namespace DeckService.Tests
             Assert.AreEqual(deckAjouter.PlayerId, 1);
         }
 
-        [TestMethod()]
-        public void getDeckTest()
-        {
-            Assert.Fail();
-        }
-
+       
         [TestMethod()]
         public void DeleteDeckTest()
         {
