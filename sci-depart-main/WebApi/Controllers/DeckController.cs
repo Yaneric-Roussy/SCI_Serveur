@@ -6,6 +6,7 @@ using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Services;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using WebApi.Services;
 
 namespace WebApi.Controllers
@@ -38,6 +39,13 @@ namespace WebApi.Controllers
 
             return Ok(await _deckService.getDeck(playerId));
         }
+
+        [HttpGet]
+        public async Task<ActionResult<List<Card>>> GetAllCard()
+        {
+            return Ok(await _deckService.GetAllCards());
+        }
+
         [HttpPost]
         public async Task<ActionResult>AjoutDcarte(int DeckID, int cardID)
         {
@@ -69,4 +77,5 @@ namespace WebApi.Controllers
         }
 
     }
+  
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Identity.Client;
 using Models.Models;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
@@ -178,17 +179,24 @@ namespace WebApi.Services
             return deckCourant;
 
 
-
+           
+        }
+        public async Task<List<Card>> GetAllCards()
+        {
+            return await _dbContext.Cards.ToListAsync();
         }
 
 
 
 
 
-    }
 
 
 
     }
+
+
+
+}
     
 
