@@ -72,7 +72,13 @@ public class MatchHub : Hub
 
         await Clients.Client(signalRId).SendAsync("ApplyEvents", startMatchEvent);
     }
+    public async Task PlayCard(Match match,int cardInt )
+    {
+        
+        PlayCardEvent playCardEvent = await _matchesService.PlayCard(userId, match.Id, cardInt);
 
+        await Clients.Client(signalRId).SendAsync("PlayCard", playCardEvent);
+    }
     public async Task EndTurn(int matchId)
     {
         PlayerEndTurnEvent endTurnEvent = await _matchesService.EndTurn(userId, matchId);

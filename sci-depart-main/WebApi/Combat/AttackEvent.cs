@@ -7,20 +7,25 @@ namespace Super_Cartes_Infinies.Combat
     {
         public override string EventType { get { return "Attack"; } }
 
-        public int Dps { get; set; }
-        public int? CardPos { get; set; }
+        public int PlayerID { get; set; }
+        public int PlayableCardId { get; set; }
 
-        public AttackEvent(PlayableCard? cardAttack,int dps,  int cardPos)
+        public AttackEvent(Match match,PlayableCard? ennemyCard,PlayableCard myCard, MatchPlayerData currentPlayerData, MatchPlayerData opposingPlayerData)
         {
+
+            this.Events = new List<MatchEvent>();
             //Si jamais aucune carte n'est devant la carte, on attaque le joueur sinon on attaque la carte.
-            Dps = dps;
-            if (cardAttack == null)
+            PlayerID = currentPlayerData.PlayerId;
+            PlayableCardId = myCard.Id;
+
+            if (ennemyCard != null)
             {
-                CardPos = null;
+                this.Events.Add(new CardDamageEvent(currentPlayerData,myCard));
+                this.Events.Add(new CardDamageEvent(opposingPlayerData,ennemyCard));
             }
             else
             {
-                CardPos = cardPos;
+                this.Events.Add(new PlayerDamageEvent(match, opposingPlayerData, currentPlayerData ,myCard.Attack));
             }
 
         }

@@ -8,7 +8,7 @@ namespace Super_Cartes_Infinies.Combat
         public override string EventType { get { return "PlayerStartTurn"; } }
         public int PlayerId { get; set; }
         // L'évènement lorsqu'un joueur débutte son tour
-        public PlayerStartTurnEvent(MatchPlayerData playerData, int nbManaPerTurn)
+        public PlayerStartTurnEvent(Match match,MatchPlayerData playerData, int nbManaPerTurn)
         {
             this.PlayerId = playerData.PlayerId;
             this.Events = new List<MatchEvent>();

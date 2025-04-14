@@ -1,4 +1,5 @@
-﻿using Super_Cartes_Infinies.Combat;
+﻿using Microsoft.EntityFrameworkCore;
+using Super_Cartes_Infinies.Combat;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Models.Dtos;
@@ -114,7 +115,6 @@ namespace Super_Cartes_Infinies.Services
             int nbCardsToDraw = _matchConfigurationService.GetNbCardsToDraw();
             int nbManaPerTurn = _matchConfigurationService.GetNbManaPerTurn();
             var startMatchEvent = new StartMatchEvent(match, currentPlayerData, opposingPlayerData, nbCardsToDraw, nbManaPerTurn);
-            
             await _dbContext.SaveChangesAsync();
 
             return startMatchEvent;
@@ -194,36 +194,36 @@ namespace Super_Cartes_Infinies.Services
 
         //PlayCard service
 
-        //public async Task<PlayCardEvent> PlayCard(string userId, int matchId, int cardId)
-        //{
-        //    Match? match = await _dbContext.Matches.FindAsync(matchId);
+        public async Task<PlayCardEvent> PlayCard(string userId, int matchId, int cardId)
+        {
+            Match? match = await _dbContext.Matches.FindAsync(matchId);
 
-        //    if (match == null)
-        //        throw new Exception("Impossible de trouver le match");
+            if (match == null)
+                throw new Exception("Impossible de trouver le match");
 
-        //    if (match.IsMatchCompleted)
-        //        throw new Exception("Le match est déjà terminé");
+            if (match.IsMatchCompleted)
+                throw new Exception("Le match est déjà terminé");
 
-        //    if (match.UserAId != userId && match.UserBId != userId)
-        //        throw new Exception("Le joueur n'est pas dans ce match");
+            if (match.UserAId != userId && match.UserBId != userId)
+                throw new Exception("Le joueur n'est pas dans ce match");
 
-        //    MatchPlayerData currentPlayerData;
+            MatchPlayerData currentPlayerData;
 
-        //    if (match.UserAId == userId)
-        //    {
-        //        currentPlayerData = match.PlayerDataA;
-        //    }
-        //    else
-        //    {
-        //        currentPlayerData = match.PlayerDataB;
-        //    }
+            if (match.UserAId == userId)
+            {
+                currentPlayerData = match.PlayerDataA;
+            }
+            else
+            {
+                currentPlayerData = match.PlayerDataB;
+            }
 
-        //    var playCardEvent = new PlayCardEvent(currentPlayerData, cardId);
+            var playCardEvent = new PlayCardEvent(currentPlayerData, cardId);
 
-        //    await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
 
-        //    return playCardEvent;
-        //}
+            return playCardEvent;
+        }
     }
 }
 

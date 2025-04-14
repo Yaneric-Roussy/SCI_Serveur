@@ -13,15 +13,15 @@ namespace Super_Cartes_Infinies.Combat
             this.Events = new List<MatchEvent>();
 
             match.IsPlayerATurn = !match.IsPlayerATurn;
-
+            
             for (int i = currentPlayerData.BattleField.Count(); i > 0; i--)
             {
                 PlayableCard card = currentPlayerData.BattleField[i];
                 PlayableCard? ennemyCard = opposingPlayerData.BattleField[i];
-                this.Events.Add(new CardActivationEvent(card,ennemyCard, i));
+                this.Events.Add(new CardActivationEvent(match, card,ennemyCard,currentPlayerData,opposingPlayerData));
             }
 
-            this.Events.Add(new PlayerStartTurnEvent(opposingPlayerData, nbManaPerTurn));
+            this.Events.Add(new PlayerStartTurnEvent(match,opposingPlayerData, nbManaPerTurn));
         }
 
     }

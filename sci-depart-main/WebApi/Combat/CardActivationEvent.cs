@@ -7,7 +7,7 @@ namespace Super_Cartes_Infinies.Combat
     {
         public override string EventType { get { return "CardActivation"; } }
 
-        public CardActivationEvent(PlayableCard card, PlayableCard? ennemyCard, int cardPos)
+        public CardActivationEvent(Match match, PlayableCard card, PlayableCard? ennemyCard, MatchPlayerData currentPlayerData, MatchPlayerData opposingPlayerData)
         {
 
             this.Events = new List<MatchEvent>();
@@ -28,7 +28,7 @@ namespace Super_Cartes_Infinies.Combat
                 this.Events.Add(new FirstStrikeEvent());
             }
 
-            this.Events.Add(new AttackEvent(ennemyCard, card.Attack,cardPos));
+            this.Events.Add(new AttackEvent(match,ennemyCard, card, currentPlayerData,opposingPlayerData));
 
         }
 

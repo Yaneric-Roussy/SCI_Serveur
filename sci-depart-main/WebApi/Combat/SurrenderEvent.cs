@@ -7,7 +7,6 @@ namespace Super_Cartes_Infinies.Combat
         public override string EventType { get { return "Surrender"; } }
         public int SurrenderingPlayerId { get; set; }
 
-        // L'évènement lorsqu'un joueur joue une carte
         public SurrenderEvent(Match match, MatchPlayerData surrenderingPlayerData, MatchPlayerData opposingPlayerData)
         {
             SurrenderingPlayerId = surrenderingPlayerData.Player.Id;
