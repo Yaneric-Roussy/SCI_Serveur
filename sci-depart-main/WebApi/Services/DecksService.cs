@@ -6,6 +6,7 @@ using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Services;
 using System.Collections;
 using System.Reflection;
+using System.Reflection.Metadata.Ecma335;
 
 namespace WebApi.Services
 {
@@ -135,10 +136,59 @@ namespace WebApi.Services
             return deck;
            
         }
-       
+        public async Task<Deck> addplayerCard(int carteID ,int playerId,int deckID)
+        {
+            Card card = await _dbContext.Cards.FirstOrDefaultAsync(c => c.Id == carteID);
+            var maxCartes = await _dbContext.GameConfig.Select(x => x.nbMaxCartesDecks).FirstOrDefaultAsync();
+            
+            Deck deckCourant = await _dbContext.Decks.FirstOrDefaultAsync(d => d.Id == deckID);
+            if (deckCourant.PlayerId==playerId)
+            {
+                OwnedCard ownedCard = new OwnedCard();
+                if (deckCourant.CarteJoueurs.Count() <= maxCartes)
+                {
+
+                    ownedCard.Card = card;
+                    deckCourant.CarteJoueurs.Add(ownedCard);
+
+
+
+                }
+                await _dbContext.OwnedCard.AddAsync(ownedCard);
+                await _dbContext.SaveChangesAsync();
+            
+
+            }
+            return deckCourant;
+
+
+        }
+        public async Task<Deck> DeleteplayerCarte(int DeckID, int ownedCardId,int playerID)
+        {
+            Deck deckCourant = await _dbContext.Decks.FirstOrDefaultAsync(d => d.Id == DeckID);
+            if (deckCourant.PlayerId==playerID)
+            {
+                OwnedCard carteAsuprrimé = await _dbContext.OwnedCard.FirstOrDefaultAsync(d => d.Id == ownedCardId);
+                deckCourant.CarteJoueurs.Remove(carteAsuprrimé);
+                deckCourant.CarteSuprime.Add(carteAsuprrimé);
+                await _dbContext.SaveChangesAsync();
+            }
+          
+
+            return deckCourant;
+
+
+
+        }
+
+
+
+
+
+    }
 
 
 
     }
     
-}
+

@@ -133,31 +133,84 @@ namespace DeckService.Tests
 
 
 
-        }   
-
-
-        [TestMethod()]
-        public void AddCarteTest()
-        {
-            Assert.Fail();
         }
 
-        [TestMethod()]
-        public void DeleteCarteTest()
-        {
-            Assert.Fail();
-        }
 
         [TestMethod()]
-        public void DeletedeckTest()
+        public async Task AddPlayerCard_AjouteCarteSiValide()
         {
-            Assert.Fail();
-        }s
+            // Arrange
+            var decksService = new DecksService(_db, null);
 
-        [TestMethod()]
-        public void SetCourantDeckTest()
-        {
-            Assert.Fail();
+            // Ajout d'une carte
+            var card = new Card { Id = 9, Name = "Carte Test" };
+            await _db.Cards.AddAsync(card);
+
+            // Ajout d'une config de jeu avec max 5 cartes
+            var config = new GameConfig { nbMaxCartesDecks = 5 };
+            await _db.GameConfig.AddAsync(config);
+
+            // Ajout d'un deck appartenant au joueur 9
+            var deck = new Deck
+            {
+                Id = 9,
+                Name = "Deck Test",
+                Courant = true,
+                PlayerId = 9,
+                CarteJoueurs = new List<OwnedCard>(),
+                CarteSuprime = new List<OwnedCard>()
+            };
+            await _db.Decks.AddAsync(deck);
+
+            await _db.SaveChangesAsync();
+
+            // Act
+            var resultDeck = await decksService.addplayerCard(9, 9, 9);
+
+            // Assert
+            Assert.IsNotNull(resultDeck);
+            Assert.AreEqual(1, resultDeck.CarteJoueurs.Count);
+            Assert.AreEqual("Carte Test", resultDeck.CarteJoueurs.First().Card.Name);
         }
+        [TestMethod()]
+        public async Task DeletePlayerCarte_DeplaceCarteDansCarteSupprime()
+        {
+            // Arrange
+            var decksService = new DecksService(_db, null);
+
+            // Création de la carte
+            var card = new Card { Id = 10, Name = "Carte Test" };
+            await _db.Cards.AddAsync(card);
+
+            // Création de l'OwnedCard (appartient déjà au deck)
+            var ownedCard = new OwnedCard { Id = 10, Card = card };
+            await _db.OwnedCard.AddAsync(ownedCard);
+
+            // Création du deck avec l'OwnedCard
+            var deck = new Deck
+            {
+                Id = 10,
+                Name = "Deck Test",
+                Courant = true,
+                PlayerId = 10,
+                CarteJoueurs = new List<OwnedCard> { ownedCard },
+                CarteSuprime = new List<OwnedCard>()
+            };
+            await _db.Decks.AddAsync(deck);
+
+            await _db.SaveChangesAsync();
+
+            // Act
+            var resultDeck = await decksService.DeleteplayerCarte(10, 10, 10);
+
+            // Assert
+            Assert.IsNotNull(resultDeck);
+            Assert.AreEqual(0, resultDeck.CarteJoueurs.Count);
+            Assert.AreEqual(1, resultDeck.CarteSuprime.Count);
+            Assert.AreEqual("Carte Test", resultDeck.CarteSuprime.First().Card.Name);
+        }
+
+
+
     }
 }
