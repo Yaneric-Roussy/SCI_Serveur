@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Models.Models;
 using Super_Cartes_Infinies.Combat;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
@@ -65,8 +66,9 @@ namespace Super_Cartes_Infinies.Services
                     playerB = _playersService.GetPlayerFromUserId(pairOfUsers.UserBId);
 
                     // Création d'un nouveau match
-                    IEnumerable<Card> cards = _cardsService.GetAllCards();
-                    match = new Match(playerA, playerB, cards);
+                    IEnumerable<Card> cardsPlayerA = await _cardsService.GetUserDeckCards(playerA.Id);
+                    IEnumerable<Card> cardsPlayerB = await _cardsService.GetUserDeckCards(playerB.Id);
+                    match = new Match(playerA, playerB, cardsPlayerA, cardsPlayerB);
                     otherPlayerConnectionId = pairOfUsers.UserAConnectionId;
 
                     _dbContext.Update(match);
@@ -111,7 +113,9 @@ namespace Super_Cartes_Infinies.Services
                 currentPlayerData = match.PlayerDataB;
                 opposingPlayerData = match.PlayerDataA;
             }
-            Player p1 = await _dbContext.Players.FirstOrDefaultAsync(p => p.Id == currentPlayerData.Id);
+            
+          
+           
             
      
             int nbCardsToDraw = _matchConfigurationService.GetNbCardsToDraw();
