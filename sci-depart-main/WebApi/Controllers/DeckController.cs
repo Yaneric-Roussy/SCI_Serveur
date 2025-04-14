@@ -71,9 +71,9 @@ namespace WebApi.Controllers
             return Ok(await _deckService.Deletedeck(deckID));
         }
         [HttpPost]
-        public async Task<ActionResult<Deck>> SetCourantDeck(int deckID)
+        public async Task<ActionResult<Deck>> SetCourantDeck(int deckID, int PlayerID)
         {
-            return Ok(await _deckService.SetCourantDeck(deckID));
+            return Ok(await _deckService.SetCourantDeck(deckID, PlayerID));
         }
 
     }

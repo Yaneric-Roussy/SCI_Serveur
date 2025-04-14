@@ -1,4 +1,5 @@
-﻿using Super_Cartes_Infinies.Combat;
+﻿using Microsoft.EntityFrameworkCore;
+using Super_Cartes_Infinies.Combat;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Models.Dtos;
@@ -110,7 +111,9 @@ namespace Super_Cartes_Infinies.Services
                 currentPlayerData = match.PlayerDataB;
                 opposingPlayerData = match.PlayerDataA;
             }
-
+            Player p1 = await _dbContext.Players.FirstOrDefaultAsync(p => p.Id == currentPlayerData.Id);
+            
+     
             int nbCardsToDraw = _matchConfigurationService.GetNbCardsToDraw();
             int nbManaPerTurn = _matchConfigurationService.GetNbManaPerTurn();
             var startMatchEvent = new StartMatchEvent(match, currentPlayerData, opposingPlayerData, nbCardsToDraw, nbManaPerTurn);

@@ -116,12 +116,22 @@ namespace WebApi.Services
             }
             return deck;
         }   
-        public async Task<Deck> SetCourantDeck(int deckID)
+        public async Task<Deck> SetCourantDeck(int deckID, int PlayerID)
+
         {
+             var userDecks = await _dbContext.Decks.Where(d => d.PlayerId == PlayerID).ToListAsync();
             Deck deck = await _dbContext.Decks.FirstOrDefaultAsync(d => d.Id == deckID);
             if (deck.Courant != true)
             {
-                deck.Courant = true;
+               
+                foreach (var item in userDecks)
+                {
+                    if (item.Courant)
+                    {
+                        item.Courant = false;
+                        deck.Courant = true;
+                    }
+                }
                 await _dbContext.SaveChangesAsync();
             }
             return deck;
