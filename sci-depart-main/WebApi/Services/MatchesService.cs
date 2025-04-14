@@ -96,8 +96,13 @@ namespace Super_Cartes_Infinies.Services
         }
 
         // L'action retourne le json de l'event de création de match (StartMatchEvent)
-        public async Task<StartMatchEvent> StartMatch(string currentUserId, Match match)
+        public async Task<StartMatchEvent> StartMatch(string currentUserId, int matchId)
         {
+            Match? match = await _dbContext.Matches.FirstOrDefaultAsync(m => m.Id == matchId);
+            if (match == null)
+            {
+                return null;
+            }
             MatchPlayerData currentPlayerData;
             MatchPlayerData opposingPlayerData;
 

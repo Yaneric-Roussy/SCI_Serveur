@@ -68,8 +68,7 @@ public class MatchHub : Hub
 
     public async Task StartMatchEvent(Match match)
     {
-        StartMatchEvent startMatchEvent = await _matchesService.StartMatch(userId, match);
-
+        StartMatchEvent startMatchEvent = await _matchesService.StartMatch(userId, match.Id);
         await Clients.Client(signalRId).SendAsync("ApplyEvents", startMatchEvent);
     }
     public async Task PlayCard(Match match,int cardInt )
