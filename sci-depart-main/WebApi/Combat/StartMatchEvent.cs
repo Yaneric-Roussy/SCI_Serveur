@@ -53,7 +53,7 @@ namespace Super_Cartes_Infinies.Combat
                 Events.Add(new DrawCardEvent(currentPlayerData));
                 Events.Add(new DrawCardEvent(opposingPlayerData));
             }
-            Events.Add(new PlayerStartTurnEvent(match, currentPlayerData, nbManaPerTurn));
+            Events.Add(new PlayerStartTurnEvent(currentPlayerData, nbManaPerTurn));
         }
     }
 }

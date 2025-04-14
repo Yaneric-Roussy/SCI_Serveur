@@ -16,7 +16,8 @@ namespace Super_Cartes_Infinies.Combat
             {
                 this.Events.Add(new FirstStrikeEvent());
             }
-            if(card.HasPower(Power.THORNS_ID)){
+            if (card.HasPower(Power.THORNS_ID))
+            {
                 this.Events.Add(new ThornsEvent());
             }
             if (card.HasPower(Power.HEAL_ID))
@@ -28,7 +29,19 @@ namespace Super_Cartes_Infinies.Combat
                 this.Events.Add(new FirstStrikeEvent());
             }
 
-            this.Events.Add(new AttackEvent(match,ennemyCard, card, currentPlayerData,opposingPlayerData));
+            if(ennemyCard == null)
+            {
+                //Pas de cartes ennemy
+                //Est-ce que devrait créer direct l'event de playerdamage?
+                this.Events.Add(new AttackEvent(match, ennemyCard, card, currentPlayerData, opposingPlayerData));
+            }
+            else
+            {
+                //Les deux cartes s'attaquent
+                this.Events.Add(new AttackEvent(match, ennemyCard, card, currentPlayerData, opposingPlayerData));
+                this.Events.Add(new AttackEvent(match, card, ennemyCard, currentPlayerData, opposingPlayerData));
+            }
+            
 
         }
 
