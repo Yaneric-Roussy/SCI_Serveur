@@ -7,8 +7,10 @@ namespace Super_Cartes_Infinies.Combat
     {
         public override string EventType { get { return "EndMatch"; } }
         public int WinningPlayerId { get; set; }
+        public int MoneyReceivedByWinner { get { return 10; }} 
+        public int MoneyReceivedByLoser { get { return 2; } }
 
-        public EndMatchEvent(Match match, MatchPlayerData winningPlayerData, MatchPlayerData losingPlayerData, int MoneyReceivedByWinner , int MoneyReceivedByLoser)
+        public EndMatchEvent(Match match, MatchPlayerData winningPlayerData, MatchPlayerData losingPlayerData)
         {
             // Pour l'instant, on n'arrête pas la simulation sur le serveur lorsqu'on atteint la fin de la partie.
             // Pour éviter qu'un joueur qui a gagné, mais qui meurt dans le même tour ne donne la victoire à l'autre, on vérifie si le match est déjà terminé!
