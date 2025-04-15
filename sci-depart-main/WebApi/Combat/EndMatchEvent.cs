@@ -14,7 +14,7 @@ namespace Super_Cartes_Infinies.Combat
             // Pour éviter qu'un joueur qui a gagné, mais qui meurt dans le même tour ne donne la victoire à l'autre, on vérifie si le match est déjà terminé!
             if (match.IsMatchCompleted)
                 return;
-
+            if(winningPlayerData.PlayerId != 0) 
             WinningPlayerId = winningPlayerData.PlayerId;
 
             match.IsMatchCompleted = true;

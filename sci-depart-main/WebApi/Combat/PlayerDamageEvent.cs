@@ -13,10 +13,10 @@ namespace Super_Cartes_Infinies.Combat
 
             AttackedPlayer.Health -= dps;
             Damage = dps;
-            PlayerId = AttackedPlayer.Id;
+            PlayerId = AttackedPlayer.PlayerId;
             if (AttackedPlayer.Health <= 0)
             {
-                this.Events.Add(new EndMatchEvent(match, AttackingPlayer, AttackedPlayer));
+                this.Events.Add(new PlayerDeathEvent(match,AttackedPlayer, AttackingPlayer));
             }
         }
     }

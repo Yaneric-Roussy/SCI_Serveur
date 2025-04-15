@@ -20,8 +20,8 @@ namespace Super_Cartes_Infinies.Combat
 
             if (ennemyCard != null)
             {
-                this.Events.Add(new CardDamageEvent(currentPlayerData, myCard));
-                this.Events.Add(new CardDamageEvent(opposingPlayerData, ennemyCard));
+                this.Events.Add(new CardDamageEvent(currentPlayerData, ennemyCard, myCard));
+                this.Events.Add(new CardDamageEvent(opposingPlayerData, myCard, ennemyCard));
             }
             else
             {

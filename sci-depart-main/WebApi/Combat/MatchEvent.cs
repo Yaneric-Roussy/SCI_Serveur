@@ -20,6 +20,7 @@ namespace Super_Cartes_Infinies.Combat
     [JsonDerivedType(typeof(HealEvent))]
     [JsonDerivedType(typeof(ThornsEvent))]
     [JsonDerivedType(typeof(PlayCardEvent))]
+    [JsonDerivedType(typeof(CardHealEvent))]
 
     public abstract class MatchEvent
     {
