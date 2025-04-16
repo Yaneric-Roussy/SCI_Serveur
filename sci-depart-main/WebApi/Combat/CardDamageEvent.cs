@@ -24,6 +24,7 @@ namespace Super_Cartes_Infinies.Combat
             if (cardDefending.Health <= 0)
             {
                 Events.Add(new CardDeathEvent(PlayerData, cardDefending));
+
             }
 
         }
