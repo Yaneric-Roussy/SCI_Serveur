@@ -12,7 +12,13 @@ namespace Super_Cartes_Infinies.Combat
         {
             DeadCardId = card.Id;
             PlayerId = PlayerData.PlayerId;
-            
+
+            //Update l'index :|
+            for(int i = card.Index + 1; i < PlayerData.BattleField.Count() - 1; i++) 
+            {
+                PlayerData.BattleField[i].Index = i - 1;
+            }
+
             PlayerData.BattleField.Remove(card);
             PlayerData.Graveyard.Add(card);
         }

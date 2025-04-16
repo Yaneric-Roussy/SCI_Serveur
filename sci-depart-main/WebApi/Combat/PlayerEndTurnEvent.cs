@@ -13,8 +13,12 @@ namespace Super_Cartes_Infinies.Combat
             this.Events = new List<MatchEvent>();
 
             match.IsPlayerATurn = !match.IsPlayerATurn;
+
+            //Order by pour s'assurer de l'ordre des cartes.
+            currentPlayerData.BattleField.OrderBy(c => c.Index);
+            opposingPlayerData.BattleField.OrderBy(c => c.Index);
+
             var opBattlefield = opposingPlayerData.BattleField;
-            //Current player card attack
             for (int i = currentPlayerData.BattleField.Count() - 1; i >= 0; i--)
             {
                 PlayableCard card = currentPlayerData.BattleField[i];

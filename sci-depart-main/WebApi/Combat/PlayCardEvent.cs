@@ -17,6 +17,7 @@ namespace Super_Cartes_Infinies.Combat
             PlayerId = currentPlayerData.PlayerId;
             CardId = playableCard.Id;
             currentPlayerData.Hand.Remove(playableCard);
+            playableCard.Index = currentPlayerData.BattleField.Count();
             currentPlayerData.BattleField.Add(playableCard);
         }
     }
