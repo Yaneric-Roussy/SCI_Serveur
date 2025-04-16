@@ -14,13 +14,13 @@ namespace Super_Cartes_Infinies.Combat
             //Vérifie que la carte est vivante
             if(card.Health > 0) {
                 //On vérifie si la carte peux recevoir tout le heal
-                if ((card.Card.Health - card.Health) < amount)
+                if ((card.Card.Health - card.Health) >= amount)
                 {
-                    card.Health += (card.Card.Health - card.Health);
+                    card.Health += amount;
                 }
                 else
                 {
-                    card.Health += amount;
+                    card.Health += (card.Card.Health - card.Health);
                 }
             }
         }

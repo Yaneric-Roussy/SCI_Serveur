@@ -1,4 +1,4 @@
-﻿using Super_Cartes_Infinies.Combat;
+﻿using Models.Models;
 using Super_Cartes_Infinies.Models;
 
 namespace Super_Cartes_Infinies.Combat
@@ -11,7 +11,7 @@ namespace Super_Cartes_Infinies.Combat
         {
             this.Events = new List<MatchEvent>();
 
-            this.Events.Add(new CardDamageEvent(currentPlayerData, ennemyCard, card));
+            this.Events.Add(new CardDamageEvent(currentPlayerData, ennemyCard.GetPowerValue(Power.THORNS_ID), card));
         }
     }
 }

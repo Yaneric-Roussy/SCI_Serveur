@@ -24,6 +24,10 @@ namespace Super_Cartes_Infinies.Models
 
         public bool HasPower(int powerId)
         {
+            if(Card.CardPowers == null)
+            {
+                return false;
+            }
             foreach(CardPower cardPower in Card.CardPowers)
             {
                 if (cardPower.PowerId == powerId || cardPower.Power.Id == powerId)

@@ -10,19 +10,20 @@ namespace Super_Cartes_Infinies.Combat
         public int Dps { get; set; }
         public int CardInt { get; set; }
 
-        public CardDamageEvent(MatchPlayerData PlayerData, PlayableCard cardAttacking, PlayableCard cardDefending )
+        public CardDamageEvent(MatchPlayerData PlayerData, int dps, PlayableCard cardDefending )
         {
 
             this.Events = new List<MatchEvent>();
 
             PlayerId = PlayerData.PlayerId ;
-            Dps = cardAttacking.Attack;
+            Dps = dps;
             CardInt = cardDefending.Id;
 
-            cardDefending.Health -= cardAttacking.Attack;
+            cardDefending.Health -= dps;
             
             if (cardDefending.Health <= 0)
             {
+                cardDefending.Health = 0;
                 Events.Add(new CardDeathEvent(PlayerData, cardDefending));
 
             }

@@ -11,10 +11,10 @@ namespace Super_Cartes_Infinies.Combat
         {
             this.Events = new List<MatchEvent>();
 
-            this.Events.Add(new CardDamageEvent(currentPlayerData, card, ennemyCard));
+            this.Events.Add(new CardDamageEvent(oppPlayerData, card.Attack, ennemyCard));
             if(ennemyCard.Health > 0)
             {
-                this.Events.Add(new CardDamageEvent(oppPlayerData, card, ennemyCard));
+                this.Events.Add(new CardDamageEvent(currentPlayerData, ennemyCard.Attack, card));
             }
         }
     }

@@ -12,7 +12,7 @@ namespace Super_Cartes_Infinies.Combat
         {
             this.Events = new List<MatchEvent>();
             
-            for (int i = 0; i < currentPlayerData.BattleField.Count() - 1; i++)
+            for (int i = 0; i < currentPlayerData.BattleField.Count(); i++)
             {
                 this.Events.Add(new CardHealEvent(currentPlayerData.BattleField[i],card.GetPowerValue(Power.HEAL_ID)));
 

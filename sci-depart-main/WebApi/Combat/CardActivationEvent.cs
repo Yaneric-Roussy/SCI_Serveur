@@ -27,9 +27,13 @@ namespace Super_Cartes_Infinies.Combat
                 if (card.HasPower(Power.FIRST_STRIKE_ID))
                 {
                     this.Events.Add(new FirstStrikeEvent(currentPlayerData, card, ennemyCard, opposingPlayerData));
+                    //if (opposingPlayerData.BattleField.Contains(ennemyCard))
+                    //{
+                    //    this.Events.Add(new CardDamageEvent(currentPlayerData, ennemyCard.Attack, card));
+                    //}
                 }
             }
-            if (!card.HasPower(Power.FIRST_STRIKE_ID))
+            if (!card.HasPower(Power.FIRST_STRIKE_ID) && currentPlayerData.BattleField.Contains(card))
             {
                 this.Events.Add(new AttackEvent(match, ennemyCard, card, currentPlayerData, opposingPlayerData));
             }
