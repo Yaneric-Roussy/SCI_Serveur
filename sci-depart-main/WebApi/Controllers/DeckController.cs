@@ -65,10 +65,10 @@ namespace WebApi.Controllers
         }
         [HttpDelete]
         [Authorize]
-        public async Task<ActionResult<Deck>> Deletedeck(int deckID)
+        public async Task<ActionResult> Deletedeck(int deckID)
         {
-
-            return Ok(await _deckService.Deletedeck(deckID));
+            await _deckService.Deletedeck(deckID);
+            return Ok();
         }
         [HttpPost]
         public async Task<ActionResult<Deck>> SetCourantDeck(int deckID, int PlayerID)

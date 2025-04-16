@@ -100,6 +100,7 @@ namespace WebApi.Services
         }
         public async Task <Deck> DeleteCarte(int DeckID , int ownedCardId)
         {
+           _dbContext.SaveChanges();
             Deck deckCourant = await _dbContext.Decks.FirstOrDefaultAsync(d=>d.Id ==DeckID);
             OwnedCard carteAsuprrimé = await _dbContext.OwnedCard.FirstOrDefaultAsync(d => d.Id == ownedCardId);
             deckCourant.CarteJoueurs.Remove(carteAsuprrimé);
@@ -117,21 +118,21 @@ namespace WebApi.Services
 
 
         }
-        public async Task<Deck> Deletedeck(int deckID)
+        public async Task Deletedeck(int deckID)
         {
-              _dbContext.SaveChanges();
+            //_dbContext.SaveChanges();
             Deck deck = await _dbContext.Decks.FirstOrDefaultAsync(d => d.Id == deckID);
             if (deck.Courant != true)
             {
                 _dbContext.Remove(deck);
                 await _dbContext.SaveChangesAsync();
             }
-            return deck;
         }   
         public async Task<Deck> SetCourantDeck(int deckID, int PlayerID)
 
         {
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
+           
             var userDecks = await _dbContext.Decks.Where(d => d.PlayerId == PlayerID).ToListAsync();
             Deck deck = await _dbContext.Decks.FirstOrDefaultAsync(d => d.Id == deckID);
             if (deck.Courant != true)
