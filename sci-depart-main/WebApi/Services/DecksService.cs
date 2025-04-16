@@ -78,7 +78,12 @@ namespace WebApi.Services
               
                 ownedCard.Card = card;
                deckCourant.CarteJoueurs.Add(ownedCard);
-                
+                var x = deckCourant.CarteSuprime.FirstOrDefault(carte => carte.Card.Id == cardID);
+                if (x != null)
+                {
+                    deckCourant.CarteSuprime.Remove(x);
+
+                }
                 
 
             }
@@ -98,7 +103,13 @@ namespace WebApi.Services
             Deck deckCourant = await _dbContext.Decks.FirstOrDefaultAsync(d=>d.Id ==DeckID);
             OwnedCard carteAsuprrimé = await _dbContext.OwnedCard.FirstOrDefaultAsync(d => d.Id == ownedCardId);
             deckCourant.CarteJoueurs.Remove(carteAsuprrimé);
-            deckCourant.CarteSuprime.Add(carteAsuprrimé);
+            var x = deckCourant.CarteSuprime.FirstOrDefault(x => x.Card.Id == carteAsuprrimé.Card.Id);
+
+            if (x == null)
+            {
+                deckCourant.CarteSuprime.Add(carteAsuprrimé);
+            }
+           
             await _dbContext.SaveChangesAsync();
 
             return deckCourant;
