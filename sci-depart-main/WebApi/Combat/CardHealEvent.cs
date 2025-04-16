@@ -6,7 +6,9 @@ namespace Super_Cartes_Infinies.Combat
     public class CardHealEvent : MatchEvent
     {
         public override string EventType { get { return "CardHeal"; } }
-
+        public int PlayerId { get; set; }
+        public int Heal { get; set; }
+        public int CardInt { get; set; }
         public CardHealEvent(PlayableCard card, int amount)
         {
             //Vérifie que la carte est vivante

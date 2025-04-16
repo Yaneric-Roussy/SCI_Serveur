@@ -11,30 +11,32 @@ namespace Super_Cartes_Infinies.Combat
         {
 
             this.Events = new List<MatchEvent>();
-
+            if (card.HasPower(4))
+            {
+                card.Attack += card.GetPowerValue(4);
+            }
             if (card.HasPower(Power.HEAL_ID))
             {
                 this.Events.Add(new HealEvent(currentPlayerData, card));
             }
-            if (ennemyCard != null && ennemyCard.HasPower(Power.THORNS_ID))
-            {
-                this.Events.Add(new ThornsEvent(currentPlayerData, card, ennemyCard));
-            }
-            if (card.HasPower(Power.FIRST_STRIKE_ID))
-            {
-                this.Events.Add(new FirstStrikeEvent());
-            }
-            
-            
-            if (card.HasPower(4))
-            {
-                this.Events.Add(new FirstStrikeEvent());
+            if(ennemyCard != null) {          
+                if (ennemyCard.HasPower(Power.THORNS_ID))
+                {
+                    this.Events.Add(new ThornsEvent(currentPlayerData, card, ennemyCard));
+                }
+                if (card.HasPower(Power.FIRST_STRIKE_ID))
+                {
+                    this.Events.Add(new FirstStrikeEvent(currentPlayerData, card, ennemyCard, opposingPlayerData));
+                }
             }
             if (!card.HasPower(Power.FIRST_STRIKE_ID))
             {
                 this.Events.Add(new AttackEvent(match, ennemyCard, card, currentPlayerData, opposingPlayerData));
             }
-            
+            if (card.HasPower(4))
+            {
+                card.Attack -= card.GetPowerValue(4);
+            }
             //if (ennemyCard == null)
             //{
             //    //Pas de cartes ennemy
@@ -47,7 +49,7 @@ namespace Super_Cartes_Infinies.Combat
             //    this.Events.Add(new AttackEvent(match, ennemyCard, card, currentPlayerData, opposingPlayerData));
             //    this.Events.Add(new AttackEvent(match, card, ennemyCard, currentPlayerData, opposingPlayerData));
             //}
-            
+
 
         }
 

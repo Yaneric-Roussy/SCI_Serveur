@@ -8,16 +8,16 @@ namespace Super_Cartes_Infinies.Combat
         public override string EventType { get { return "PlayCard"; } }
         // TODO: Ajouter tout ce qui manque
         public int CardId { get; set; }
+        public int Cost { get; set; }
         public int PlayerId { get; set; }
-        public PlayCardEvent(MatchPlayerData currentPlayerData, int playableCardId)
+        public PlayCardEvent(MatchPlayerData currentPlayerData, PlayableCard playableCard)
         {
+            currentPlayerData.Mana -= playableCard.Card.Cost;
+            Cost = playableCard.Card.Cost;
             PlayerId = currentPlayerData.PlayerId;
-            CardId = playableCardId;
-            PlayableCard? card = currentPlayerData.Hand.Find(e => e.Id == playableCardId);
-            if (card != null ) {
-                currentPlayerData.Hand.Remove(card);
-                currentPlayerData.BattleField.Add(card);
-            }
+            CardId = playableCard.Id;
+            currentPlayerData.Hand.Remove(playableCard);
+            currentPlayerData.BattleField.Add(playableCard);
         }
     }
 }

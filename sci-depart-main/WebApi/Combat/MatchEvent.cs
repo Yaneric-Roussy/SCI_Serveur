@@ -11,7 +11,6 @@ namespace Super_Cartes_Infinies.Combat
     [JsonDerivedType(typeof(PlayerDeathEvent))]
     [JsonDerivedType(typeof(StartMatchEvent))]
     [JsonDerivedType(typeof(SurrenderEvent))]
-    [JsonDerivedType(typeof(AttackBoostEvent))]
     [JsonDerivedType(typeof(AttackEvent))]
     [JsonDerivedType(typeof(CardActivationEvent))]
     [JsonDerivedType(typeof(CardDamageEvent))]

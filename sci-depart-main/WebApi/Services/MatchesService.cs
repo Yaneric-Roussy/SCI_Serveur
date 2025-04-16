@@ -222,8 +222,16 @@ namespace Super_Cartes_Infinies.Services
             {
                 currentPlayerData = match.PlayerDataB;
             }
-
-            var playCardEvent = new PlayCardEvent(currentPlayerData, cardId);
+            PlayableCard? card = currentPlayerData.Hand.Find(e => e.Id == cardId);
+            if(card == null)
+            {
+                throw new Exception("La carte n'a pas été trouvé dans le jeu du joueur");
+            }
+            if(currentPlayerData.Mana - card.Card.Cost < 0)
+            {
+                throw new Exception("Pas assez de mana");
+            }
+            var playCardEvent = new PlayCardEvent(currentPlayerData, card);
 
             await _dbContext.SaveChangesAsync();
 
