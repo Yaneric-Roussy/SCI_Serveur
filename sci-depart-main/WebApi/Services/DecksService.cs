@@ -131,7 +131,8 @@ namespace WebApi.Services
         public async Task<Deck> SetCourantDeck(int deckID, int PlayerID)
 
         {
-             var userDecks = await _dbContext.Decks.Where(d => d.PlayerId == PlayerID).ToListAsync();
+            await _dbContext.SaveChangesAsync();
+            var userDecks = await _dbContext.Decks.Where(d => d.PlayerId == PlayerID).ToListAsync();
             Deck deck = await _dbContext.Decks.FirstOrDefaultAsync(d => d.Id == deckID);
             if (deck.Courant != true)
             {
