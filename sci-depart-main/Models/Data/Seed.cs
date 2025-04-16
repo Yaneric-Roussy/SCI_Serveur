@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using Microsoft.AspNetCore.Identity;
+using Models.Models;
 using Super_Cartes_Infinies.Models;
 
 namespace Super_Cartes_Infinies.Data
@@ -231,6 +232,43 @@ namespace Super_Cartes_Infinies.Data
                     Id = 2,
                     Name = "Test player 2",
                     UserId = "User2Id"
+                }
+            };
+        }
+        public static Pack[] SeedPacks()
+        {
+            return new Pack[] {
+                new Pack
+                {
+                    Id = 1,
+                    Name = "Le platre",
+                    NbCard = 3,
+                    Cost=1,
+                    ImageUrl="https://www.realite-virtuelle.com/wp-content/uploads/2021/02/rayquaza-tout-savoir-guide.jpg"
+                    ,Rareté = 0,
+                    Type=0
+                },
+                new Pack
+                {
+                    Id = 2,
+                    Name = "La brique",
+                    NbCard=4,
+                    Cost=2,
+                    ImageUrl="https://static.wikia.nocookie.net/nintendo/images/7/7c/TCG_Zygarde_Complete_Form_2.png/revision/latest/scale-to-width-down/250?cb=20230720033717&path-prefix=en",
+                    Rareté = 0,
+                    Type = Pack.type.Normal
+
+                },
+                  new Pack
+                {
+                    Id = 3,
+                    Name = "La céramique",
+                    NbCard=5,
+                    Cost=2,
+                    ImageUrl="https://m.media-amazon.com/images/I/61y74SPNLnL._AC_UF894,1000_QL80_.jpg",
+                    Rareté = Pack.rareté.Rare,
+                    Type = Pack.type.Super
+
                 }
             };
         }
