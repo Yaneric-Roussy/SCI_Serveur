@@ -20,9 +20,14 @@ namespace Super_Cartes_Infinies.Models
 		public virtual Card Card { get; set; }
 		public int Health { get; set; }
         public int Attack { get; set; }
+        public int Index { get; set; }
 
         public bool HasPower(int powerId)
         {
+            if(Card.CardPowers == null)
+            {
+                return false;
+            }
             foreach(CardPower cardPower in Card.CardPowers)
             {
                 if (cardPower.PowerId == powerId || cardPower.Power.Id == powerId)

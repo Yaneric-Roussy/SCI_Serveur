@@ -52,27 +52,35 @@ public class MatchHub : Hub
         }
         else if(joiningMatchData != null)
         {
+            string groupName = WriteGroupName(joiningMatchData.Match.Id);
             if (joiningMatchData.OtherPlayerConnectionId != null)
             {
-                string groupName = WriteGroupName(joiningMatchData.Match.Id);
-                
-                //Add both users to a group. Should only happen once (when starting the game)
-                await Groups.AddToGroupAsync(signalRId, groupName);
+                //Ajout l'autre utilisateur au groupe puisque le match vient juste de commencer.
                 await Groups.AddToGroupAsync(joiningMatchData.OtherPlayerConnectionId, groupName);
-
                 await Clients.Client(joiningMatchData.OtherPlayerConnectionId).SendAsync("joiningMatchData", joiningMatchData);
             }
+            //Cette partie s'active tjrs et dois ajouter le user au groupe pour que s'il essaye de rejoin il fait tjrs partie du groupe.
+            //Add both users to a group. Should happen every reload and at the start of the game
+            await Groups.AddToGroupAsync(signalRId, groupName);
             await Clients.Client(signalRId).SendAsync("JoiningMatchData", joiningMatchData);
         }
     }
 
     public async Task StartMatchEvent(Match match)
     {
-        StartMatchEvent startMatchEvent = await _matchesService.StartMatch(userId, match);
+        StartMatchEvent startMatchEvent = await _matchesService.StartMatch(userId, match.Id);
+        string groupName = WriteGroupName(match.Id);
+        await Clients.Group(groupName).SendAsync("ApplyEvents", startMatchEvent);
+        
 
-        await Clients.Client(signalRId).SendAsync("ApplyEvents", startMatchEvent);
     }
-
+    public async Task PlayCard(Match match,int cardInt )
+    {
+        
+        PlayCardEvent playCardEvent = await _matchesService.PlayCard(userId, match.Id, cardInt);
+        string groupName = WriteGroupName(match.Id);
+        await Clients.Group(groupName).SendAsync("PlayCard", playCardEvent);
+    }
     public async Task EndTurn(int matchId)
     {
         PlayerEndTurnEvent endTurnEvent = await _matchesService.EndTurn(userId, matchId);

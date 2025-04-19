@@ -350,6 +350,148 @@ namespace Tests.Services
             Assert.IsTrue(_card.HasPower(3));
             Assert.AreEqual(_card.GetPowerValue(3), 4);
         }
+        [TestMethod]
+        public void AttackBoostTueEnnemyTest()
+        {
+            Power boostPower = new Power
+            {
+                Id = 4
+            };
+
+            // On donne le pouvoir Boost à l'attaquant
+            CardPower cardPower = new CardPower
+            {
+                Power = boostPower,
+                Card = _cardB,
+                Value = 3
+            };
+            _cardA.CardPowers = new List<CardPower> { cardPower };
+
+
+            //3 health
+            //2 attack
+            _currentPlayerData.BattleField.Add(_playableCardA);
+
+            //5 healt
+            //1 attack
+            _opposingPlayerData.BattleField.Add(_playableCardB);
+
+
+            var playerTurnEvent = new PlayerEndTurnEvent(_match, _currentPlayerData, _opposingPlayerData, NB_MANA_PER_TURN);
+
+            Assert.AreEqual(_currentPlayerData.PlayerId, playerTurnEvent.PlayerId);
+
+            // _playableCardB devrait avoir perdu les vies de l'attaque de carte plus de son pouvoir         
+            Assert.AreEqual(_cardB.Health - (cardPower.Value + _cardA.Attack), _playableCardB.Health);
+
+            // damagePlayableCard devrait avoir été guéri de 3 de ses 4 de dégâts
+            Assert.AreEqual(0, _playableCardB.Health);
+
+            // Toutes les cartes sont encore en jeu et la carte morte est dans le graveyard
+            Assert.AreEqual(1, _currentPlayerData.BattleField.Count);
+            Assert.AreEqual(0, _currentPlayerData.Graveyard.Count);
+            Assert.AreEqual(0, _opposingPlayerData.BattleField.Count);
+            Assert.AreEqual(1, _opposingPlayerData.Graveyard.Count);
+        }
+
+        [TestMethod]
+        public void AttackBoostNeTuePasEnnemyTest()
+        {
+            Power boostPower = new Power
+            {
+                Id = 4
+            };
+
+            // On donne le pouvoir Boost à l'attaquant
+            CardPower cardPower = new CardPower
+            {
+                Power = boostPower,
+                Card = _cardB,
+                Value = 2
+            };
+            _cardA.CardPowers = new List<CardPower> { cardPower };
+
+
+            //3 health
+            //2 attack
+            _currentPlayerData.BattleField.Add(_playableCardA);
+
+            //5 healt
+            //1 attack
+            _opposingPlayerData.BattleField.Add(_playableCardB);
+
+
+            var playerTurnEvent = new PlayerEndTurnEvent(_match, _currentPlayerData, _opposingPlayerData, NB_MANA_PER_TURN);
+
+            Assert.AreEqual(_currentPlayerData.PlayerId, playerTurnEvent.PlayerId);
+
+            // _playableCardB devrait avoir perdu les vies de l'attaque de carte plus de son pouvoir         
+            Assert.AreEqual(_cardB.Health - (cardPower.Value + _cardA.Attack), _playableCardB.Health);
+
+            Assert.AreEqual(_cardA.Health - _cardB.Attack, _playableCardA.Health);
+            //playableCardB devrait avoir 2 vies (ne regarde pas l'orthorgraphe s'il te plait).
+            Assert.AreEqual(1, _playableCardB.Health);
+            //playableCardA devrait avoir 2 vies 
+            Assert.AreEqual(2, _playableCardA.Health);
+
+            // Toutes les cartes sont encore en jeu et la carte morte est dans le graveyard
+            Assert.AreEqual(1, _currentPlayerData.BattleField.Count);
+            Assert.AreEqual(0, _currentPlayerData.Graveyard.Count);
+            Assert.AreEqual(1, _opposingPlayerData.BattleField.Count);
+            Assert.AreEqual(0, _opposingPlayerData.Graveyard.Count);
+        }
+
+        [TestMethod]
+        public void AttackBoostNeTuePasEnnemyMaisMeurtTest()
+        {
+            Power boostPower = new Power
+            {
+                Id = 4
+            };
+
+            // On donne le pouvoir Boost à l'attaquant
+            CardPower cardPower = new CardPower
+            {
+                Power = boostPower,
+                Card = _cardB,
+                Value = 2
+            };
+            _cardA.CardPowers = new List<CardPower> { cardPower };
+            _cardB.Attack = 3;
+            var damagedPlayableCard = new PlayableCard(_cardB)
+            {
+                Id = 3
+            };
+
+
+            //3 health
+            //2 attack
+            _currentPlayerData.BattleField.Add(_playableCardA);
+
+            //5 healt
+            //1 attack
+            _opposingPlayerData.BattleField.Add(damagedPlayableCard);
+
+
+            var playerTurnEvent = new PlayerEndTurnEvent(_match, _currentPlayerData, _opposingPlayerData, NB_MANA_PER_TURN);
+
+            Assert.AreEqual(_currentPlayerData.PlayerId, playerTurnEvent.PlayerId);
+
+            // _playableCardB devrait avoir perdu les vies de l'attaque de carte plus de son pouvoir         
+            Assert.AreEqual(_cardB.Health - (cardPower.Value + _cardA.Attack), damagedPlayableCard.Health);
+
+            Assert.AreEqual(_cardA.Health - _cardB.Attack, _playableCardA.Health);
+            //playableCardB devrait avoir 2 vies (ne regarde pas l'orthorgraphe s'il te plait).
+            Assert.AreEqual(1, damagedPlayableCard.Health);
+            //playableCardA devrait avoir 2 vies 
+            Assert.AreEqual(0, _playableCardA.Health);
+
+            // Toutes les cartes sont encore en jeu et la carte morte est dans le graveyard
+            Assert.AreEqual(0, _currentPlayerData.BattleField.Count);
+            Assert.AreEqual(1, _currentPlayerData.Graveyard.Count);
+            Assert.AreEqual(1, _opposingPlayerData.BattleField.Count);
+            Assert.AreEqual(0, _opposingPlayerData.Graveyard.Count);
+        }
     }
 }
 
