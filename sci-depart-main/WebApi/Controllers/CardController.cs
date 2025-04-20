@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Models.Models;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Services;
@@ -92,6 +93,21 @@ namespace Super_Cartes_Infinies.Controllers
                     return Ok(list.OrderBy(i => i.Cost));
             }
             return BadRequest("Champ de tri invalide");
+        }
+
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult<IEnumerable<Pack>> GetAllPacks()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+                return Unauthorized();
+
+            var list = _cardsService.GetPacks();
+            return Ok(list.OrderBy(i => i.Type));
+
+
         }
     }
 }

@@ -17,9 +17,9 @@ namespace Models.Models
         public int NbCard { get; set; }
         public int Cost { get; set; }
         public string ImageUrl { get; set; } = "";
-        public rareté Rareté { get; set; } = 0;
+        public raretéPack Rareté { get; set; } = 0;
         public type Type { get; set; } = 0;
-        public enum rareté { Commune, Rare, Épique, Légendaire };
+        public enum raretéPack { Commune, Rare, Épique, Légendaire };
         public enum type { Basic,  Normal, Super };
 
     }

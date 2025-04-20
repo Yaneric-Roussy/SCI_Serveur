@@ -1,4 +1,5 @@
-﻿using Super_Cartes_Infinies.Data;
+﻿using Models.Models;
+using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
 
 namespace Super_Cartes_Infinies.Services
@@ -32,6 +33,11 @@ namespace Super_Cartes_Infinies.Services
         public IEnumerable<Card> GetAllCards()
         {
             return _dbContext.Cards;
+        }
+
+        public IEnumerable<Pack> GetPacks()
+        {
+            return _dbContext.Packs;
         }
     }
 }

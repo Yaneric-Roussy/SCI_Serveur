@@ -266,7 +266,7 @@ namespace Super_Cartes_Infinies.Data
                     NbCard=5,
                     Cost=2,
                     ImageUrl="https://m.media-amazon.com/images/I/61y74SPNLnL._AC_UF894,1000_QL80_.jpg",
-                    Rareté = Pack.rareté.Rare,
+                    Rareté = Pack.raretéPack.Rare,
                     Type = Pack.type.Super
 
                 }
