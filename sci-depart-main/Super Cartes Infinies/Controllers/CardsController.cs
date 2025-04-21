@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using Models.Models;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
@@ -42,7 +39,6 @@ namespace Super_Cartes_Infinies.Controllers
             {
                 return NotFound();
             }
-
             return View(card);
         }
 
@@ -81,7 +77,100 @@ namespace Super_Cartes_Infinies.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["PowersList"] = new SelectList(await GetAvailablePowers(card), "Id", "Display");
             return View(card);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteCardPower(int? cardPowerId, int? cardId)
+        {
+            if (cardPowerId == null || cardId == null)
+            {
+                return NotFound();
+            }
+
+            var cardPower = await _context.CardPower.FindAsync(cardPowerId);
+            var card = await _context.Cards.FindAsync(cardId);
+            if (cardPower == null || card == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                _context.CardPower.Remove(cardPower);
+                await _context.SaveChangesAsync();
+                ViewData["PowersList"] = new SelectList(await GetAvailablePowers(card), "Id", "Display");
+            }
+
+            return RedirectToAction(nameof(Edit), "Cards", new { id = card.Id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddCardPower(int? powerId, int? powerValue, int? cardId)
+        {
+            if(powerId == null || cardId == null)
+            {
+                return NotFound();
+            }
+            if (powerValue == null)
+                powerValue = 0;
+
+            var card = await _context.Cards.FindAsync(cardId);
+            var power = await _context.Power.FindAsync(powerId);
+            if(card == null || power == null)
+            {
+                return NotFound();
+            }
+
+            CardPower cardPower = new CardPower
+            {
+                PowerId = (int)powerId,
+                CardId = (int)cardId,
+                Card = card,
+                Power = power,
+                Value = (int)powerValue
+            };
+
+            _context.CardPower.Add(cardPower);
+            await _context.SaveChangesAsync();
+
+            ViewData["PowersList"] = new SelectList(await GetAvailablePowers(card), "Id", "Display");
+            return RedirectToAction(nameof(Edit), "Cards", new { id = card.Id });
+
+        }
+
+        public async Task<List<object>> GetAvailablePowers(Card card)
+        {
+            var assignedPowerIds = card.CardPowers.Select(cp => cp.Power.Id).ToList();
+
+            if(assignedPowerIds.Count != 0)
+            {
+                var availablePowers = await _context.Power
+                    .Where(p => !assignedPowerIds.Contains(p.Id))
+                    .Select(p => new
+                    {
+                        p.Id,
+                        Display = p.IconeURL + " " + p.Name
+                    })
+                    .Cast<object>() //Cast en objet car pas de classe avec Id et Display
+                    .ToListAsync();
+
+                return availablePowers;
+            }
+
+            var allPowers = await _context.Power
+                .Select(p => new
+                {
+                    p.Id,
+                    Display = p.IconeURL + " " + p.Name
+                })
+                .Cast<object>()
+                .ToListAsync();
+
+            return allPowers;
         }
 
         // POST: Cards/Edit/5
