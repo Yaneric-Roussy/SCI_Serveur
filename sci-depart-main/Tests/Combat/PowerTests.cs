@@ -355,7 +355,7 @@ namespace Tests.Services
         {
             Power boostPower = new Power
             {
-                Id = 4
+                Id = Power.ATTACK_BOOST_ID
             };
 
             // On donne le pouvoir Boost à l'attaquant
@@ -384,7 +384,7 @@ namespace Tests.Services
             // _playableCardB devrait avoir perdu les vies de l'attaque de carte plus de son pouvoir         
             Assert.AreEqual(_cardB.Health - (cardPower.Value + _cardA.Attack), _playableCardB.Health);
 
-            // damagePlayableCard devrait avoir été guéri de 3 de ses 4 de dégâts
+            // damagePlayableCard devrait être morte
             Assert.AreEqual(0, _playableCardB.Health);
 
             // Toutes les cartes sont encore en jeu et la carte morte est dans le graveyard
@@ -399,7 +399,7 @@ namespace Tests.Services
         {
             Power boostPower = new Power
             {
-                Id = 4
+                Id = Power.ATTACK_BOOST_ID
             };
 
             // On donne le pouvoir Boost à l'attaquant
@@ -429,7 +429,7 @@ namespace Tests.Services
             Assert.AreEqual(_cardB.Health - (cardPower.Value + _cardA.Attack), _playableCardB.Health);
 
             Assert.AreEqual(_cardA.Health - _cardB.Attack, _playableCardA.Health);
-            //playableCardB devrait avoir 2 vies (ne regarde pas l'orthorgraphe s'il te plait).
+            //playableCardB devrait avoir 1 vies (ne regarde pas l'orthorgraphe s'il te plait).
             Assert.AreEqual(1, _playableCardB.Health);
             //playableCardA devrait avoir 2 vies 
             Assert.AreEqual(2, _playableCardA.Health);
@@ -446,7 +446,7 @@ namespace Tests.Services
         {
             Power boostPower = new Power
             {
-                Id = 4
+                Id = Power.ATTACK_BOOST_ID
             };
 
             // On donne le pouvoir Boost à l'attaquant
@@ -469,9 +469,8 @@ namespace Tests.Services
             _currentPlayerData.BattleField.Add(_playableCardA);
 
             //5 healt
-            //1 attack
+            //3 attack
             _opposingPlayerData.BattleField.Add(damagedPlayableCard);
-
 
             var playerTurnEvent = new PlayerEndTurnEvent(_match, _currentPlayerData, _opposingPlayerData, NB_MANA_PER_TURN);
 
@@ -481,9 +480,9 @@ namespace Tests.Services
             Assert.AreEqual(_cardB.Health - (cardPower.Value + _cardA.Attack), damagedPlayableCard.Health);
 
             Assert.AreEqual(_cardA.Health - _cardB.Attack, _playableCardA.Health);
-            //playableCardB devrait avoir 2 vies (ne regarde pas l'orthorgraphe s'il te plait).
+            //playableCardB devrait avoir 1 vies (ne regarde pas l'orthorgraphe s'il te plait).
             Assert.AreEqual(1, damagedPlayableCard.Health);
-            //playableCardA devrait avoir 2 vies 
+            //playableCardA devrait avoir 0 vies, donc morte.
             Assert.AreEqual(0, _playableCardA.Health);
 
             // Toutes les cartes sont encore en jeu et la carte morte est dans le graveyard
@@ -491,6 +490,7 @@ namespace Tests.Services
             Assert.AreEqual(1, _currentPlayerData.Graveyard.Count);
             Assert.AreEqual(1, _opposingPlayerData.BattleField.Count);
             Assert.AreEqual(0, _opposingPlayerData.Graveyard.Count);
+
         }
     }
 }

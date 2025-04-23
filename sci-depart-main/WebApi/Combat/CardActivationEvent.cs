@@ -11,15 +11,16 @@ namespace Super_Cartes_Infinies.Combat
         {
 
             this.Events = new List<MatchEvent>();
-            if (card.HasPower(4))
+            if (card.HasPower(Power.ATTACK_BOOST_ID))
             {
-                card.Attack += card.GetPowerValue(4);
+                card.Attack += card.GetPowerValue(Power.ATTACK_BOOST_ID);
+                this.Events.Add(new DamageBoostEvent(currentPlayerData, card));
             }
             if (card.HasPower(Power.HEAL_ID))
             {
                 this.Events.Add(new HealEvent(currentPlayerData, card));
             }
-            if(ennemyCard != null) {          
+            if(ennemyCard != null) {
                 if (ennemyCard.HasPower(Power.THORNS_ID))
                 {
                     this.Events.Add(new ThornsEvent(currentPlayerData, card, ennemyCard));
@@ -33,13 +34,13 @@ namespace Super_Cartes_Infinies.Combat
                     //}
                 }
             }
-            if (!card.HasPower(Power.FIRST_STRIKE_ID) && currentPlayerData.BattleField.Contains(card))
+            if ((!card.HasPower(Power.FIRST_STRIKE_ID) || ennemyCard == null) && currentPlayerData.BattleField.Contains(card))
             {
                 this.Events.Add(new AttackEvent(match, ennemyCard, card, currentPlayerData, opposingPlayerData));
             }
-            if (card.HasPower(4))
+            if (card.HasPower(Power.ATTACK_BOOST_ID))
             {
-                card.Attack -= card.GetPowerValue(4);
+                card.Attack -= card.GetPowerValue(Power.ATTACK_BOOST_ID);
             }
             //if (ennemyCard == null)
             //{
