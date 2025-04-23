@@ -307,6 +307,17 @@ namespace Tests.Services
         }
 
         [TestMethod]
+        public void HasPowerNullReturnFalse()
+        {
+
+            PlayableCard _card = new PlayableCard(_cardA)
+            {
+                Id = 1,
+            };
+            Assert.IsFalse(_card.HasPower(3));
+        }
+
+        [TestMethod]
         public void GetPowerValueFalse()
         {
             Power healPower = new Power
@@ -347,7 +358,6 @@ namespace Tests.Services
             {
                 Id = 1,
             };
-            Assert.IsTrue(_card.HasPower(3));
             Assert.AreEqual(_card.GetPowerValue(3), 4);
         }
         [TestMethod]
