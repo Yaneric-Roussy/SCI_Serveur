@@ -33,7 +33,7 @@ namespace Super_Cartes_Infinies.Combat
                     //}
                 }
             }
-            if (!card.HasPower(Power.FIRST_STRIKE_ID) && currentPlayerData.BattleField.Contains(card))
+            if ((!card.HasPower(Power.FIRST_STRIKE_ID) || ennemyCard == null) && currentPlayerData.BattleField.Contains(card))
             {
                 this.Events.Add(new AttackEvent(match, ennemyCard, card, currentPlayerData, opposingPlayerData));
             }
