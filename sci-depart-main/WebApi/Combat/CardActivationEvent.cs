@@ -6,18 +6,24 @@ namespace Super_Cartes_Infinies.Combat
     public class CardActivationEvent : MatchEvent
     {
         public override string EventType { get { return "CardActivation"; } }
-
+        public int CardId { get; set; }
+        public List<int> PowerIds { get; set; }
         public CardActivationEvent(Match match, PlayableCard card, PlayableCard? ennemyCard, MatchPlayerData currentPlayerData, MatchPlayerData opposingPlayerData)
         {
 
             this.Events = new List<MatchEvent>();
+            this.CardId = card.Id;
+            this.PowerIds = new List<int>();
+
             if (card.HasPower(Power.ATTACK_BOOST_ID))
             {
+                PowerIds.Add(Power.ATTACK_BOOST_ID);
                 card.Attack += card.GetPowerValue(Power.ATTACK_BOOST_ID);
                 this.Events.Add(new DamageBoostEvent(currentPlayerData, card));
             }
             if (card.HasPower(Power.HEAL_ID))
             {
+                PowerIds.Add(Power.HEAL_ID);
                 this.Events.Add(new HealEvent(currentPlayerData, card));
             }
             if(ennemyCard != null) {
@@ -27,6 +33,7 @@ namespace Super_Cartes_Infinies.Combat
                 }
                 if (card.HasPower(Power.FIRST_STRIKE_ID))
                 {
+                    PowerIds.Add(Power.FIRST_STRIKE_ID);
                     this.Events.Add(new FirstStrikeEvent(currentPlayerData, card, ennemyCard, opposingPlayerData));
                     //if (opposingPlayerData.BattleField.Contains(ennemyCard))
                     //{
