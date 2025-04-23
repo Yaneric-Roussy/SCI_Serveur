@@ -53,6 +53,7 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<StartingCard> StartingCards { get; set; } = default!;
     public DbSet<MatchPlayerData> MatchPlayersData { get; set; } = default!;
     public DbSet<GameConfig> GameConfig { get; set; } = default!;
+    public DbSet<Deck> Decks { get; set; } = default!;
     public DbSet<Power> Power { get; set; } = default!;
     public DbSet<CardPower> CardPower { get; set; } = default!;
 }

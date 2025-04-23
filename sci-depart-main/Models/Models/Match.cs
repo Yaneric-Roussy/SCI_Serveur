@@ -1,4 +1,5 @@
 ﻿using Models.Interfaces;
+using Models.Models;
 
 namespace Super_Cartes_Infinies.Models
 {
@@ -9,14 +10,14 @@ namespace Super_Cartes_Infinies.Models
 		}
 
         // Pour créer un nouveau match pour 2 joueurs
-        public Match(Player playerA, Player playerB, IEnumerable<Card> cards)
+        public Match(Player playerA, Player playerB, IEnumerable<Card> cardsPlayerA, IEnumerable<Card> cardsPlayerB)
         {
             Id = 0;
             IsMatchCompleted = false;
             UserAId = playerA.UserId;
-            PlayerDataA = new MatchPlayerData(playerA, cards);
+            PlayerDataA = new MatchPlayerData(playerA, cardsPlayerA);
             UserBId = playerB.UserId;
-            PlayerDataB = new MatchPlayerData(playerB, cards);
+            PlayerDataB = new MatchPlayerData(playerB, cardsPlayerB);
         }
 
         public int Id { get; set; }

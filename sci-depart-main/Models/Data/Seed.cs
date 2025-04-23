@@ -19,7 +19,9 @@ namespace Super_Cartes_Infinies.Data
             {
                 Id = 1,
                 nbCardsToDraw = 4,
-                Mana = 3
+                Mana = 3,
+                nbMaxCartesDecks = 10,
+                nbMaxDecks = 3,
             }
             };
 
