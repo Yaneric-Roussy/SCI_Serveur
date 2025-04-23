@@ -98,8 +98,13 @@ namespace Super_Cartes_Infinies.Services
         }
 
         // L'action retourne le json de l'event de création de match (StartMatchEvent)
-        public async Task<StartMatchEvent> StartMatch(string currentUserId, Match match)
+        public async Task<StartMatchEvent> StartMatch(string currentUserId, int matchId)
         {
+            Match? match = await _dbContext.Matches.FirstOrDefaultAsync(m => m.Id == matchId);
+            if (match == null)
+            {
+                return null;
+            }
             MatchPlayerData currentPlayerData;
             MatchPlayerData opposingPlayerData;
 
@@ -121,7 +126,6 @@ namespace Super_Cartes_Infinies.Services
             int nbCardsToDraw = _matchConfigurationService.GetNbCardsToDraw();
             int nbManaPerTurn = _matchConfigurationService.GetNbManaPerTurn();
             var startMatchEvent = new StartMatchEvent(match, currentPlayerData, opposingPlayerData, nbCardsToDraw, nbManaPerTurn);
-            
             await _dbContext.SaveChangesAsync();
 
             return startMatchEvent;
@@ -197,6 +201,47 @@ namespace Super_Cartes_Infinies.Services
             await _dbContext.SaveChangesAsync();
 
             return surrenderEvent;
+        }
+
+        //PlayCard service
+
+        public async Task<PlayCardEvent> PlayCard(string userId, int matchId, int cardId)
+        {
+            Match? match = await _dbContext.Matches.FindAsync(matchId);
+
+            if (match == null)
+                throw new Exception("Impossible de trouver le match");
+
+            if (match.IsMatchCompleted)
+                throw new Exception("Le match est déjà terminé");
+
+            if (match.UserAId != userId && match.UserBId != userId)
+                throw new Exception("Le joueur n'est pas dans ce match");
+
+            MatchPlayerData currentPlayerData;
+
+            if (match.UserAId == userId)
+            {
+                currentPlayerData = match.PlayerDataA;
+            }
+            else
+            {
+                currentPlayerData = match.PlayerDataB;
+            }
+            PlayableCard? card = currentPlayerData.Hand.Find(e => e.Id == cardId);
+            if(card == null)
+            {
+                throw new Exception("La carte n'a pas été trouvé dans le jeu du joueur");
+            }
+            if(currentPlayerData.Mana - card.Card.Cost < 0)
+            {
+                throw new Exception("Pas assez de mana");
+            }
+            var playCardEvent = new PlayCardEvent(currentPlayerData, card);
+
+            await _dbContext.SaveChangesAsync();
+
+            return playCardEvent;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Super_Cartes_Infinies.Models;
+﻿
+using Super_Cartes_Infinies.Models;
 
 namespace Super_Cartes_Infinies.Combat
 {
