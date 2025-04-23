@@ -22,7 +22,7 @@ public class MatchHub : Hub
         _context = context;
         _matchesService = matchesService;
     }
-    private static Dictionary<string, string> _userConnections = new();
+    //private static Dictionary<string, string> _userConnections = new();
     private string signalRId
     {
         get { return Context.ConnectionId!; }
@@ -39,7 +39,7 @@ public class MatchHub : Hub
     {
         //Add user to dictionnary
         var userId = Context.UserIdentifier; 
-        _userConnections[userId] = Context.ConnectionId!;
+        //_userConnections[userId] = Context.ConnectionId!;
         await base.OnConnectedAsync();
     }
 
@@ -99,7 +99,7 @@ public class MatchHub : Hub
     public override Task OnDisconnectedAsync(Exception? exception)
     {
         var userId = Context.UserIdentifier;
-        _userConnections.Remove(userId);
+        //_userConnections.Remove(userId);
         return base.OnDisconnectedAsync(exception); 
     }
 }
