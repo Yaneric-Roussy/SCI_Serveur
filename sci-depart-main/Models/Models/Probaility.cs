@@ -10,10 +10,10 @@ namespace Models.Models
     public class Probability
     {
 
-        public decimal deci { get; set; }
+        public double Value { get; set; }
 
-        public Card.rareté rarity { get; set; }
+        public Card.rareté Rarity { get; set; }
 
-        public int baseQty { get; set; }
+        public int BaseQty { get; set; }
     }
 }

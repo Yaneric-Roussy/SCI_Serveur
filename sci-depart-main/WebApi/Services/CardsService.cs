@@ -41,54 +41,76 @@ namespace Super_Cartes_Infinies.Services
             return _dbContext.Packs;
         }
 
+        public Pack GetPackId(int id)
+        {
+            return _dbContext.Packs.Where(i => i.Id == id).FirstOrDefault();
+        }
+
         // Une Probability possède : une value décimale (entre 0 et 1), une "rarity" et un "baseQty"
 
         // Faire une liste de rareté de carte à obtenir
-        public List<Card.rareté> GenerateRarities(int nbCards, int defaultRarity, List<Probability> probabilities)
+        public static List<Card.rareté> GenerateRarities(int nbCards, rareté defaultRarity, List<Probability> probabilities)
         {
-            var rarities = new List<Card.rareté>();
+            var rarities = new List<rareté>();
 
-            // Ajouter la quantité de base pour chaque probability à la liste
-            foreach (Probability probability in probabilities)
+            // 1) Ajouter la quantité de base pour chaque probabilité
+            foreach (var p in probabilities)
+                for (int i = 0; i < p.BaseQty; i++)
+                    rarities.Add(p.Rarity);
+
+            // 2) Normaliser les probabilités si leur somme ≠ 1
+            double total = probabilities.Sum(p => p.Value);
+            if (total > 0 && Math.Abs(total - 1.0) > 1e-6)
             {
-                for (int i = 0; i < probability.baseQty; i++)
-                {
-                    rarities.Add(probabilities[i].rarity);
-                }
+                foreach (var p in probabilities)
+                    p.Value /= total;
             }
 
-            // Continuer de remplir la liste jusqu'à atteindre la quantité voulue
+            // 3) Tirages supplémentaires jusqu'à nbCards
+            var rnd = new Random();
             while (rarities.Count < nbCards)
             {
-                var rarity = GetRandomRarity(probabilites);
-
-
-                //if (rarity == null)
-                //            add defaultRarity to rarities
-                //else
-                //            add rarity to rarities
-                //            }
-
-                return rarities;
+                var chosen = GetRandomRarity(probabilities, rnd);
+                rarities.Add(chosen ?? defaultRarity);
             }
 
-            // Cette méthode permet d'obtenir une rareté au hasard
-            public Card.rareté? GetRandomRarity(List<Probability> probabilities)
+            return rarities;
+        }
+
+        private static rareté? GetRandomRarity(List<Probability> probabilities, Random rnd)
+        {
+            double x = rnd.NextDouble(); // [0,1)
+            foreach (var p in probabilities)
             {
-               var X = Random Number Between 0 and 1
+                if (x < p.Value)
+                    return p.Rarity;
+                x -= p.Value;
+            }
+            // Par sécurité en cas d’erreur numérique
+            return null;
+        }
+        public List<Card> BuildPack(   List<rareté> rarities,   Dictionary<rareté, List<Card>> cardsByRarity)
+        {
+            var pack = new List<Card>(rarities.Count);
+            var rnd = new Random();
 
-
-    for each rarity of probabilities{
-                    if probability.value < X{
-                        return probability.rarity}
-                    else:
-            X -= probability.value
+            foreach (var rarity in rarities)
+            {
+                // Récupère la liste des cartes de cette rareté
+                if (!cardsByRarity.TryGetValue(rarity, out var available)
+                    || available.Count == 0)
+                {
+                    throw new InvalidOperationException(
+                        $"Aucune carte disponible pour la rareté {rarity}");
                 }
 
+                // Pioche une carte aléatoire (doublons possibles)
+                int index = rnd.Next(available.Count);
+                pack.Add(available[index]);
+            }
 
-    return null
-                         }
-
+            return pack;
+        }
 
 
     }

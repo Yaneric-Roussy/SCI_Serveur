@@ -254,7 +254,7 @@ namespace Super_Cartes_Infinies.Data
                     Name = "La brique",
                     NbCard=4,
                     Cost=2,
-                    ImageUrl="https://static.wikia.nocookie.net/nintendo/images/7/7c/TCG_Zygarde_Complete_Form_2.png/revision/latest/scale-to-width-down/250?cb=20230720033717&path-prefix=en",
+                    ImageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZahnOokotXrBgjZ2ywo9aQaw7oLO-JqE1rA&s",
                     Rareté = 0,
                     Type = Pack.type.Normal
 

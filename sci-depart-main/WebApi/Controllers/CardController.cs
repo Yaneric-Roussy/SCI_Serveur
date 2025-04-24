@@ -109,5 +109,19 @@ namespace Super_Cartes_Infinies.Controllers
 
 
         }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult<IEnumerable<Card>> AchatPack(int PackId)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+                return Unauthorized();
+
+            var pack = _cardsService.GetPackId(PackId);
+            var list = _cardsService.BuildPack()
+
+            return Ok();
+        }
     }
 }
