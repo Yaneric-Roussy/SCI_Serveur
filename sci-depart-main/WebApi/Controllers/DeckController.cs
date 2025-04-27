@@ -46,16 +46,24 @@ namespace WebApi.Controllers
             return Ok(await _deckService.GetAllCards());
         }
 
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<List<OwnedCard>>> GetUserCards(string userId)
+        {
+            var list = _cardsService.GetPlayersCards(userId);
+            return Ok(list);
+        }
+
         [HttpPost]
         public async Task<ActionResult>AjoutDcarte(int DeckID, int cardID)
         {
             return Ok(await _deckService.AddCarte(DeckID,  cardID));
         }
 
-        public DeckController(ApplicationDbContext dbContext, DecksService decksService)
+        public DeckController(ApplicationDbContext dbContext, DecksService decksService, CardsService cardsService)
         {
             _dbContext = dbContext;
             _deckService = decksService;
+            _cardsService = cardsService;
         }
         [HttpDelete]
         public async Task<ActionResult<Deck>> DeleteCarte(int deckID , int OwnedCardId)

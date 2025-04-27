@@ -209,18 +209,7 @@ namespace WebApi.Services
         {
             return await _dbContext.Cards.ToListAsync();
         }
-
-
-
-
-
-
-
-
     }
-
-
-
 }
     
 
