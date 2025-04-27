@@ -38,7 +38,21 @@
             @Html.DisplayNameFor(model => model.ImageUrl)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImageUrl)
+            <img height="100" src="@Html.DisplayFor(model => model.ImageUrl)" />
+        </dd>
+        <dt class="col-sm-2">
+            Pouvoirs
+        </dt>
+        <dd class="col-sm-10">
+            <ul>
+                @foreach (var cardPower in Model.CardPowers)
+                {
+                    <li>
+                        @(cardPower.Power.IconeURL + " " + cardPower.Power.Name +
+                            (cardPower.Power.Name == "First strike" ? "" : " " + cardPower.Value))
+                    </li>
+                }
+            </ul>
         </dd>
     </dl>
 </div>

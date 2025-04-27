@@ -22,11 +22,11 @@ public class ApplicationDbContext : IdentityDbContext
         builder.Entity<Card>().HasData(Seed.SeedCards());
         builder.Entity<GameConfig>().HasData(Seed.SeedGameConfig());
         builder.Entity<StartingCard>().HasData(Seed.SeedStartingCards());
-
+        builder.Entity<Power>().HasData(Seed.SeedPowers());
+        builder.Entity<CardPower>().HasData(Seed.SeedCardPowers());
         builder.Entity<IdentityUser>().HasData(Seed.SeedUsers());
         builder.Entity<IdentityRole>().HasData(Seed.SeedRoles());
         builder.Entity<IdentityUserRole<string>>().HasData(Seed.SeedUserRoles());
-
         builder.Entity<IdentityUser>().HasData(Seed.SeedTestUsers());
         builder.Entity<Player>().HasData(Seed.SeedTestPlayers());
 
@@ -47,18 +47,14 @@ public class ApplicationDbContext : IdentityDbContext
     }
 
     public DbSet<Card> Cards { get; set; } = default!;
-
     public DbSet<Player> Players { get; set; } = default!;
-
     public DbSet<Match> Matches { get; set; } = default!;
-
     public DbSet<OwnedCard> OwnedCard { get; set; } = default!;
-
     public DbSet<StartingCard> StartingCards { get; set; } = default!;
-
     public DbSet<MatchPlayerData> MatchPlayersData { get; set; } = default!;
-    
-
     public DbSet<GameConfig> GameConfig { get; set; } = default!;
+    public DbSet<Deck> Decks { get; set; } = default!;
+    public DbSet<Power> Power { get; set; } = default!;
+    public DbSet<CardPower> CardPower { get; set; } = default!;
 }
 
