@@ -272,6 +272,24 @@ namespace Super_Cartes_Infinies.Data
                 }
             };
         }
+        public static Probability[] SeedProbs()
+        {
+            return new Probability[]
+            {
+                 // Probabilités pour le Basic Pack
+        new Probability { Value = 0.3, Rarity = Card.rareté.Rare, BaseQty = 0, Id = 1, PackId = 1 },
+
+        // Probabilités pour le Normal Pack
+        new Probability { Value = 0.3, Rarity = Card.rareté.Rare, BaseQty = 1, Id = 2, PackId = 2 },
+        new Probability { Value = 0.1, Rarity = Card.rareté.Épique, BaseQty = 0, Id = 3, PackId = 2 },
+        new Probability { Value = 0.02, Rarity = Card.rareté.Légendaire, BaseQty = 0, Id = 4, PackId = 2 },
+
+        // Probabilités pour le Super Pack
+        new Probability { Value = 0.25, Rarity = Card.rareté.Épique, BaseQty = 1, Id = 5, PackId = 3 },
+        new Probability { Value = 0.1, Rarity = Card.rareté.Légendaire, BaseQty = 0, Id = 6, PackId = 3 }
+
+            };
+        }
     }
 }
 

@@ -9,11 +9,15 @@ namespace Models.Models
 {
     public class Probability
     {
-
+        public int Id { get; set; }
         public double Value { get; set; }
 
         public Card.rareté Rarity { get; set; }
 
         public int BaseQty { get; set; }
+
+        public int PackId { get; set; }
+
+        public virtual Pack Pack { get; set; }
     }
 }

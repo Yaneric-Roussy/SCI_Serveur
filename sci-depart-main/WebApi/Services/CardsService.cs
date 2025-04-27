@@ -49,68 +49,144 @@ namespace Super_Cartes_Infinies.Services
         // Une Probability possède : une value décimale (entre 0 et 1), une "rarity" et un "baseQty"
 
         // Faire une liste de rareté de carte à obtenir
-        public static List<Card.rareté> GenerateRarities(int nbCards, rareté defaultRarity, List<Probability> probabilities)
+        public List<Card.rareté> GenerateRarities(int nbCards, Card.rareté defaultRarity, List<Probability> probabilities)
         {
-            var rarities = new List<rareté>();
+            var rarities = new List<Card.rareté>();
 
-            // 1) Ajouter la quantité de base pour chaque probabilité
-            foreach (var p in probabilities)
-                for (int i = 0; i < p.BaseQty; i++)
-                    rarities.Add(p.Rarity);
-
-            // 2) Normaliser les probabilités si leur somme ≠ 1
-            double total = probabilities.Sum(p => p.Value);
-            if (total > 0 && Math.Abs(total - 1.0) > 1e-6)
+            // 1. Ajouter la quantité de base pour chaque probabilité
+            foreach (var probability in probabilities)
             {
-                foreach (var p in probabilities)
-                    p.Value /= total;
+                for (int i = 0; i < probability.BaseQty; i++)
+                {
+                    rarities.Add(probability.Rarity);
+                }
             }
 
-            // 3) Tirages supplémentaires jusqu'à nbCards
+            // 2. Remplir la liste jusqu'à atteindre le nombre de cartes souhaité
             var rnd = new Random();
             while (rarities.Count < nbCards)
             {
-                var chosen = GetRandomRarity(probabilities, rnd);
-                rarities.Add(chosen ?? defaultRarity);
+                var rarity = GetRandomRarity(probabilities, rnd);
+
+                if (rarity == null)
+                {
+                    rarities.Add(defaultRarity);
+                }
+                else
+                {
+                    rarities.Add(rarity.Value);
+                }
             }
 
             return rarities;
         }
 
-        private static rareté? GetRandomRarity(List<Probability> probabilities, Random rnd)
+        private Card.rareté? GetRandomRarity(List<Probability> probabilities, Random rnd)
         {
-            double x = rnd.NextDouble(); // [0,1)
-            foreach (var p in probabilities)
+            double x = rnd.NextDouble(); // Génère un nombre aléatoire entre 0 et 1
+
+            foreach (var probability in probabilities)
             {
-                if (x < p.Value)
-                    return p.Rarity;
-                x -= p.Value;
+                if (x < probability.Value)
+                {
+                    return probability.Rarity;
+                }
+                x -= probability.Value;
             }
-            // Par sécurité en cas d’erreur numérique
+
+            // Retourne null en cas d'erreur numérique
             return null;
         }
-        public List<Card> BuildPack(   List<rareté> rarities,   Dictionary<rareté, List<Card>> cardsByRarity)
+        public List<Card> BuildPack(int packId, string userId)
         {
-            var pack = new List<Card>(rarities.Count);
-            var rnd = new Random();
-
-            foreach (var rarity in rarities)
+            // Récupérer le pack et ses probabilités
+            var pack = _dbContext.Packs.Where(p => p.Id == packId).FirstOrDefault();
+            if (pack == null)
             {
-                // Récupère la liste des cartes de cette rareté
-                if (!cardsByRarity.TryGetValue(rarity, out var available)
-                    || available.Count == 0)
-                {
-                    throw new InvalidOperationException(
-                        $"Aucune carte disponible pour la rareté {rarity}");
-                }
-
-                // Pioche une carte aléatoire (doublons possibles)
-                int index = rnd.Next(available.Count);
-                pack.Add(available[index]);
+                throw new ArgumentException($"Le pack avec l'ID {packId} n'existe pas.");
             }
 
-            return pack;
+            var user = _dbContext.Players.Where(p => p.UserId == userId).FirstOrDefault();
+            if (user == null)
+            {
+                throw new ArgumentException($"L'utilisateur avec l'ID {userId} n'existe pas.");
+            }
+
+            // Vérifier si le joueur a assez d'argent
+            if (user.Money < pack.Cost)
+            {
+                throw new InvalidOperationException("Vous n'avez pas assez d'argent pour acheter ce pack.");
+            }
+
+            var probabilities = _dbContext.Probabilities
+                .Where(p => p.PackId == packId)
+                .ToList();
+
+            if (!probabilities.Any())
+            {
+                throw new InvalidOperationException($"Aucune probabilité définie pour le pack {pack.Name}.");
+            }
+
+            // Générer les raretés des cartes
+            var rarities = GenerateRarities(pack.NbCard, (Card.rareté)pack.Rareté, probabilities);
+
+            // Construire le pack de cartes
+            var cards = new List<Card>();
+            var rnd = new Random();
+            bool hasEpicCard = false;
+            foreach (var rarity in rarities)
+            {
+                // Récupérer les cartes disponibles pour cette rareté
+                var availableCards = _dbContext.Cards
+                    .Where(c => c.Rareté == rarity)
+                    .ToList();
+
+                if (!availableCards.Any())
+                {
+                    throw new InvalidOperationException($"Aucune carte disponible pour la rareté {rarity}.");
+                }
+
+                // Sélectionner une carte aléatoire
+                var randomCard = availableCards[rnd.Next(availableCards.Count)];
+                cards.Add(randomCard);
+
+                // Vérifier si une carte épique est obtenue
+                if (randomCard.Rareté == Card.rareté.Épique)
+                {
+                    hasEpicCard = true;
+                }
+            }
+
+            // Vérifier les règles spécifiques au pack le plus cher
+            if (pack.Type == Pack.type.Super)
+            {
+                if (cards.Any(c => c.Rareté == Card.rareté.Commune))
+                {
+                    throw new InvalidOperationException("Les cartes communes ne sont pas autorisées dans le pack Super.");
+                }
+
+                if (!hasEpicCard)
+                {
+                    throw new InvalidOperationException("Le pack Super doit contenir au moins une carte épique.");
+                }
+            }
+
+            // Déduire le coût du pack du solde du joueur
+            user.Money -= pack.Cost;
+
+            // Ajouter les cartes obtenues à la collection du joueur
+            foreach (var card in cards)
+            {
+                var ownedCard = new OwnedCard { Card = card, Player = user };
+                _dbContext.OwnedCard.Add(ownedCard);
+            }
+
+            // Sauvegarder les modifications dans la base de données
+            _dbContext.SaveChanges();
+
+            return cards;
         }
+
 
 
     }
