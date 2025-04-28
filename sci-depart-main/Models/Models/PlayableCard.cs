@@ -20,12 +20,17 @@ namespace Super_Cartes_Infinies.Models
 		public virtual Card Card { get; set; }
 		public int Health { get; set; }
         public int Attack { get; set; }
+        public int Index { get; set; }
 
         public bool HasPower(int powerId)
         {
+            if(Card.CardPowers == null)
+            {
+                return false;
+            }
             foreach(CardPower cardPower in Card.CardPowers)
             {
-                if (cardPower.PowerId == powerId)
+                if (cardPower.PowerId == powerId || cardPower.Power.Id == powerId)
                 {
                     return true;
                 }
@@ -37,7 +42,7 @@ namespace Super_Cartes_Infinies.Models
         {
             if (HasPower(powerId))
             {
-                CardPower cardPower = Card.CardPowers.Find(c => c.PowerId == powerId)!;
+                CardPower cardPower = Card.CardPowers.Find(c => c.Power.Id == powerId)!;
                 return cardPower.Value;
             }
             else

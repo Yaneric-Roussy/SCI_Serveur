@@ -1,7 +1,12 @@
-﻿using Models.Models;
+
+﻿using Microsoft.EntityFrameworkCore;
+using Models.Models;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
+using System.Collections.Generic;
+using WebApi.Services;
 using static Super_Cartes_Infinies.Models.Card;
+
 
 namespace Super_Cartes_Infinies.Services
 {
@@ -31,6 +36,33 @@ namespace Super_Cartes_Infinies.Services
             return ownedCards;
         }
 
+        public async Task<IEnumerable<Card>> GetUserDeckCards(int playerId)
+        {
+            Deck deck = await _dbContext.Decks.Where(d => d.PlayerId == playerId && d.Courant).FirstOrDefaultAsync();
+            List<Card> listCARTE = new List<Card>();
+
+            if (deck == null)
+                throw new NullReferenceException();
+
+            foreach (OwnedCard ownedCard in deck.CarteJoueurs)
+            {
+                listCARTE.Add(ownedCard.Card);
+            }
+            return listCARTE;
+
+
+            //foreach (Deck deck in deckList)
+            //{
+            //    if (deck.Courant)
+            //    {
+            //        foreach (OwnedCard ownedCard in deck.CarteJoueurs)
+            //        {
+            //            listCARTE.Add(ownedCard.Card);
+            //        }
+            //        return listCARTE;
+            //    }
+            //}
+        }
         public IEnumerable<Card> GetAllCards()
         {
             return _dbContext.Cards;

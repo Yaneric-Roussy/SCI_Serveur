@@ -14,7 +14,7 @@ namespace Super_Cartes_Infinies.Models
         public MatchPlayerData(int playerId)
 		{
             PlayerId = playerId;
-            Health = STARTING_HEALTH;
+            Health = STARTING_HEALTH; 
             CardsPile = new List<PlayableCard>();
             Hand = new List<PlayableCard>();
             BattleField = new List<PlayableCard>();

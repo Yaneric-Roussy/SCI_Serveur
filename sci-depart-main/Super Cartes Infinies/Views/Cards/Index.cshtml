@@ -25,7 +25,13 @@
                 @Html.DisplayNameFor(model => model.Cost)
             </th>
             <th>
+
                 @Html.DisplayNameFor(model => model.Rareté)
+                </th>
+
+                 <th>
+                Pouvoirs
+
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ImageUrl)
@@ -52,13 +58,24 @@
                     @Html.DisplayFor(modelItem => item.Rareté)
                 </td>
             <td>
+                <ul>
+                    @foreach (var cardPower in item.CardPowers)
+                    {
+                        <li>
+                            @(cardPower.Power.IconeURL + " " + cardPower.Power.Name +
+                                (cardPower.Power.Name == "First strike" ? "" : " " + cardPower.Value))
+                        </li>
+                    }
+                </ul>
+            </td>
+            <td>
                     <img height="100" src="@Html.DisplayFor(modelItem => item.ImageUrl)" />
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    <a asp-action="CreateStatingCard" asp-route-id="@item.Id">Ajouter au cartes de départ</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                <a asp-action="CreateStatingCard" asp-route-id="@item.Id">Ajouter au cartes de départ</a>
             </td>
         </tr>
 }
