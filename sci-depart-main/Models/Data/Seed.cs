@@ -156,6 +156,7 @@ namespace Super_Cartes_Infinies.Data
                     Attack = 2,
                     Health = 1,
                     Cost = 1,
+                    Rareté=Card.rareté.Rare,
                     ImageUrl = "https://cdn.wallpapersafari.com/27/53/SZ8PO9.jpg"
                 }, new Card
                 {
@@ -164,6 +165,7 @@ namespace Super_Cartes_Infinies.Data
                     Attack = 8,
                     Health = 4,
                     Cost = 4,
+                    Rareté=Card.rareté.Rare,
                     ImageUrl = "https://wallpapers.com/images/hd/epic-cat-poster-baavft05ylgta4j8.jpg"
                 }, new Card
                 {
@@ -172,6 +174,7 @@ namespace Super_Cartes_Infinies.Data
                     Attack = 7,
                     Health = 7,
                     Cost = 5,
+                    Rareté=Card.rareté.Épique,
                     ImageUrl = "https://i.etsystatic.com/6230905/r/il/32aa5a/3474618751/il_fullxfull.3474618751_mfvf.jpg"
                 }, new Card
                 {
@@ -180,6 +183,7 @@ namespace Super_Cartes_Infinies.Data
                     Attack = 4,
                     Health = 2,
                     Cost = 2,
+                    Rareté=Card.rareté.Épique,
                     ImageUrl = "https://store.playstation.com/store/api/chihiro/00_09_000/container/AU/en/99/EP2402-CUSA05624_00-ETH0000000002875/0/image?_version=00_09_000&platform=chihiro&bg_color=000000&opacity=100&w=720&h=720"
                 }, new Card
                 {
@@ -188,6 +192,7 @@ namespace Super_Cartes_Infinies.Data
                     Attack = 6,
                     Health = 3,
                     Cost = 4,
+                    Rareté=Card.rareté.Légendaire,
                     ImageUrl = "https://images.squarespace-cdn.com/content/51b3dc8ee4b051b96ceb10de/1394662654865-JKOZ7ZFF39247VYDTGG9/hilarious-jedi-cats-fight-video-preview.jpg?content-type=image%2Fjpeg"
                 }, new Card
                 {
@@ -196,6 +201,7 @@ namespace Super_Cartes_Infinies.Data
                     Attack = 1,
                     Health = 9,
                     Cost = 2,
+                    Rareté=Card.rareté.Légendaire,
                     ImageUrl = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c89c9a3c-7848-4bd5-9306-417c97096ae5/dh8sghm-7bebd975-51f2-4728-87bc-fb3cef176af5.jpg/v1/fit/w_750,h_1000,q_70,strp/another_lucifur_blob_by_slugyyycat_dh8sghm-375w-2x.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTAwMCIsInBhdGgiOiJcL2ZcL2M4OWM5YTNjLTc4NDgtNGJkNS05MzA2LTQxN2M5NzA5NmFlNVwvZGg4c2dobS03YmViZDk3NS01MWYyLTQ3MjgtODdiYy1mYjNjZWYxNzZhZjUuanBnIiwid2lkdGgiOiI8PTc1MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.7oGugpkEX4yqfhiOXlo4TfqzatOuHaCu2aEi-Lnw_40"
                 }, new Card
                 {
@@ -204,6 +210,7 @@ namespace Super_Cartes_Infinies.Data
                     Attack = 5,
                     Health = 1,
                     Cost = 2,
+                    Rareté=Card.rareté.Légendaire,
                     ImageUrl = "https://townsquare.media/site/142/files/2011/08/jedicats.jpg?w=980&q=75"
                 }, new Card
                 {
@@ -212,6 +219,7 @@ namespace Super_Cartes_Infinies.Data
                     Attack = 6,
                     Health = 1,
                     Cost = 2,
+                    Rareté=Card.rareté.Épique,
                     ImageUrl = "https://cdn.theatlantic.com/thumbor/fOZjgqHH0RmXA1A5ek-yDz697W4=/133x0:2091x1020/1200x625/media/img/mt/2015/12/RTRD62Q/original.jpg"
                 }
             };
@@ -332,6 +340,61 @@ namespace Super_Cartes_Infinies.Data
                     Name = "Test player 2",
                     UserId = "User2Id"
                 }
+            };
+        }
+        public static Pack[] SeedPacks()
+        {
+            return new Pack[] {
+                new Pack
+                {
+                    Id = 1,
+                    Name = "Le platre",
+                    NbCard = 3,
+                    Cost=1,
+                    ImageUrl="https://www.realite-virtuelle.com/wp-content/uploads/2021/02/rayquaza-tout-savoir-guide.jpg"
+                    ,Rareté = 0,
+                    Type=0
+                },
+                new Pack
+                {
+                    Id = 2,
+                    Name = "La brique",
+                    NbCard=4,
+                    Cost=2,
+                    ImageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZahnOokotXrBgjZ2ywo9aQaw7oLO-JqE1rA&s",
+                    Rareté = 0,
+                    Type = Pack.type.Normal
+
+                },
+                  new Pack
+                {
+                    Id = 3,
+                    Name = "La céramique",
+                    NbCard=5,
+                    Cost=2,
+                    ImageUrl="https://m.media-amazon.com/images/I/61y74SPNLnL._AC_UF894,1000_QL80_.jpg",
+                    Rareté = Pack.raretéPack.Rare,
+                    Type = Pack.type.Super
+
+                }
+            };
+        }
+        public static Probability[] SeedProbs()
+        {
+            return new Probability[]
+            {
+                 // Probabilités pour le Basic Pack
+        new Probability { Value = 0.3, Rarity = Card.rareté.Rare, BaseQty = 0, Id = 1, PackId = 1 },
+
+        // Probabilités pour le Normal Pack
+        new Probability { Value = 0.3, Rarity = Card.rareté.Rare, BaseQty = 1, Id = 2, PackId = 2 },
+        new Probability { Value = 0.1, Rarity = Card.rareté.Épique, BaseQty = 0, Id = 3, PackId = 2 },
+        new Probability { Value = 0.02, Rarity = Card.rareté.Légendaire, BaseQty = 0, Id = 4, PackId = 2 },
+
+        // Probabilités pour le Super Pack
+        new Probability { Value = 0.25, Rarity = Card.rareté.Épique, BaseQty = 1, Id = 5, PackId = 3 },
+        new Probability { Value = 0.1, Rarity = Card.rareté.Légendaire, BaseQty = 0, Id = 6, PackId = 3 }
+
             };
         }
     }

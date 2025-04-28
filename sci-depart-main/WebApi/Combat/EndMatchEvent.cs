@@ -7,6 +7,8 @@ namespace Super_Cartes_Infinies.Combat
     {
         public override string EventType { get { return "EndMatch"; } }
         public int WinningPlayerId { get; set; }
+        public int MoneyReceivedByWinner { get { return 10; }} 
+        public int MoneyReceivedByLoser { get { return 2; } }
 
         public EndMatchEvent(Match match, MatchPlayerData winningPlayerData, MatchPlayerData losingPlayerData)
         {
@@ -20,10 +22,12 @@ namespace Super_Cartes_Infinies.Combat
             WinningPlayerId = winningPlayerData.PlayerId;
 
             match.IsMatchCompleted = true;
-
+            winningPlayerData.Player.Money += MoneyReceivedByWinner;
+            losingPlayerData.Player.Money += MoneyReceivedByLoser;
             string userId;
             if (match.PlayerDataA.PlayerId == winningPlayerData.PlayerId)
                 userId = match.UserAId;
+
             else
                 userId = match.UserBId;
 

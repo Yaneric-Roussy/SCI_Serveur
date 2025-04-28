@@ -25,7 +25,13 @@
                 @Html.DisplayNameFor(model => model.Cost)
             </th>
             <th>
+
+                @Html.DisplayNameFor(model => model.Rareté)
+                </th>
+
+                 <th>
                 Pouvoirs
+
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ImageUrl)
@@ -48,6 +54,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Cost)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rareté)
+                </td>
             <td>
                 <ul>
                     @foreach (var cardPower in item.CardPowers)

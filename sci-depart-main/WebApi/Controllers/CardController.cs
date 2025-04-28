@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Models.Models;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Services;
@@ -16,17 +17,17 @@ namespace Super_Cartes_Infinies.Controllers
         private ApplicationDbContext _dbContext;
         private CardsService _cardsService;
 
-        public CardController(ApplicationDbContext dbContext, CardsService cardsService, PlayersService playersService):base(playersService)
+        public CardController(ApplicationDbContext dbContext, CardsService cardsService, PlayersService playersService) : base(playersService)
         {
             _dbContext = dbContext;
             _cardsService = cardsService;
-            
+
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Card>> GetAllCards(int? champ, int? ordre)
         {
-            if(ordre == 1)
+            if (ordre == 1)
             {
                 switch (champ)
                 {
@@ -37,7 +38,7 @@ namespace Super_Cartes_Infinies.Controllers
                     case 2:
                         return Ok(_cardsService.GetAllCards().OrderByDescending(i => i.Cost));
                 }
-                    
+
             }
             if (ordre == null && ordre == null)
             {
@@ -57,14 +58,14 @@ namespace Super_Cartes_Infinies.Controllers
 
         // TODO: La version réelle devra utiliser [Authorize] pour protéger les données est s'assurer d'avoir accès au User
         // Et l'utiliser pour obtenir l'Id de l'utilisateur
-        
-        
+
+
         [HttpGet]
         [Authorize]
         public ActionResult<IEnumerable<Card>> GetPlayersCards(int? champ, int? ordre)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (userId == null) 
+            if (userId == null)
                 return Unauthorized();
             //var userId = "1";
             var list = _cardsService.GetPlayersCards(userId);
@@ -92,6 +93,40 @@ namespace Super_Cartes_Infinies.Controllers
                     return Ok(list.OrderBy(i => i.Cost));
             }
             return BadRequest("Champ de tri invalide");
+        }
+
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult<IEnumerable<Pack>> GetAllPacks()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+                return Unauthorized();
+
+            var list = _cardsService.GetPacks();
+            return Ok(list.OrderBy(i => i.Type));
+
+
+        }
+
+        [HttpGet("{id}")]
+        [Authorize]
+        public ActionResult<IEnumerable<Card>> AchatPack(int id)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+                return Unauthorized();
+
+            try
+            {
+                var cards = _cardsService.BuildPack(id, userId);
+                return Ok(cards);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

@@ -20,6 +20,8 @@ public class ApplicationDbContext : IdentityDbContext
         base.OnModelCreating(builder);
 
         builder.Entity<Card>().HasData(Seed.SeedCards());
+        builder.Entity<Probability>().HasData(Seed.SeedProbs());
+        builder.Entity<Pack>().HasData(Seed.SeedPacks());
         builder.Entity<GameConfig>().HasData(Seed.SeedGameConfig());
         builder.Entity<StartingCard>().HasData(Seed.SeedStartingCards());
         builder.Entity<Power>().HasData(Seed.SeedPowers());
@@ -52,6 +54,13 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<OwnedCard> OwnedCard { get; set; } = default!;
     public DbSet<StartingCard> StartingCards { get; set; } = default!;
     public DbSet<MatchPlayerData> MatchPlayersData { get; set; } = default!;
+
+
+    public DbSet<Pack> Packs { get; set; } = default!;
+
+    public DbSet<Probability> Probabilities { get; set; } = default!;
+
+
     public DbSet<GameConfig> GameConfig { get; set; } = default!;
     public DbSet<Deck> Decks { get; set; } = default!;
     public DbSet<Power> Power { get; set; } = default!;

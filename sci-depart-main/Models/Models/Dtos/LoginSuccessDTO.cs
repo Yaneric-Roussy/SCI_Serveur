@@ -14,5 +14,7 @@ namespace Models.Models.Dtos
         public string Email { get; set; } = null!;
         public string PlayerId { get; set; } = null!;
         public int PlayerNumId { get; set; }
+
+        public int Money { get; set; }
     }
 }
