@@ -20,9 +20,12 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+        
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore "sci-depart-main/Super Cartes Infinies.sln"
+    
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build "sci-depart-main/Super Cartes Infinies.sln" --no-restore
+
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test "sci-depart-main/Super Cartes Infinies.sln" --no-build --verbosity normal
