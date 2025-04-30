@@ -1,19 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WebApi.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Super_Cartes_Infinies.Data;
 using Microsoft.EntityFrameworkCore;
 using Models.Models;
 using Super_Cartes_Infinies.Models;
 
-namespace DeckService.Tests
+namespace Tests.Services
 {
     [TestClass()]
-    public class DecksServiceTests
+    public class DeckTests
 
     {
         private ApplicationDbContext _db;
@@ -31,44 +26,42 @@ namespace DeckService.Tests
 
             _db = new ApplicationDbContext(options);
             Deck[] deck = new Deck[] {
-    new Deck
-    {
-        Id = 1,
-        Name = "Deck 1",
-        Courant = true,
-        PlayerId = 1,
-        CarteJoueurs = new List<OwnedCard>(),
-        CarteSuprime = new List<OwnedCard>()
-    },
-    new Deck
-    {
-        Id = 2,
-        Name = "Deck 3",
-        Courant = false,
-        PlayerId = 1,
-        CarteJoueurs = new List<OwnedCard>(),
-        CarteSuprime = new List<OwnedCard>()
-    },
-     new Deck
-    {
-        Id = 3,
-        Name = "Deck 3",
-        Courant = false,
-        PlayerId = 1,
-        CarteJoueurs = new List<OwnedCard>(),
-        CarteSuprime = new List<OwnedCard>()
-    },
-};
-
+                new Deck
+                {
+                    Id = 1,
+                    Name = "Deck 1",
+                    Courant = true,
+                    PlayerId = 1,
+                    CarteJoueurs = new List<OwnedCard>(),
+                    CarteSuprime = new List<OwnedCard>()
+                },
+                new Deck
+                {
+                    Id = 2,
+                    Name = "Deck 3",
+                    Courant = false,
+                    PlayerId = 1,
+                    CarteJoueurs = new List<OwnedCard>(),
+                    CarteSuprime = new List<OwnedCard>()
+                },
+                 new Deck
+                {
+                    Id = 3,
+                    Name = "Deck 3",
+                    Courant = false,
+                    PlayerId = 1,
+                    CarteJoueurs = new List<OwnedCard>(),
+                    CarteSuprime = new List<OwnedCard>()
+                },
+            };
             _db.AddRange(deck);
             _db.SaveChanges();
-
         }
         [TestCleanup]
         public void Dispose()
         {
             _db.Dispose();
-}
+        }
         
       
        
