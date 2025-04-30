@@ -97,7 +97,13 @@ builder.Services.AddScoped<DecksService>();
 //    .AddDefaultTokenProviders();
 
 
-builder.Services.AddSignalR();
+builder.Services.AddSignalR(options =>
+{
+    //Permet de voir en détail les erreurs Hub related -YR
+    options.EnableDetailedErrors = true;
+    //Limite actuelle est 128KB -YR
+    options.MaximumReceiveMessageSize = 128 * 1024;
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
