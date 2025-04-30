@@ -97,7 +97,11 @@ builder.Services.AddScoped<DecksService>();
 //    .AddDefaultTokenProviders();
 
 
-builder.Services.AddSignalR();
+builder.Services.AddSignalR(options =>
+{
+    options.EnableDetailedErrors = true;
+    options.MaximumReceiveMessageSize = 128 * 1024;
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

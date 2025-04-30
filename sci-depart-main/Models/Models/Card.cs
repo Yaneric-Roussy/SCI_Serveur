@@ -5,7 +5,7 @@ using Models.Models;
 
 namespace Super_Cartes_Infinies.Models
 {
-    public class Card:IModel
+	public class Card : IModel
 	{
 		public Card() { }
 
@@ -14,10 +14,15 @@ namespace Super_Cartes_Infinies.Models
 		public int Attack { get; set; }
 		public int Health { get; set; }
 		public int Cost { get; set; }
-        public string ImageUrl { get; set; } = "";
+		public string ImageUrl { get; set; } = "";
+
+		public rareté Rareté { get; set; } = 0;
 
 		[ValidateNever]
 		public virtual List<CardPower> CardPowers { get; set; }
-    }
+
+		public enum rareté { Commune, Rare, Épique, Légendaire };
+
+	}
 }
 

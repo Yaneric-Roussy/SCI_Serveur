@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Super_Cartes_Infinies.Combat;
 using Super_Cartes_Infinies.Models;
 
-namespace Tests.Services
+namespace Tests.Combat
 {
     public class BaseTests
 	{

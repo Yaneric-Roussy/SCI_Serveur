@@ -1,7 +1,7 @@
 ﻿using Super_Cartes_Infinies.Combat;
 using Super_Cartes_Infinies.Models;
 
-namespace Tests.Services
+namespace Tests.Combat
 {
     [TestClass]
     public class CombatTests : BaseTests
