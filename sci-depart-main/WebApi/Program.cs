@@ -99,13 +99,7 @@ builder.Services.AddScoped<DecksService>();
 
 builder.Services.AddSignalR(options =>
 {
-<<<<<<< HEAD
     options.EnableDetailedErrors = true;
-=======
-    //Permet de voir en détail les erreurs Hub related -YR
-    options.EnableDetailedErrors = true;
-    //Limite actuelle est 128KB -YR
->>>>>>> b1183688250e61bf2f3d171f744c8d7282f03430
     options.MaximumReceiveMessageSize = 128 * 1024;
 });
 
