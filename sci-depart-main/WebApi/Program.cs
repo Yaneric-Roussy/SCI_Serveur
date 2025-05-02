@@ -7,6 +7,7 @@ using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Hubs;
 using Super_Cartes_Infinies.Services;
 using System.Text;
+using WebApi.Hubs;
 using WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -158,5 +159,6 @@ app.MapControllerRoute(
 );
 
 app.MapHub<MatchHub>("/matchHub");
+app.MapHub<Chat>("/Chat");
 
 app.Run();

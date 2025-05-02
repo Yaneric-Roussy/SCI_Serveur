@@ -17,22 +17,35 @@ namespace WebApi.Hubs
 
 
 
-
         public Chat(ApplicationDbContext context, MatchesService matchesService)
         {
             _context = context;
             _matchesService = matchesService;
         }
-        public override Task OnConnectedAsync()
+        //private static Dictionary<string, string> _userConnections = new();
+        private string signalRId
         {
-            // You can retrieve the user identifier from the context (e.g., from authentication)
-            var userId = Context.UserIdentifier; // Here you can set a custom UserIdentifier based on your app's logic.
-            return base.OnConnectedAsync();
+            get { return Context.ConnectionId!; }
+        }
+        private string userId
+        {
+            get { return Context.UserIdentifier!; }
+        }
+        private string WriteGroupName(int id)
+        {
+            return "match_" + id;
+        }
+        public override async Task OnConnectedAsync()
+        {
+            //Add user to dictionnary
+            var userId = Context.UserIdentifier;
+            //_userConnections[userId] = Context.ConnectionId!;
+            await base.OnConnectedAsync();
         }
 
-   
-        
-       public async Task UserPlaying()
+
+
+        public async Task UserPlaying()
         {
 
         }
@@ -41,6 +54,12 @@ namespace WebApi.Hubs
         {
 
         }
+        public async Task AfficheMatches() {
+            await Clients.All.SendAsync("GetActiveMatches");
+
+
+        }
+
 
         public async Task GetActiveMatches()
         {
