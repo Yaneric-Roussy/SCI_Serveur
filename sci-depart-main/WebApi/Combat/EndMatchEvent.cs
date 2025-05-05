@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Models.Models;
 using Super_Cartes_Infinies.Models;
 
 namespace Super_Cartes_Infinies.Combat
@@ -25,13 +26,24 @@ namespace Super_Cartes_Infinies.Combat
             winningPlayerData.Player.Money += MoneyReceivedByWinner;
             losingPlayerData.Player.Money += MoneyReceivedByLoser;
             string userId;
+
             if (match.PlayerDataA.PlayerId == winningPlayerData.PlayerId)
                 userId = match.UserAId;
-
             else
                 userId = match.UserBId;
 
+            winningPlayerData.Player.listeDeck.Where(i => i.Courant).First().victoire++;
+            losingPlayerData.Player.listeDeck.Where(i => i.Courant).First().defaite++;
+          
+
+
             match.WinnerUserId = userId;
+        }
+
+        void victoiredéfaite(Deck perdant, Deck gagnant)
+        {
+            perdant.defaite++;
+            gagnant.victoire++;
         }
     }
 }
