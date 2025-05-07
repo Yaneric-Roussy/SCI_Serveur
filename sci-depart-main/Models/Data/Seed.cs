@@ -126,6 +126,34 @@ namespace Super_Cartes_Infinies.Data
                     Name = "Attack boost",
                     Description ="Augmente de X les dégâts que la carte inflige quand elle attaque.",
                     IconeURL = "🐱‍🏍"
+                },
+                new Power
+                {
+                    Id = Power.CHAOS_ID,
+                    Name = "Chaos",
+                    Description = "Inverse l'attaque et la défense de toutes les cartes en jeu. Il se produit avant que la carte attaque.",
+                    IconeURL = "💥"
+                },
+                new Power
+                {
+                    Id = Power.POISON_ID,
+                    Name = "Poison",
+                    Description = "Ajoute une valeur de poison à la carte attaquée. Le poison diminue ensuite la vie d’une carte de la valeur du poison à la fin de son activation.",
+                    IconeURL = "🧪"
+                },
+                new Power
+                {
+                    Id = Power.STUNNED_ID,
+                    Name = "Stunned",
+                    Description = "Empêche une carte d’agir pendant son activation durant X tours. Mais elle reçoit quand même les dégâts de poison",
+                    IconeURL = "💫"
+                },
+                new Power
+                {
+                    Id = Power.PROTECTION_ID,
+                    Name = "Protection",
+                    Description = "Donne l'invulnérabilité à la carte durant X tours. La carte ne peut pas prendre de dégâts, même des sorts.",
+                    IconeURL = "🛡"
                 }
             };
         }
