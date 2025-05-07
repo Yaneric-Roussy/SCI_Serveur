@@ -1,4 +1,5 @@
-﻿using Models.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Models.Interfaces;
 using Models.Models;
 
 namespace Super_Cartes_Infinies.Models
@@ -21,6 +22,23 @@ namespace Super_Cartes_Infinies.Models
 		public int Health { get; set; }
         public int Attack { get; set; }
         public int Index { get; set; }
+        [ValidateNever]
+        public virtual List<PlayableCardStatus> PlayableCardStatus { get; set; }
+
+        public bool HasStatus(int powerId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddStatusValue(int powerId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetStatusValue(int powerId)
+        {
+            throw new NotImplementedException();
+        }
 
         public bool HasPower(int powerId)
         {
