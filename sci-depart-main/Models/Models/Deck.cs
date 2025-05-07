@@ -16,8 +16,8 @@ namespace Models.Models
         public virtual Player Player { get; set; }
         public bool Courant { get; set; }
         public virtual List<OwnedCard> CarteSuprime { get; set; }
-        public int victoire { get; set; } = 0;
-        public int defaite { get; set; } = 0;
+        public int Victoire { get; set; } = 0;
+        public int Defaite { get; set; } = 0;
 
 
 

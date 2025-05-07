@@ -31,19 +31,21 @@ namespace Super_Cartes_Infinies.Combat
                 userId = match.UserAId;
             else
                 userId = match.UserBId;
-
-            winningPlayerData.Player.listeDeck.Where(i => i.Courant).First().victoire++;
-            losingPlayerData.Player.listeDeck.Where(i => i.Courant).First().defaite++;
+           
+            victoiredéfaite(losingPlayerData, winningPlayerData);
+           
           
 
 
             match.WinnerUserId = userId;
         }
 
-        void victoiredéfaite(Deck perdant, Deck gagnant)
+        void victoiredéfaite(MatchPlayerData perdant, MatchPlayerData gagnant)
         {
-            perdant.defaite++;
-            gagnant.victoire++;
+            perdant.Player.Defaite++;
+            perdant.Player.listeDeck.Where(i => i.Courant).First().Defaite++;
+            gagnant.Player.Victoire++;
+            gagnant.Player.listeDeck.Where(i => i.Courant).First().Victoire++;
         }
     }
 }

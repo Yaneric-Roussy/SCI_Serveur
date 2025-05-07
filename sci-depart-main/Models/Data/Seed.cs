@@ -133,95 +133,436 @@ namespace Super_Cartes_Infinies.Data
         public static Card[] SeedCards()
         {
             return new Card[] {
+                #region Gen1
                 new Card
                 {
                     Id = 1,
-                    Name = "Chat Dragon",
-                    Attack = 3,
+                    Name = "Bulbizarre",
+                    Attack = 4,
                     Health = 3,
-                    Cost = 3,
-                    ImageUrl = "https://i.pinimg.com/originals/a8/16/49/a81649bd4b0f032ce633161c5a076b87.jpg"
+                    Cost = 4,
+                    Rareté = Card.rareté.Rare,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png"
                 }, new Card
                 {
                     Id = 2,
-                    Name = "Chat Awesome",
-                    Attack = 2,
-                    Health = 5,
-                    Cost = 3,
-                    ImageUrl = "https://i0.wp.com/thediscerningcat.com/wp-content/uploads/2021/02/tabby-cat-wearing-sunglasses.jpg"
+                    Name = "Herbizarre",
+                    Attack = 5,
+                    Health = 4,
+                    Cost = 6,
+                    Rareté=Card.rareté.Rare,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png"
                 }, new Card
                 {
                     Id = 3,
-                    Name = "Chatton Laser",
-                    Attack = 2,
-                    Health = 1,
-                    Cost = 1,
-                    Rareté=Card.rareté.Rare,
-                    ImageUrl = "https://cdn.wallpapersafari.com/27/53/SZ8PO9.jpg"
+                    Name = "Florizarre",
+                    Attack = 6,
+                    Health = 5,
+                    Cost = 8,
+                    Rareté=Card.rareté.Épique,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/003.png"
                 }, new Card
                 {
                     Id = 4,
-                    Name = "Chat Spacial",
-                    Attack = 8,
-                    Health = 4,
+                    Name = "Salamèche",
+                    Attack = 4,
+                    Health = 3,
                     Cost = 4,
                     Rareté=Card.rareté.Rare,
-                    ImageUrl = "https://wallpapers.com/images/hd/epic-cat-poster-baavft05ylgta4j8.jpg"
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/004.png"
                 }, new Card
                 {
                     Id = 5,
-                    Name = "Chat Guerrier",
-                    Attack = 7,
-                    Health = 7,
-                    Cost = 5,
-                    Rareté=Card.rareté.Épique,
-                    ImageUrl = "https://i.etsystatic.com/6230905/r/il/32aa5a/3474618751/il_fullxfull.3474618751_mfvf.jpg"
+                    Name = "Reptincel",
+                    Attack = 5,
+                    Health = 4,
+                    Cost = 6,
+                    Rareté=Card.rareté.Rare,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/005.png"
                 }, new Card
                 {
                     Id = 6,
-                    Name = "Chat Laser",
-                    Attack = 4,
-                    Health = 2,
-                    Cost = 2,
+                    Name = "Dracaufeu",
+                    Attack = 7,
+                    Health = 5,
+                    Cost = 8,
                     Rareté=Card.rareté.Épique,
-                    ImageUrl = "https://store.playstation.com/store/api/chihiro/00_09_000/container/AU/en/99/EP2402-CUSA05624_00-ETH0000000002875/0/image?_version=00_09_000&platform=chihiro&bg_color=000000&opacity=100&w=720&h=720"
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/006.png"
                 }, new Card
                 {
                     Id = 7,
-                    Name = "Jedi Chat",
-                    Attack = 6,
+                    Name = "Carapuce",
+                    Attack = 3,
                     Health = 3,
                     Cost = 4,
-                    Rareté=Card.rareté.Légendaire,
-                    ImageUrl = "https://images.squarespace-cdn.com/content/51b3dc8ee4b051b96ceb10de/1394662654865-JKOZ7ZFF39247VYDTGG9/hilarious-jedi-cats-fight-video-preview.jpg?content-type=image%2Fjpeg"
+                    Rareté=Card.rareté.Rare,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/007.png"
                 }, new Card
                 {
                     Id = 8,
-                    Name = "Blob Chat",
-                    Attack = 1,
-                    Health = 9,
-                    Cost = 2,
-                    Rareté=Card.rareté.Légendaire,
-                    ImageUrl = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c89c9a3c-7848-4bd5-9306-417c97096ae5/dh8sghm-7bebd975-51f2-4728-87bc-fb3cef176af5.jpg/v1/fit/w_750,h_1000,q_70,strp/another_lucifur_blob_by_slugyyycat_dh8sghm-375w-2x.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTAwMCIsInBhdGgiOiJcL2ZcL2M4OWM5YTNjLTc4NDgtNGJkNS05MzA2LTQxN2M5NzA5NmFlNVwvZGg4c2dobS03YmViZDk3NS01MWYyLTQ3MjgtODdiYy1mYjNjZWYxNzZhZjUuanBnIiwid2lkdGgiOiI8PTc1MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.7oGugpkEX4yqfhiOXlo4TfqzatOuHaCu2aEi-Lnw_40"
+                    Name = "Carabaffe",
+                    Attack = 4,
+                    Health = 4,
+                    Cost = 6,
+                    Rareté=Card.rareté.Rare,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/008.png"
                 }, new Card
                 {
                     Id = 9,
-                    Name = "Jedi Chatton",
+                    Name = "Tortank",
                     Attack = 5,
-                    Health = 1,
-                    Cost = 2,
-                    Rareté=Card.rareté.Légendaire,
-                    ImageUrl = "https://townsquare.media/site/142/files/2011/08/jedicats.jpg?w=980&q=75"
+                    Health = 5,
+                    Cost = 8,
+                    Rareté=Card.rareté.Épique,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/009.png"
                 }, new Card
                 {
-                    Id = 10,
-                    Name = "Chat Furtif",
+                    Id = 25,
+                    Name = "Pikachu",
+                    Attack = 4,
+                    Health = 3,
+                    Cost = 3,
+                    Rareté=Card.rareté.Commune,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/025.png"
+                }, new Card
+                {
+                    Id = 26,
+                    Name = "Raichu",
                     Attack = 6,
-                    Health = 1,
+                    Health = 4,
+                    Cost = 5,
+                    Rareté=Card.rareté.Rare,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/026.png"
+                }, new Card
+                {
+                    Id = 27,
+                    Name = "Sabelette d'Alola",
+                    Attack = 5,
+                    Health = 3,
                     Cost = 2,
+                    Rareté=Card.rareté.Commune,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/027_f2.png"
+                }, new Card
+                {
+                    Id = 28,
+                    Name = "Sablaireau d'Alola",
+                    Attack = 6,
+                    Health = 5,
+                    Cost = 3,
+                    Rareté=Card.rareté.Commune,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/028_f2.png"
+                }, new Card
+                {
+                    Id = 102,
+                    Name = "Noeunoeuf",
+                    Attack = 4,
+                    Health = 4,
+                    Cost = 3,
+                    Rareté=Card.rareté.Commune,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/102.png"
+                }, new Card
+                {
+                    Id = 103,
+                    Name = "Noadkoko",
+                    Attack = 6,
+                    Health = 6,
+                    Cost = 5,
+                    Rareté=Card.rareté.Rare,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/103.png"
+                },new Card
+                {
+                    Id = 111,
+                    Name = "Rhinocorne",
+                    Attack = 5,
+                    Health = 5,
+                    Cost = 4,
+                    Rareté=Card.rareté.Commune,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/111.png"
+                },new Card
+                {
+                    Id = 112,
+                    Name = "Rhinoféros",
+                    Attack = 8,
+                    Health = 7,
+                    Cost = 8,
+                    Rareté=Card.rareté.Rare,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/112.png"
+                },
+                #endregion
+                #region Gen2
+                 new Card
+                {
+                    Id = 201,
+                    Name = "Zarbi",
+                    Attack = 5,
+                    Health = 3,
+                    Cost = 3,
+                    Rareté=Card.rareté.Commune,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/201.png"
+                },  new Card
+                {
+                    Id = 203,
+                    Name = "Girafarig",
+                    Attack = 5,
+                    Health = 5,
+                    Cost = 4,
+                    Rareté=Card.rareté.Commune,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/203.png"
+                },
+                #endregion
+                #region Gen3
+                new Card
+                {
+                    Id = 273,
+                    Name = "Grainipiot",
+                    Attack = 3,
+                    Health = 3,
+                    Cost = 2,
+                    Rareté=Card.rareté.Commune,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/273.png"
+                },new Card
+                {
+                    Id = 274,
+                    Name = "Pifeuil",
+                    Attack = 5,
+                    Health = 5,
+                    Cost = 4,
+                    Rareté=Card.rareté.Commune,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/274.png"
+                },new Card
+                {
+                    Id = 275,
+                    Name = "Tengalice",
+                    Attack = 6,
+                    Health = 6,
+                    Cost = 5,
+                    Rareté=Card.rareté.Rare,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/275.png"
+                },new Card
+                {
+                    Id = 287,
+                    Name = "Parecool",
+                    Attack = 4,
+                    Health = 4,
+                    Cost = 3,
+                    Rareté=Card.rareté.Commune,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/287.png"
+                },new Card
+                {
+                    Id = 288,
+                    Name = "Vigoroth ",
+                    Attack = 5,
+                    Health = 5,
+                    Cost = 4,
+                    Rareté=Card.rareté.Commune,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/288.png"
+                },new Card
+                {
+                    Id = 289,
+                    Name = "Monaflèmit",
+                    Attack = 10,
+                    Health = 9,
+                    Cost = 9,
+                    Rareté=Card.rareté.Rare,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/289.png"
+                },new Card
+                {
+                    Id = 384,
+                    Name = "Rayquaza",
+                    Attack = 9,
+                    Health = 7,
+                    Cost = 9,
+                    Rareté=Card.rareté.Légendaire,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/384.png"
+                },
+                #endregion
+                #region Gen4
+                new Card
+                {
+                    Id = 459,
+                    Name = "Blizzi",
+                    Attack = 4,
+                    Health = 4,
+                    Cost = 3,
+                    Rareté=Card.rareté.Commune,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/459.png"
+                },new Card
+                {
+                    Id = 460,
+                    Name = "Blizzaroi",
+                    Attack = 6,
+                    Health = 6,
+                    Cost = 5,
+                    Rareté=Card.rareté.Rare,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/460.png"
+                },
+                #endregion
+                #region Gen5
+                new Card
+                {
+                    Id = 570,
+                    Name = "Zorua",
+                    Attack = 4,
+                    Health = 3,
+                    Cost = 3,
+                    Rareté=Card.rareté.Rare,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/570.png"
+                },new Card
+                {
+                    Id = 571,
+                    Name = "Zoroark",
+                    Attack = 7,
+                    Health = 4,
+                    Cost = 5,
                     Rareté=Card.rareté.Épique,
-                    ImageUrl = "https://cdn.theatlantic.com/thumbor/fOZjgqHH0RmXA1A5ek-yDz697W4=/133x0:2091x1020/1200x625/media/img/mt/2015/12/RTRD62Q/original.jpg"
-                }
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/571.png"
+                },new Card
+                {
+                    Id = 643,
+                    Name = "Reshiram",
+                    Attack = 8,
+                    Health = 6,
+                    Cost = 7,
+                    Rareté=Card.rareté.Légendaire,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/643.png"
+                },
+                #endregion
+                #region Gen6
+                new Card
+                {
+                    Id = 656,
+                    Name = "Grenousse",
+                    Attack = 4,
+                    Health = 3,
+                    Cost = 3,
+                    Rareté=Card.rareté.Rare,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/656.png"
+                },new Card
+                {
+                    Id = 657,
+                    Name = "Croâporal",
+                    Attack = 4,
+                    Health = 4,
+                    Cost = 3,
+                    Rareté=Card.rareté.Rare,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/657.png"
+                },new Card
+                {
+                    Id = 658,
+                    Name = "Amphinobi",
+                    Attack = 6,
+                    Health = 5,
+                    Cost = 5,
+                    Rareté=Card.rareté.Épique,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/658_f2.png"
+                },new Card
+                {
+                    Id = 661,
+                    Name = "Passerouge",
+                    Attack = 3,
+                    Health = 3,
+                    Cost = 2,
+                    Rareté=Card.rareté.Commune,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/661.png"
+                },new Card
+                {
+                    Id = 662,
+                    Name = "Braisillon",
+                    Attack = 5,
+                    Health = 4,
+                    Cost = 3,
+                    Rareté=Card.rareté.Rare,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/662.png"
+                },new Card
+                {
+                    Id = 663,
+                    Name = "Flambusard",
+                    Attack = 5,
+                    Health = 5,
+                    Cost = 5,
+                    Rareté=Card.rareté.Rare,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/663.png"
+                },new Card
+                {
+                    Id = 714,
+                    Name = "Sonistrelle",
+                    Attack = 3,
+                    Health = 3,
+                    Cost = 2,
+                    Rareté=Card.rareté.Commune,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/714.png"
+                },new Card
+                {
+                    Id = 715,
+                    Name = "Bruyverne",
+                    Attack = 5,
+                    Health = 5,
+                    Cost = 5,
+                    Rareté=Card.rareté.Épique,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/715.png"
+                }, new Card
+                {
+                    Id = 717,
+                    Name = "Yveltal",
+                    Attack = 8,
+                    Health = 8,
+                    Cost = 7,
+                    Rareté=Card.rareté.Légendaire,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/717.png"
+                },new Card
+                {
+                    Id = 720,
+                    Name = "Hoopa",
+                    Attack = 7,
+                    Health = 5,
+                    Cost = 6,
+                    Rareté=Card.rareté.Légendaire,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/720.png"
+                },
+                #endregion
+                #region Gen7
+                new Card
+                {
+                    Id = 802,
+                    Name = "Marshadow",
+                    Attack = 8,
+                    Health = 6,
+                    Cost = 6,
+                    Rareté=Card.rareté.Légendaire,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/802.png"
+                },
+                #endregion
+                #region Gen8
+                new Card
+                {
+                    Id = 885,
+                    Name = "Fantyrm",
+                    Attack = 4,
+                    Health = 2,
+                    Cost = 2,
+                    Rareté=Card.rareté.Commune,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/885.png"
+                },new Card
+                {
+                    Id = 886,
+                    Name = "Dispareptil",
+                    Attack = 5,
+                    Health = 4,
+                    Cost = 4,
+                    Rareté=Card.rareté.Rare,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/886.png"
+                },new Card
+                {
+                    Id = 887,
+                    Name = "Lanssorien",
+                    Attack = 8,
+                    Health = 6,
+                    Cost = 6,
+                    Rareté=Card.rareté.Épique,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/887.png"
+                },
+#endregion
+
             };
         }
 
