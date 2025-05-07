@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Models.Interfaces;
 using Models.Models;
 
@@ -23,21 +24,48 @@ namespace Super_Cartes_Infinies.Models
         public int Attack { get; set; }
         public int Index { get; set; }
         [ValidateNever]
-        public virtual List<PlayableCardStatus> PlayableCardStatus { get; set; }
+        public virtual List<PlayableCardStatus> PlayableCardsStatus { get; set; }
 
-        public bool HasStatus(int powerId)
+        public bool HasStatus(PlayableCard pc, int statusId)
         {
-            throw new NotImplementedException();
+            if(pc.PlayableCardsStatus == null)
+            {
+                return false;
+            }
+
+            foreach(PlayableCardStatus pcs in pc.PlayableCardsStatus)
+            {
+                if(pcs.StatusId == statusId || pcs.Status.Id == statusId)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
-        public void AddStatusValue(int powerId)
+        public void AddStatusValue(PlayableCard pc, int powerId, Status status)
         {
-            throw new NotImplementedException();
+            int powerValue = GetPowerValue(powerId);
+            PlayableCardStatus pcs = new PlayableCardStatus()
+            {
+                Value = powerValue,
+                StatusId = status.Id,
+                Status = status
+            };
+            pc.PlayableCardsStatus.Add(pcs);
         }
 
-        public int GetStatusValue(int powerId)
+        public int GetStatusValue(PlayableCard pc, int statusId)
         {
-            throw new NotImplementedException();
+            if (HasStatus(pc, statusId))
+            {
+                PlayableCardStatus pcs = pc.PlayableCardsStatus.Find(c => c.Status.Id == statusId)!;
+                return pcs.Value;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         public bool HasPower(int powerId)

@@ -10,7 +10,7 @@ namespace Models.Models
     {
         public int Id { get; set; }
         public int Value { get; set; }
-        public int ValueId { get; set; }
+        public int StatusId { get; set; }
         public virtual Status Status { get; set; }
     }
 }
