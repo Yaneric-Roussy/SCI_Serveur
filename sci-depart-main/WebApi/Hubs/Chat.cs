@@ -12,7 +12,7 @@ namespace WebApi.Hubs
     {
         ApplicationDbContext _context;
         MatchesService _matchesService;
-        IEnumerable<Match> Matches = new List<Match>();
+        List<Match> Matches = new List<Match>();
 
 
 
@@ -55,18 +55,13 @@ namespace WebApi.Hubs
 
         }
         public async Task AfficheMatches() {
-            await Clients.All.SendAsync("GetActiveMatches");
+            Matches = await _context.Matches.Where(m => m.IsMatchCompleted == false).ToListAsync();
+            await Clients.All.SendAsync("GetActiveMatches",Matches);
 
 
         }
 
 
-        public async Task GetActiveMatches()
-        {
-               Matches = await _context.Matches.Where(m => m.IsMatchCompleted == false).ToListAsync();
-          
-            
        
-        }
     }
 }
