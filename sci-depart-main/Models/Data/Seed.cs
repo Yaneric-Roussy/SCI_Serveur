@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Identity;
 using Models.Models;
@@ -45,6 +46,27 @@ namespace Super_Cartes_Infinies.Data
                     Description = "Fait 1 à 6 de dégâts à une carte adverse (au hazard).",
                     Value = 0,
                     Icone = "🤕"
+                }
+            };
+        }
+
+        public static Status[] SeedStatus()
+        {
+            return new Status[]
+            {
+                new Status
+                {
+                    Id = Status.STUNNED_ID,
+                    Name = "Stunned",
+                    Description = "La carte est stunned, elle ne peut pas prendre d'action.",
+                    Icone = "💫"
+                },
+                new Status
+                {
+                    Id = Status.POISONED_ID,
+                    Name = "Poisoned",
+                    Description = "La carte est poisoned, elle prend du dégât de poison.",
+                    Icone = "🧪"
                 }
             };
         }
