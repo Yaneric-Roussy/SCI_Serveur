@@ -16,6 +16,7 @@ namespace Super_Cartes_Infinies.Models
 			Card = c;
             Health = c.Health;
             Attack = c.Attack;
+            PlayableCardsStatus = new List<PlayableCardStatus>();
         }
 
         public int Id { get; set; }
@@ -26,46 +27,28 @@ namespace Super_Cartes_Infinies.Models
         [ValidateNever]
         public virtual List<PlayableCardStatus> PlayableCardsStatus { get; set; }
 
-        public bool HasStatus(PlayableCard pc, int statusId)
+        public bool HasStatus(int statusId)
         {
-            if(pc.PlayableCardsStatus == null)
-            {
-                return false;
-            }
+            return PlayableCardsStatus?.Any(pcs => pcs.StatusId == statusId || pcs.Status?.Id == statusId) ?? false;
+        }
 
-            foreach(PlayableCardStatus pcs in pc.PlayableCardsStatus)
+        public void AddStatusValue(int statusId, Status status, int value)
+        {
+            var existingStatus = PlayableCardsStatus.FirstOrDefault(pcs => pcs.StatusId == statusId || pcs.Status?.Id == statusId);
+            if (existingStatus == null)
             {
-                if(pcs.StatusId == statusId || pcs.Status.Id == statusId)
+                PlayableCardsStatus.Add(new PlayableCardStatus
                 {
-                    return true;
-                }
+                    Value = value,
+                    StatusId = statusId,
+                    Status = status
+                });
             }
-            return false;
         }
-
-        public void AddStatusValue(PlayableCard pc, int powerId, Status status)
+        public int GetStatusValue(int statusId)
         {
-            int powerValue = GetPowerValue(powerId);
-            PlayableCardStatus pcs = new PlayableCardStatus()
-            {
-                Value = powerValue,
-                StatusId = status.Id,
-                Status = status
-            };
-            pc.PlayableCardsStatus.Add(pcs);
-        }
-
-        public int GetStatusValue(PlayableCard pc, int statusId)
-        {
-            if (HasStatus(pc, statusId))
-            {
-                PlayableCardStatus pcs = pc.PlayableCardsStatus.Find(c => c.Status.Id == statusId)!;
-                return pcs.Value;
-            }
-            else
-            {
-                return 0;
-            }
+            var status = PlayableCardsStatus.FirstOrDefault(pcs => pcs.StatusId == statusId || pcs.Status?.Id == statusId);
+            return status?.Value ?? 0;
         }
 
         public bool HasPower(int powerId)
