@@ -2,13 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Models;
+using Super_Cartes_Infinies.Models.Dtos;
 using Super_Cartes_Infinies.Services;
 using System.Reflection;
 
 
 namespace WebApi.Hubs
 {
-    public class Chat: Hub
+    public class Chat : Hub
     {
         ApplicationDbContext _context;
         MatchesService _matchesService;
@@ -54,14 +55,42 @@ namespace WebApi.Hubs
         {
 
         }
-        public async Task AfficheMatches() {
+        public async Task AfficheMatches()
+        {
             Matches = await _context.Matches.Where(m => m.IsMatchCompleted == false).ToListAsync();
-            await Clients.All.SendAsync("GetActiveMatches",Matches);
+            await Clients.All.SendAsync("GetActiveMatches", Matches);
 
 
         }
+        public async Task regarderPartie()
+        {
 
+        }
+        public async Task JoinMatch()
+        {
 
-       
+            JoiningMatchData? joiningMatchData = await _matchesService.JoinMatch(userId, signalRId, null);
+            joiningMatchData.OtherPlayerConnectionId = userId;
+            if (joiningMatchData == null)
+            {
+                await Clients.Client(signalRId).SendAsync("JoiningMatchData", null);
+            }
+            else if (joiningMatchData != null)
+            {
+                string groupName = WriteGroupName(joiningMatchData.Match.Id);
+                if (joiningMatchData.OtherPlayerConnectionId != null)
+                {
+                    //Ajout l'autre utilisateur au groupe puisque le match vient juste de commencer.
+                    await Groups.AddToGroupAsync(joiningMatchData.OtherPlayerConnectionId, groupName);
+                    await Clients.Client(joiningMatchData.OtherPlayerConnectionId).SendAsync("joiningMatchData", joiningMatchData);
+                }
+                //Cette partie s'active tjrs et dois ajouter le user au groupe pour que s'il essaye de rejoin il fait tjrs partie du groupe.
+                //Add both users to a group. Should happen every reload and at the start of the game
+                await Groups.AddToGroupAsync(signalRId, groupName);
+                await Clients.Client(signalRId).SendAsync("JoiningMatchData", joiningMatchData);
+            }
+
+        }
+
     }
 }
