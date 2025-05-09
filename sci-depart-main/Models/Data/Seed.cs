@@ -26,6 +26,28 @@ namespace Super_Cartes_Infinies.Data
             };
 
         }
+        public static Spell[] SeedSpells()
+        {
+            return new Spell[]
+            {
+                new Spell
+                {
+                    Id = Spell.EARTHQUAKE_ID,
+                    Name = "Earthquake",
+                    Description = "Fait X dégâts à TOUTES les cartes en jeu.",
+                    Value = 2,
+                    Icone = "🌎"
+                },
+                new Spell
+                {
+                    Id = Spell.RANDOM_PAIN_ID,
+                    Name = "Random Pain",
+                    Description = "Fait 1 à 6 de dégâts à une carte adverse (au hazard).",
+                    Value = 0,
+                    Icone = "🤕"
+                }
+            };
+        }
         public static CardPower[] SeedCardPowers()
         {
             return new CardPower[]
@@ -83,14 +105,21 @@ namespace Super_Cartes_Infinies.Data
                 {
                     Id = 8,
                     CardId = 5,
-                    PowerId = Power.THORNS_ID,
-                    Value = 3
+                    PowerId = Power.POISON_ID,
+                    Value = 2
                 },
                 new CardPower
                 {
                     Id = 9,
                     CardId = 6,
-                    PowerId = Power.HEAL_ID,
+                    PowerId = Power.STUNNED_ID,
+                    Value = 2
+                },
+                new CardPower
+                {
+                    Id = 10,
+                    CardId = 7,
+                    PowerId = Power.PROTECTION_ID,
                     Value = 2
                 }
             };
