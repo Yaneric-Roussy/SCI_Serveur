@@ -64,11 +64,6 @@ namespace WebApi.Hubs
         }
         public async Task regarderPartie()
         {
-
-        }
-        public async Task JoinMatch()
-        {
-
             JoiningMatchData? joiningMatchData = await _matchesService.JoinMatch(userId, signalRId, null);
             joiningMatchData.OtherPlayerConnectionId = userId;
             if (joiningMatchData == null)
@@ -89,8 +84,8 @@ namespace WebApi.Hubs
                 await Groups.AddToGroupAsync(signalRId, groupName);
                 await Clients.Client(signalRId).SendAsync("JoiningMatchData", joiningMatchData);
             }
-
         }
+       
 
     }
 }
