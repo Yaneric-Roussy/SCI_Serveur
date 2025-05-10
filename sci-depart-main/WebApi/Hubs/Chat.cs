@@ -62,10 +62,10 @@ namespace WebApi.Hubs
 
 
         }
-        public async Task regarderPartie()
+        public async Task regarderPartie(string PlayerId,int matchid)
         {
-            JoiningMatchData? joiningMatchData = await _matchesService.JoinMatch(userId, signalRId, null);
-            joiningMatchData.OtherPlayerConnectionId = userId;
+            JoiningMatchData? joiningMatchData = await _matchesService.JoinMatch(PlayerId, signalRId, matchid);
+            joiningMatchData.OtherPlayerConnectionId = PlayerId;
             if (joiningMatchData == null)
             {
                 await Clients.Client(signalRId).SendAsync("JoiningMatchData", null);

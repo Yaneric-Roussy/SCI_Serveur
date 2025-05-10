@@ -101,7 +101,7 @@ builder.Services.AddScoped<DecksService>();
 builder.Services.AddSignalR(options =>
 {
     options.EnableDetailedErrors = true;
-    options.MaximumReceiveMessageSize = 128 * 1024;
+    options.MaximumReceiveMessageSize = 326 * 1024;
 });
 
 builder.Services.AddControllers();
