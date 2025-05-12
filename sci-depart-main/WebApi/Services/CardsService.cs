@@ -31,6 +31,7 @@ namespace Super_Cartes_Infinies.Services
             var ownedCards = _dbContext.OwnedCard
                 .Where(oc => oc.Player.Id == player.Id)
                 .Select(oc => oc.Card)
+                .OrderBy(oc=>oc.Id)
                 .ToList();
 
             return ownedCards;
@@ -65,7 +66,7 @@ namespace Super_Cartes_Infinies.Services
         }
         public IEnumerable<Card> GetAllCards()
         {
-            return _dbContext.Cards;
+            return _dbContext.Cards.OrderBy(c=>c.Id);
         }
 
         public IEnumerable<Pack> GetPacks()
