@@ -206,6 +206,9 @@ namespace WebApi.Services
 
 
         }
+
+      
+
         public async Task<List<Card>> GetAllCards()
         {
             return await _dbContext.Cards.OrderBy(c => c.Id).ToListAsync();

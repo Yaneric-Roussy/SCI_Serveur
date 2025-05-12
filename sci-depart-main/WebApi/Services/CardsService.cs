@@ -19,23 +19,28 @@ namespace Super_Cartes_Infinies.Services
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Card> GetPlayersCards(string userId)
+        public IEnumerable<OwnedCard> GetPlayersCards(string userId)
         {
             // Récupérer les cartes possédées par le joueur en utilisant l'ID de l'utilisateur
             var player = _dbContext.Players.FirstOrDefault(p => p.UserId == userId);
             if (player == null)
             {
-                return new List<Card>();
+                return new List<OwnedCard>();
             }
 
             var ownedCards = _dbContext.OwnedCard
                 .Where(oc => oc.Player.Id == player.Id)
-                .Select(oc => oc.Card)
                 .OrderBy(oc=>oc.Id)
                 .ToList();
 
             return ownedCards;
         }
+
+        public IEnumerable<OwnedCard>GetOwnedCards(Player player)
+        {
+            return player.OwnedCards;
+        }
+
 
         public async Task<IEnumerable<Card>> GetUserDeckCards(int playerId)
         {
