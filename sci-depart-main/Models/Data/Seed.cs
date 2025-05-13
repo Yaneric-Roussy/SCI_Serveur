@@ -114,7 +114,7 @@ namespace Super_Cartes_Infinies.Data
                 {
                     Id = 6,
                     CardId = 3,
-                    PowerId = Power.FIRST_STRIKE_ID,
+                    PowerId = Power.CHAOS_ID,
                     Value = 0
                 }, new CardPower
                 {

@@ -49,6 +49,10 @@ namespace Super_Cartes_Infinies.Combat
             {
                 card.Attack -= card.GetPowerValue(Power.ATTACK_BOOST_ID);
             }
+            if (card.HasPower(Power.CHAOS_ID))
+            {
+                Events.Add(new ChaosEvent(currentPlayerData, opposingPlayerData));
+            }
             //if (ennemyCard == null)
             //{
             //    //Pas de cartes ennemy
