@@ -10,7 +10,10 @@ namespace Super_Cartes_Infinies.Combat
         {
             this.Events = new List<MatchEvent>();
             AlterCards(currentPlayerData);
-            AlterCards(opposingPlayerData);
+            if(opposingPlayerData.BattleField != null)
+            {
+                AlterCards(opposingPlayerData);
+            }
         }
 
         public void AlterCards(MatchPlayerData playerData)
