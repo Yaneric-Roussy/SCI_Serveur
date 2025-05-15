@@ -21,7 +21,7 @@ namespace Super_Cartes_Infinies.Combat
             }
             if (card.HasStatus(Status.POISONED_ID))
             {
-
+                this.Events.Add(new PoisonedEvent(currentPlayerData, card));
             }
             if (card.HasPower(Power.ATTACK_BOOST_ID))
             {
