@@ -25,23 +25,26 @@ namespace Super_Cartes_Infinies.Models
         public int Attack { get; set; }
         public int Index { get; set; }
         [ValidateNever]
-        public virtual List<PlayableCardStatus> PlayableCardsStatus { get; set; }
+        public virtual List<PlayableCardStatus> PlayableCardsStatus { get; set; } = new List<PlayableCardStatus>();
 
         public bool HasStatus(int statusId)
         {
             return PlayableCardsStatus?.Any(pcs => pcs.StatusId == statusId || pcs.Status?.Id == statusId) ?? false;
         }
 
-        public void AddStatusValue(int statusId, Status status, int value)
+        public void AddStatusValue(int statusId, int value)
         {
             var existingStatus = PlayableCardsStatus.FirstOrDefault(pcs => pcs.StatusId == statusId || pcs.Status?.Id == statusId);
+            if(existingStatus != null && statusId == Status.POISONED_ID)
+            {
+                existingStatus.Value += value;
+            }
             if (existingStatus == null)
             {
                 PlayableCardsStatus.Add(new PlayableCardStatus
                 {
                     Value = value,
-                    StatusId = statusId,
-                    Status = status
+                    StatusId = statusId
                 });
             }
         }

@@ -30,14 +30,13 @@ namespace Tests.Combat
         [TestMethod]
         public void HasStatusValid()
         {
-            var status = new Status { Id = 1, Name = "Poison", Description = "Fait mal" };
+            //var status = new Status { Id = 1, Name = "Poison", Description = "Fait mal" };
             var card = new Card();
             var playable = new PlayableCard(card);
 
             playable.PlayableCardsStatus.Add(new PlayableCardStatus
             {
                 StatusId = 1,
-                Status = status,
                 Value = 2
             });
 
@@ -56,11 +55,11 @@ namespace Tests.Combat
         [TestMethod]
         public void AddStatusValueValid()
         {
-            var status = new Status { Id = 1, Name = "Shield", Description = "Protège" };
+            //var status = new Status { Id = 1, Name = "Shield", Description = "Protège" };
             var card = new Card();
             var playable = new PlayableCard(card);
 
-            playable.AddStatusValue(1, status, 3);
+            playable.AddStatusValue(1, 3);
 
             Assert.AreEqual(1, playable.PlayableCardsStatus.Count);
             Assert.AreEqual(3, playable.PlayableCardsStatus[0].Value);
@@ -69,11 +68,11 @@ namespace Tests.Combat
         [TestMethod]
         public void AddStatusValueNotValid()
         {
-            var status = new Status { Id = 1, Name = "Shield", Description = "Protège" };
+            //var status = new Status { Id = 1, Name = "Shield", Description = "Protège" };
             var card = new Card();
             var playable = new PlayableCard(card);
 
-            playable.AddStatusValue(1, status, 5);
+            playable.AddStatusValue(1, 5);
 
             Assert.AreEqual(1, playable.PlayableCardsStatus.Count);
             Assert.AreNotEqual(10, playable.PlayableCardsStatus[0].Value);
@@ -82,11 +81,11 @@ namespace Tests.Combat
         [TestMethod]
         public void GetStatusValueValid()
         {
-            var status = new Status { Id = 1, Name = "Rage" };
+            //var status = new Status { Id = 1, Name = "Rage" };
             var card = new Card();
             var playable = new PlayableCard(card);
 
-            playable.AddStatusValue(1, status, 10);
+            playable.AddStatusValue(1, 10);
 
             int value = playable.GetStatusValue(1);
             Assert.AreEqual(10, value);

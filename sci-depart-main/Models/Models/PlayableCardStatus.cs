@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace Models.Models
         public int Id { get; set; }
         public int Value { get; set; }
         public int StatusId { get; set; }
+        [ValidateNever]
         public virtual Status Status { get; set; }
     }
 }

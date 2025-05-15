@@ -15,6 +15,14 @@ namespace Super_Cartes_Infinies.Combat
             this.CardId = card.Id;
             this.PowerIds = new List<int>();
 
+            if (card.HasStatus(Status.STUNNED_ID))
+            {
+
+            }
+            if (card.HasStatus(Status.POISONED_ID))
+            {
+
+            }
             if (card.HasPower(Power.ATTACK_BOOST_ID))
             {
                 PowerIds.Add(Power.ATTACK_BOOST_ID);
@@ -39,6 +47,14 @@ namespace Super_Cartes_Infinies.Combat
                     //{
                     //    this.Events.Add(new CardDamageEvent(currentPlayerData, ennemyCard.Attack, card));
                     //}
+                }
+                if (card.HasPower(Power.POISON_ID))
+                {
+                    Events.Add(new PoisonEvent(currentPlayerData, opposingPlayerData, card, ennemyCard));
+                }
+                if (card.HasPower(Power.STUNNED_ID))
+                {
+                    //Getting there...
                 }
             }
             if ((!card.HasPower(Power.FIRST_STRIKE_ID) || ennemyCard == null) && currentPlayerData.BattleField.Contains(card))
