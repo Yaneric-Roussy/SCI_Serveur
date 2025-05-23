@@ -21,12 +21,15 @@ namespace Super_Cartes_Infinies.Combat
                 if(card.Card.SpellId == Spell.EARTHQUAKE_ID)
                 {
                     this.Events.Add(new EarthquakeEvent(currentPlayerData, opposingPlayerData, card));
-                    //On "tue" la carte (un sort finit d'exister après avoir été utilisé)
+                    //On "tue" la carte (un sort finit d'exister après avoir été utilisé)       -YR
                     this.Events.Add(new CardDeathEvent(currentPlayerData, card));
                     return;
                 }
                 if(card.Card.SpellId == Spell.RANDOM_PAIN_ID)
                 {
+                    this.Events.Add(new RandomPainEvent(currentPlayerData, opposingPlayerData, card));
+                    //On "tue" la carte (un sort finit d'exister après avoir été utilisé)       -YR
+                    this.Events.Add(new CardDeathEvent(currentPlayerData, card));
                     return;
                 }
             }

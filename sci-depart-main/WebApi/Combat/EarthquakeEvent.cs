@@ -25,8 +25,7 @@ namespace WebApi.Combat
         {
             foreach (PlayableCard playableCard in playerData.BattleField)
             {
-                if(!playableCard.Card.IsSpell)
-                    Events.Add(new CardDamageEvent(playerData, damage, playableCard));
+                Events.Add(new CardDamageEvent(playerData, damage, playableCard));
             }
         }
     }
