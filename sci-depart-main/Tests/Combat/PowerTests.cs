@@ -1,6 +1,7 @@
 ﻿using Models.Models;
 using Super_Cartes_Infinies.Combat;
 using Super_Cartes_Infinies.Models;
+using WebApi.Combat;
 
 
 namespace Tests.Combat
@@ -500,8 +501,83 @@ namespace Tests.Combat
             Assert.AreEqual(1, _currentPlayerData.Graveyard.Count);
             Assert.AreEqual(1, _opposingPlayerData.BattleField.Count);
             Assert.AreEqual(0, _opposingPlayerData.Graveyard.Count);
-
         }
+
+        [TestMethod]
+        public void ChaosPowerSwapsCorrectly()
+        {
+            _playableCardA.Attack = 4;
+            _playableCardA.Health = 2;
+
+            _playableCardB.Attack = 1;
+            _playableCardB.Health = 3;
+
+            _currentPlayerData.BattleField.Add(_playableCardA);
+            _opposingPlayerData.BattleField.Add(_playableCardB);
+
+            var chaosEvent = new ChaosEvent(_currentPlayerData, _opposingPlayerData);
+
+            Assert.AreEqual(2, _playableCardA.Attack);
+            Assert.AreEqual(4, _playableCardA.Health);
+
+            Assert.AreEqual(1, _playableCardB.Health);
+            Assert.AreEqual(3, _playableCardB.Attack);
+        }
+
+        [TestMethod]
+        public void PoisonPowerAppliesStatusCorrectly()
+        {
+            Power poisonPower = new Power
+            {
+                Id = Power.POISON_ID
+            };
+
+            CardPower cardPower = new CardPower
+            {
+                Power = poisonPower,
+                Card = _cardA,
+                Value = 3
+            };
+            _cardA.CardPowers = new List<CardPower> { cardPower };
+
+            _currentPlayerData.BattleField.Add(_playableCardA);
+            _opposingPlayerData.BattleField.Add(_playableCardB);
+
+            var poisonEvent = new PoisonEvent(_currentPlayerData, _opposingPlayerData, _playableCardA, _playableCardB);
+
+            var status = _playableCardB.PlayableCardsStatus.FirstOrDefault(s => s.StatusId == Status.POISONED_ID);
+            Assert.IsNotNull(status);
+            Assert.AreEqual(3, status.Value);
+            Assert.AreEqual(GameStatuses.Poisoned, status.Status);
+        }
+
+        [TestMethod]
+        public void StunPowerAppliesStatusCorrectly()
+        {
+            Power stunPower = new Power
+            {
+                Id = Power.STUNNED_ID
+            };
+
+            CardPower cardPower = new CardPower
+            {
+                Power = stunPower,
+                Card = _cardA,
+                Value = 2
+            };
+            _cardA.CardPowers = new List<CardPower> { cardPower };
+
+            _currentPlayerData.BattleField.Add(_playableCardA);
+            _opposingPlayerData.BattleField.Add(_playableCardB);
+
+            var stunEvent = new StunEvent(_currentPlayerData, _opposingPlayerData, _playableCardA, _playableCardB);
+
+            var status = _playableCardB.PlayableCardsStatus.FirstOrDefault(s => s.StatusId == Status.STUNNED_ID);
+            Assert.IsNotNull(status);
+            Assert.AreEqual(2, status.Value);
+            Assert.AreEqual(GameStatuses.Stunned, status.Status);
+        }
+
     }
 }
 
