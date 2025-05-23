@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
+using Super_Cartes_Infinies.Models;
 using Models.Models;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Hubs;
@@ -22,8 +24,7 @@ namespace WebApi.Services
             {
                 ApplicationDbContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-
-
+                //List<PlayerInfo> playerInfos = await dbContext.PlayerInfos.Where(p => p.Attente != null).ToListAsync();
                 //faire des actions.
                 // Passer une COPIE de l'information sur les players (Car on va retirer les éléments de la liste, même si le player n'est pas mis dans une paire)
                 List<PairOfPlayers> GeneratePairs(List<PlayerInfo> playerInfos)

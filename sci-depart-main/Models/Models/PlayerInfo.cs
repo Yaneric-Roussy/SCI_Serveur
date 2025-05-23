@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Models.Models
+namespace Super_Cartes_Infinies.Models
 {
     public class PlayerInfo
     {
@@ -16,7 +16,7 @@ namespace Models.Models
 
         public int Id { get; set; }
         public int Elo { get; set; }
-        public int Attente { get; set; }
+        public int? Attente { get; set; }
         public string UserId { get; set; }
         public int PlayerId { get; set; }
         [ValidateNever]

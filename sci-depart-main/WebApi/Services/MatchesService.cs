@@ -31,6 +31,7 @@ namespace Super_Cartes_Infinies.Services
             // Vérifier si le match n'a pas déjà été démarré (de façon plus générale, retourner un match courrant si le joueur y participe)
             IEnumerable<Match> matches = _dbContext.Matches.Where(m => m.IsMatchCompleted == false && (m.UserAId == userId || m.UserBId == userId));
 
+      
             if(matches.Count() > 1)
             {
                 throw new Exception("A player should never be playing 2 matches at the same time!");
