@@ -5,6 +5,7 @@ using Models.Models;
 using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Hubs;
 using System.Threading.Channels;
+using Super_Cartes_Infinies.Services;
 
 namespace WebApi.Services
 {
@@ -13,10 +14,12 @@ namespace WebApi.Services
         public const int DELAY = 1 * 1000;
         public IServiceScopeFactory _serviceScopeFactory;
         public IHubContext<MatchHub> _matchHub;
-        public MatchmakingService(IHubContext<MatchHub> matchHub, IServiceScopeFactory serviceScopeFactory)
+        public MatchesService _matchService;
+        public MatchmakingService(IHubContext<MatchHub> matchHub, IServiceScopeFactory serviceScopeFactory, MatchesService matchesService)
         {
             _matchHub = matchHub;
             _serviceScopeFactory = serviceScopeFactory;
+            _matchService = matchesService;
         }
         public async Task DoSomething(CancellationToken stoppingToken)
         {
@@ -24,7 +27,9 @@ namespace WebApi.Services
             {
                 ApplicationDbContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-                //List<PlayerInfo> playerInfos = await dbContext.PlayerInfos.Where(p => p.Attente != null).ToListAsync();
+                List<PlayerInfo> playerInfos = await dbContext.PlayerInfos.Where(p => p.Attente != null).ToListAsync();
+                var copy = new List<PlayerInfo>(playerInfos);
+                List<PairOfPlayers> pairs = GeneratePairs(copy);
                 //faire des actions.
                 // Passer une COPIE de l'information sur les players (Car on va retirer les éléments de la liste, même si le player n'est pas mis dans une paire)
                 List<PairOfPlayers> GeneratePairs(List<PlayerInfo> playerInfos)
@@ -65,6 +70,11 @@ namespace WebApi.Services
                     }
                     return pairs;
                 }
+                foreach (PairOfPlayers pair in pairs)
+                {
+                    //_matchService.JoinMatch()
+                }
+
             }
 
         }

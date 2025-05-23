@@ -23,6 +23,74 @@ namespace Super_Cartes_Infinies.Services
             _matchConfigurationService = matchConfigurationService;
         }
 
+        //// Cette fonction est assez flexible car elle peut simplement être appeler lorsqu'un user veut jouer un match
+        //// Si le user a déjà un match en cours (Un match qui n'est pas terminé), on lui retourne l'information pour ce match
+        //// Sinon on utilise le WaitingUserService pour essayer de trouver un autre user ou nous mettre en attente
+        //public async Task<JoiningMatchData?> JoinMatch(string userId, string? connectionId, int? specificMatchId)
+        //{
+        //    // Vérifier si le match n'a pas déjà été démarré (de façon plus générale, retourner un match courrant si le joueur y participe)
+        //    IEnumerable<Match> matches = _dbContext.Matches.Where(m => m.IsMatchCompleted == false && (m.UserAId == userId || m.UserBId == userId));
+
+
+        //    if(matches.Count() > 1)
+        //    {
+        //        throw new Exception("A player should never be playing 2 matches at the same time!");
+        //    }
+
+        //    Match? match = null;
+        //    Player? playerA = null;
+        //    Player? playerB = null;
+        //    string otherPlayerConnectionId = null;
+
+        //    // Le joueur est dans un match en cours
+        //    if (matches.Count() == 1)
+        //    {
+        //        match = matches.First();
+        //        if(specificMatchId != null && specificMatchId != match.Id )
+        //        {
+        //            match = null;
+        //        }
+        //        else
+        //        {
+        //            playerA = _playersService.GetPlayerFromUserId(match.UserAId);
+        //            playerB = _playersService.GetPlayerFromUserId(match.UserBId);
+        //        }
+        //    }
+        //    // Si on veut rejoindre un match en particulier, on ne se met pas en file
+        //    else if(specificMatchId == null)
+        //    {
+        //        UsersReadyForAMatch? pairOfUsers = await _waitingUserService.LookForWaitingUser(userId, connectionId);
+
+        //        if (pairOfUsers != null)
+        //        {
+        //            playerA = _playersService.GetPlayerFromUserId(pairOfUsers.UserAId);
+        //            playerB = _playersService.GetPlayerFromUserId(pairOfUsers.UserBId);
+
+        //            // Création d'un nouveau match
+        //            IEnumerable<Card> cardsPlayerA = await _cardsService.GetUserDeckCards(playerA.Id);
+        //            IEnumerable<Card> cardsPlayerB = await _cardsService.GetUserDeckCards(playerB.Id);
+        //            match = new Match(playerA, playerB, cardsPlayerA, cardsPlayerB);
+        //            otherPlayerConnectionId = pairOfUsers.UserAConnectionId;
+
+        //            _dbContext.Update(match);
+        //            _dbContext.SaveChanges();
+        //        }
+        //    }
+
+        //    if(match != null) {
+        //        return new JoiningMatchData
+        //        {
+        //            Match = match,
+        //            PlayerA = playerA!,
+        //            PlayerB = playerB!,
+        //            OtherPlayerConnectionId = otherPlayerConnectionId,
+        //            IsStarted = otherPlayerConnectionId == null
+        //        };
+        //    }
+
+        //    return null;
+        //}
+
         // Cette fonction est assez flexible car elle peut simplement être appeler lorsqu'un user veut jouer un match
         // Si le user a déjà un match en cours (Un match qui n'est pas terminé), on lui retourne l'information pour ce match
         // Sinon on utilise le WaitingUserService pour essayer de trouver un autre user ou nous mettre en attente
@@ -31,8 +99,8 @@ namespace Super_Cartes_Infinies.Services
             // Vérifier si le match n'a pas déjà été démarré (de façon plus générale, retourner un match courrant si le joueur y participe)
             IEnumerable<Match> matches = _dbContext.Matches.Where(m => m.IsMatchCompleted == false && (m.UserAId == userId || m.UserBId == userId));
 
-      
-            if(matches.Count() > 1)
+
+            if (matches.Count() > 1)
             {
                 throw new Exception("A player should never be playing 2 matches at the same time!");
             }
@@ -46,7 +114,7 @@ namespace Super_Cartes_Infinies.Services
             if (matches.Count() == 1)
             {
                 match = matches.First();
-                if(specificMatchId != null && specificMatchId != match.Id )
+                if (specificMatchId != null && specificMatchId != match.Id)
                 {
                     match = null;
                 }
@@ -57,7 +125,7 @@ namespace Super_Cartes_Infinies.Services
                 }
             }
             // Si on veut rejoindre un match en particulier, on ne se met pas en file
-            else if(specificMatchId == null)
+            else if (specificMatchId == null)
             {
                 UsersReadyForAMatch? pairOfUsers = await _waitingUserService.LookForWaitingUser(userId, connectionId);
 
@@ -77,7 +145,8 @@ namespace Super_Cartes_Infinies.Services
                 }
             }
 
-            if(match != null) {
+            if (match != null)
+            {
                 return new JoiningMatchData
                 {
                     Match = match,
