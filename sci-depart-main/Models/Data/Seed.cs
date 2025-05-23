@@ -300,6 +300,28 @@ namespace Super_Cartes_Infinies.Data
                     Cost = 2,
                     Rareté=Card.rareté.Épique,
                     ImageUrl = "https://cdn.theatlantic.com/thumbor/fOZjgqHH0RmXA1A5ek-yDz697W4=/133x0:2091x1020/1200x625/media/img/mt/2015/12/RTRD62Q/original.jpg"
+                }, new Card //This card is a spell 
+                {
+                    Id = 11,
+                    Name = "Random Pain",
+                    Attack = 0,     //Ignored
+                    Health = 0,      //Ignored
+                    Cost = 2,
+                    Rareté = Card.rareté.Rare,
+                    ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR936kxkL3CDGYOfTwzxYl8nAZ_KE3GzXk6GQ&s",
+                    IsSpell = true,
+                    SpellId = Spell.RANDOM_PAIN_ID
+                }, new Card //This card is a spell 
+                {
+                    Id = 12,
+                    Name = "Earthquake",
+                    Attack = 0,     //Ignored
+                    Health = 0,      //Ignored
+                    Cost = 2,
+                    Rareté = Card.rareté.Rare,
+                    ImageUrl = "https://catpedia.wiki/images/5/59/Milly.png",
+                    IsSpell = true,
+                    SpellId = Spell.EARTHQUAKE_ID
                 }
             };
         }
@@ -384,6 +406,14 @@ namespace Super_Cartes_Infinies.Data
                 new {
                     Id = 9,
                     CardId = SeedCards()[8].Id  // Assigning the cardID value
+                },
+                new {
+                    Id = 10,
+                    CardId = SeedCards()[10].Id
+                },
+                new {
+                    Id = 11,
+                    CardId = SeedCards()[11].Id
                 }
 
             };

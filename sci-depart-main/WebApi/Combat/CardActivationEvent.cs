@@ -1,5 +1,6 @@
 ﻿using Models.Models;
 using Super_Cartes_Infinies.Models;
+using WebApi.Combat;
 
 namespace Super_Cartes_Infinies.Combat
 {
@@ -15,6 +16,20 @@ namespace Super_Cartes_Infinies.Combat
             this.CardId = card.Id;
             this.PowerIds = new List<int>();
 
+            if (card.Card.IsSpell)
+            {
+                if(card.Card.SpellId == Spell.EARTHQUAKE_ID)
+                {
+                    this.Events.Add(new EarthquakeEvent(currentPlayerData, opposingPlayerData, card));
+                    //On "tue" la carte (un sort finit d'exister après avoir été utilisé)
+                    this.Events.Add(new CardDeathEvent(currentPlayerData, card));
+                    return;
+                }
+                if(card.Card.SpellId == Spell.RANDOM_PAIN_ID)
+                {
+                    return;
+                }
+            }
             //Garder Poisoned en haut pour qu'il s'exécute quand même, même si la carte a stunned (changer logique si on déplace) -YR
             if (card.HasStatus(Status.POISONED_ID))
             {
