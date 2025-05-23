@@ -52,7 +52,7 @@ namespace WebApi.Services
         }
         public async Task<IEnumerable<Deck>> getDeck(int playerId)
         {
-            List<Deck> deck = await _dbContext.Decks.Where(d => d.PlayerId == playerId).ToListAsync();
+            List<Deck> deck = await _dbContext.Decks.Where(d => d.PlayerId == playerId).Include(p=>p.CarteJoueurs).ToListAsync();
             return deck;
         }
         public async Task DeleteDeck(Deck deck)
