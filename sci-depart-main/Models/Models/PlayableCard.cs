@@ -35,7 +35,7 @@ namespace Super_Cartes_Infinies.Models
         public void AddStatusValue(int statusId, int value)
         {
             var existingStatus = PlayableCardsStatus.FirstOrDefault(pcs => pcs.StatusId == statusId || pcs.Status?.Id == statusId);
-            if(existingStatus != null && statusId == Status.POISONED_ID)
+            if(existingStatus != null && (statusId == Status.POISONED_ID || statusId == Status.STUNNED_ID))
             {
                 existingStatus.Value += value;
             }

@@ -15,13 +15,16 @@ namespace Super_Cartes_Infinies.Combat
             this.CardId = card.Id;
             this.PowerIds = new List<int>();
 
-            if (card.HasStatus(Status.STUNNED_ID))
-            {
-
-            }
+            //Garder Poisoned en haut pour qu'il s'exécute quand même, même si la carte a stunned (changer logique si on déplace) -YR
             if (card.HasStatus(Status.POISONED_ID))
             {
                 this.Events.Add(new PoisonedEvent(currentPlayerData, card));
+            }
+            if (card.HasStatus(Status.STUNNED_ID))
+            {
+                this.Events.Add(new StunnedEvent(currentPlayerData, card));
+                return; //On évite le reste, la carte est stunned       -YR
+                
             }
             if (card.HasPower(Power.ATTACK_BOOST_ID))
             {
@@ -54,7 +57,7 @@ namespace Super_Cartes_Infinies.Combat
                 }
                 if (card.HasPower(Power.STUNNED_ID))
                 {
-                    //Getting there...
+                    this.Events.Add(new StunEvent(currentPlayerData, opposingPlayerData, card, ennemyCard));
                 }
             }
             if ((!card.HasPower(Power.FIRST_STRIKE_ID) || ennemyCard == null) && currentPlayerData.BattleField.Contains(card))
