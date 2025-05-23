@@ -46,6 +46,12 @@ namespace WebApi.Controllers
             return Ok(await _deckService.GetAllCards());
         }
 
+        [HttpGet("{deckId}")]
+        public async Task<ActionResult<List<Card>>> GetAllCardFromDeck(int deckId)
+        {
+            return Ok(await _deckService.GetAllCardsFromDeck(deckId));
+        }
+
         [HttpGet("{userId}")]
         public async Task<ActionResult<List<OwnedCard>>> GetUserCards(string userId)
         {

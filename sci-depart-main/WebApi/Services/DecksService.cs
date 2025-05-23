@@ -206,8 +206,13 @@ namespace WebApi.Services
 
 
         }
+        public async Task<List<OwnedCard>> GetAllCardsFromDeck(int deckId)
+        {
+           var x = await _dbContext.Decks.Where(c => c.Id == deckId).Include(c=>c.CarteJoueurs).FirstOrDefaultAsync();
+            var y = x.CarteJoueurs;
+            return y;
+        }
 
-      
 
         public async Task<List<Card>> GetAllCards()
         {
