@@ -51,13 +51,13 @@ namespace Tests.Services
             List<PlayerInfo> playerInfos = new List<PlayerInfo>();
             playerInfos.Add(new PlayerInfo
             {
-                Attente = 0,
+                Attente = 10,
                 Elo = 1500,
 
             });
             playerInfos.Add(new PlayerInfo
             {
-                Attente = 0,
+                Attente = 12,
                 Elo = 769
             });
             List<PairOfPlayers> pairOfPlayers = generatePairsService.GeneratePairs(playerInfos);
@@ -113,6 +113,12 @@ namespace Tests.Services
 
 
             Assert.AreEqual(pairOfPlayers.Count(), 2);
+
+            //Vérifier que les paires ont bien été créés et que il n'y a pas de paire avec les joueurs trop loins
+            Assert.AreEqual(pairOfPlayers[0].PlayerInfo1,  proche1_1);
+            Assert.AreEqual(pairOfPlayers[0].PlayerInfo2, proche1_2);
+            Assert.AreEqual(pairOfPlayers[1].PlayerInfo1, proche2_2);
+            Assert.AreEqual(pairOfPlayers[1].PlayerInfo2, proche2_1);
         }
     }
 }
