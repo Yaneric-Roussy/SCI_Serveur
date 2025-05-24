@@ -75,7 +75,16 @@ public class MatchHub : Hub
 
         }
     }
+    public async Task StopSearch()
+    {
+        PlayerInfo? pi = await _context.PlayerInfos.Where(p => p.UserId == userId).SingleOrDefaultAsync();
+        if(pi != null)
+        {
+            pi.Attente = null;
+            await _context.SaveChangesAsync();
+        }
 
+    }
     public async Task StartMatchEvent(Match match)
     {
         StartMatchEvent startMatchEvent = await _matchesService.StartMatch(userId, match.Id);
