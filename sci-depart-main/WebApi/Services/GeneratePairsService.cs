@@ -11,7 +11,7 @@ namespace WebApi.Services
 {
     public class GeneratePairsService
     {
-        public const int CONSTANTE = 4;
+        public const int CONSTANTE = 6;
         public GeneratePairsService()
         {
         }
