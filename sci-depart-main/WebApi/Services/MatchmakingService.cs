@@ -15,11 +15,10 @@ namespace WebApi.Services
         public IServiceScopeFactory _serviceScopeFactory;
         public IHubContext<MatchHub> _matchHub;
         public MatchesService _matchService;
-        public MatchmakingService(IHubContext<MatchHub> matchHub, IServiceScopeFactory serviceScopeFactory, MatchesService matchesService)
+        public MatchmakingService(IHubContext<MatchHub> matchHub, IServiceScopeFactory serviceScopeFactory)
         {
             _matchHub = matchHub;
             _serviceScopeFactory = serviceScopeFactory;
-            _matchService = matchesService;
         }
         public async Task DoSomething(CancellationToken stoppingToken)
         {
@@ -50,7 +49,7 @@ namespace WebApi.Services
                             PlayerInfo pi = playerInfos[i];
                             int difference = Math.Abs(pi.Elo - playerInfo.Elo);
                             //Accepter de plus en plus en fonction de l'attente
-                            if (difference < playerInfo.Attente * CONSTANTE)
+                            if (difference <= playerInfo.Attente * CONSTANTE)
                             {
                                 if (difference < smallestELODifference)
                                 {
@@ -70,11 +69,27 @@ namespace WebApi.Services
                     }
                     return pairs;
                 }
+                
+                var playersWithAttente = await dbContext.PlayerInfos.Where(p => p.Attente != null).ToListAsync();
+                foreach (var player in playersWithAttente)
+                {
+                    player.Attente++;
+                }
+                await dbContext.SaveChangesAsync();
                 foreach (PairOfPlayers pair in pairs)
                 {
-                    //_matchService.JoinMatch()
+                    PlayerInfo p1 = await dbContext.PlayerInfos.Where(p => p.Id == pair.PlayerInfo1.Id).SingleAsync();
+                    p1.Attente = null;
+                    PlayerInfo p2 = await dbContext.PlayerInfos.Where(p => p.Id == pair.PlayerInfo2.Id).SingleAsync();
+                    p2.Attente = null;
+                    playerInfos.Remove(pair.PlayerInfo1);
+                    playerInfos.Remove(pair.PlayerInfo2);
+                    await dbContext.SaveChangesAsync();
+                    MatchesService matchesService = scope.ServiceProvider.GetRequiredService<MatchesService>();
+                    await matchesService.PartMatch(pair);
+                    await _matchHub.Clients.User(pair.PlayerInfo1.UserId).SendAsync("FoundMatch", pair.PlayerInfo1.UserId);
                 }
-
+                
             }
 
         }

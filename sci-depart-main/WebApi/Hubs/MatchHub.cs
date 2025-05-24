@@ -43,9 +43,9 @@ public class MatchHub : Hub
         await base.OnConnectedAsync();
     }
 
-    public async Task JoinMatch()
+    public async Task JoinMatch(bool fisrt)
     {
-        JoiningMatchData? joiningMatchData = await _matchesService.JoinMatch(userId,signalRId,null);
+        JoiningMatchData? joiningMatchData = await _matchesService.JoinMatch(userId,signalRId,null, fisrt);
         if(joiningMatchData == null)
         {
             await Clients.Client(signalRId).SendAsync("JoiningMatchData", null);
@@ -53,16 +53,26 @@ public class MatchHub : Hub
         else if(joiningMatchData != null)
         {
             string groupName = WriteGroupName(joiningMatchData.Match.Id);
-            if (joiningMatchData.OtherPlayerConnectionId != null)
+            await Groups.AddToGroupAsync(signalRId, groupName);
+            await Clients.Client(signalRId).SendAsync("JoiningMatchData", joiningMatchData);
+            if (joiningMatchData.IsStarted == false)
             {
                 //Ajout l'autre utilisateur au groupe puisque le match vient juste de commencer.
-                await Groups.AddToGroupAsync(joiningMatchData.OtherPlayerConnectionId, groupName);
-                await Clients.Client(joiningMatchData.OtherPlayerConnectionId).SendAsync("joiningMatchData", joiningMatchData);
+                //--------------------
+                //--Ancienne méthode--
+                //--------------------
+                //await Groups.AddToGroupAsync(joiningMatchData.OtherPlayerConnectionId, groupName);
+                //await Clients.Client(joiningMatchData.OtherPlayerConnectionId).SendAsync("joiningMatchData", joiningMatchData);
+
+                await Groups.AddToGroupAsync(joiningMatchData.PlayerB.UserId, groupName);
+                joiningMatchData.IsStarted = true;
+                await Clients.User(joiningMatchData.PlayerB.UserId).SendAsync("joiningMatchData", joiningMatchData);
+
+                //await Clients.Users()
             }
             //Cette partie s'active tjrs et dois ajouter le user au groupe pour que s'il essaye de rejoin il fait tjrs partie du groupe.
             //Add both users to a group. Should happen every reload and at the start of the game
-            await Groups.AddToGroupAsync(signalRId, groupName);
-            await Clients.Client(signalRId).SendAsync("JoiningMatchData", joiningMatchData);
+
         }
     }
 

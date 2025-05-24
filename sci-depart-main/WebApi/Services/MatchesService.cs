@@ -94,7 +94,7 @@ namespace Super_Cartes_Infinies.Services
         // Cette fonction est assez flexible car elle peut simplement être appeler lorsqu'un user veut jouer un match
         // Si le user a déjà un match en cours (Un match qui n'est pas terminé), on lui retourne l'information pour ce match
         // Sinon on utilise le WaitingUserService pour essayer de trouver un autre user ou nous mettre en attente
-        public async Task<JoiningMatchData?> JoinMatch(string userId, string? connectionId, int? specificMatchId)
+        public async Task<JoiningMatchData?> JoinMatch(string userId, string? connectionId, int? specificMatchId, bool first)
         {
             // Vérifier si le match n'a pas déjà été démarré (de façon plus générale, retourner un match courrant si le joueur y participe)
             IEnumerable<Match> matches = _dbContext.Matches.Where(m => m.IsMatchCompleted == false && (m.UserAId == userId || m.UserBId == userId));
@@ -120,44 +120,120 @@ namespace Super_Cartes_Infinies.Services
                 }
                 else
                 {
-                    playerA = _playersService.GetPlayerFromUserId(match.UserAId);
-                    playerB = _playersService.GetPlayerFromUserId(match.UserBId);
+                    if (first)
+                    {
+                        playerA = _playersService.GetPlayerFromUserId(match.UserAId);
+                        playerB = _playersService.GetPlayerFromUserId(match.UserBId);
+
+                        return new JoiningMatchData
+                        {
+                            Match = match,
+                            PlayerA = playerA!,
+                            PlayerB = playerB!,
+                            OtherPlayerConnectionId = otherPlayerConnectionId!,
+                            IsStarted = false
+                        };
+                    }
+                    else
+                    {
+                        playerA = _playersService.GetPlayerFromUserId(match.UserAId);
+                        playerB = _playersService.GetPlayerFromUserId(match.UserBId);
+                        otherPlayerConnectionId = connectionId!;
+                        return new JoiningMatchData
+                        {
+                            Match = match,
+                            PlayerA = playerA!,
+                            PlayerB = playerB!,
+                            OtherPlayerConnectionId = otherPlayerConnectionId!,
+                            IsStarted = true
+                        };
+                    }
+                    
+
                 }
             }
             // Si on veut rejoindre un match en particulier, on ne se met pas en file
-            else if (specificMatchId == null)
+            else if (specificMatchId == null && matches.Count() == 0)
             {
-                UsersReadyForAMatch? pairOfUsers = await _waitingUserService.LookForWaitingUser(userId, connectionId);
-
-                if (pairOfUsers != null)
+                Player? player = await _dbContext.Players.Where(p => p.UserId == userId).SingleOrDefaultAsync();
+                if (player != null)
                 {
-                    playerA = _playersService.GetPlayerFromUserId(pairOfUsers.UserAId);
-                    playerB = _playersService.GetPlayerFromUserId(pairOfUsers.UserBId);
-
-                    // Création d'un nouveau match
-                    IEnumerable<Card> cardsPlayerA = await _cardsService.GetUserDeckCards(playerA.Id);
-                    IEnumerable<Card> cardsPlayerB = await _cardsService.GetUserDeckCards(playerB.Id);
-                    match = new Match(playerA, playerB, cardsPlayerA, cardsPlayerB);
-                    otherPlayerConnectionId = pairOfUsers.UserAConnectionId;
-
-                    _dbContext.Update(match);
-                    _dbContext.SaveChanges();
+                    PlayerInfo? playerInfo = player.playerInfo;
+                    if (playerInfo != null)
+                    {
+                        playerInfo.Attente = 0;                        
+                    }
+                    else
+                    {
+                        player.playerInfo = new PlayerInfo()
+                        {
+                            Elo = 1000,
+                            UserId = player.UserId,
+                            Player = player,
+                            Attente = 0
+                        };
+                    }
                 }
-            }
+                await _dbContext.SaveChangesAsync();
+                //UsersReadyForAMatch? pairOfUsers = await _waitingUserService.LookForWaitingUser(userId, connectionId);
 
-            if (match != null)
-            {
-                return new JoiningMatchData
-                {
-                    Match = match,
-                    PlayerA = playerA!,
-                    PlayerB = playerB!,
-                    OtherPlayerConnectionId = otherPlayerConnectionId,
-                    IsStarted = otherPlayerConnectionId == null
-                };
-            }
 
+                //if (pairOfUsers != null)
+                //{
+                //    playerA = _playersService.GetPlayerFromUserId(pairOfUsers.UserAId);
+                //    playerB = _playersService.GetPlayerFromUserId(pairOfUsers.UserBId);
+
+                //    // Création d'un nouveau match
+                //    IEnumerable<Card> cardsPlayerA = await _cardsService.GetUserDeckCards(playerA.Id);
+                //    IEnumerable<Card> cardsPlayerB = await _cardsService.GetUserDeckCards(playerB.Id);
+                //    match = new Match(playerA, playerB, cardsPlayerA, cardsPlayerB);
+                //    otherPlayerConnectionId = pairOfUsers.UserAConnectionId;
+
+                //    _dbContext.Update(match);
+                //    _dbContext.SaveChanges();
+                //}
+
+
+                //if (match != null)
+                //{
+                //    return new JoiningMatchData
+                //    {
+                //        Match = match,
+                //        PlayerA = playerA!,
+                //        PlayerB = playerB!,
+                //        OtherPlayerConnectionId = otherPlayerConnectionId,
+                //        IsStarted = otherPlayerConnectionId == null
+                //    };
+                //}
+
+            }
             return null;
+        }
+
+        public async Task<bool> PartMatch(PairOfPlayers pair)
+        {
+            // Création d'un nouveau match
+            IEnumerable<Card> cardsPlayerA = await _cardsService.GetUserDeckCards(pair.PlayerInfo1.Player.Id);
+            IEnumerable<Card> cardsPlayerB = await _cardsService.GetUserDeckCards(pair.PlayerInfo2.Player.Id);
+            Match match = new Match(pair.PlayerInfo1.Player, pair.PlayerInfo2.Player, cardsPlayerA, cardsPlayerB);
+
+
+            _dbContext.Update(match);
+            _dbContext.SaveChanges();
+
+            
+            //if (match != null)
+            //{
+            //    return new JoiningMatchData
+            //    {
+            //        Match = match,
+            //        PlayerA = playerA!,
+            //        PlayerB = playerB!,
+            //        OtherPlayerConnectionId = otherPlayerConnectionId,
+            //        IsStarted = otherPlayerConnectionId == null
+            //    };
+            //}
+            return true;
         }
 
         public async Task<bool> StopJoiningMatch(string userId)

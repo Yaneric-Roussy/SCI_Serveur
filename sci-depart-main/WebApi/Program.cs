@@ -22,6 +22,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.AddSingleton<MatchmakingService>();
+builder.Services.AddHostedService<MatchmakingService>(p => p.GetService<MatchmakingService>());
 
 SymmetricSecurityKey signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("C'est tellement la meilleure cle qui a jamais ete cree dans l'histoire de l'humanite (doit etre longue)"));
 string serverAdress = "https://localhost:7179" +
@@ -74,8 +76,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireNonAlphanumeric = false;
 });
 
-builder.Services.AddSingleton<MatchmakingService>();
-builder.Services.AddHostedService<MatchmakingService>(p => p.GetService<MatchmakingService>());
+
 
 builder.Services.AddCors(options =>
 {
