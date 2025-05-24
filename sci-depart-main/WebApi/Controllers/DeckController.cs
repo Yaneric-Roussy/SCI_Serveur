@@ -59,6 +59,19 @@ namespace WebApi.Controllers
             return Ok(list);
         }
 
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<Player>> GetVictoires(string userId)
+        {
+            var player = await _deckService.GetPlayerFromUserId(userId);
+            return Ok(player.Victoire);
+        }
+
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<Player>> GetDéfaites(string userId)
+        {
+            var player = await _deckService.GetPlayerFromUserId(userId);
+            return Ok(player.Defaite);
+        }
         [HttpPost]
         public async Task<ActionResult>AjoutDcarte(int DeckID, int cardID)
         {

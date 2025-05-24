@@ -287,6 +287,24 @@ namespace Super_Cartes_Infinies.Data
                     Cost = 8,
                     Rareté=Card.rareté.Rare,
                     ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/112.png"
+                },new Card
+                {
+                    Id = 150,
+                    Name = "Mewtwo",
+                    Attack = 9,
+                    Health = 5,
+                    Cost = 9,
+                    Rareté=Card.rareté.Légendaire,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/150.png"
+                },new Card
+                {
+                    Id = 151,
+                    Name = "Mew",
+                    Attack = 6,
+                    Health = 6,
+                    Cost = 6,
+                    Rareté=Card.rareté.Légendaire,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/151.png"
                 },
                 #endregion
                 #region Gen2
@@ -308,6 +326,24 @@ namespace Super_Cartes_Infinies.Data
                     Cost = 4,
                     Rareté=Card.rareté.Commune,
                     ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/203.png"
+                },new Card
+                {
+                    Id = 249,
+                    Name = "Lugia",
+                    Attack = 8,
+                    Health = 7,
+                    Cost = 7,
+                    Rareté=Card.rareté.Légendaire,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/249.png"
+                },new Card
+                {
+                    Id = 250,
+                    Name = "Ho-Oh",
+                    Attack = 8,
+                    Health = 7,
+                    Cost = 7,
+                    Rareté=Card.rareté.Légendaire,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/250.png"
                 },
                 #endregion
                 #region Gen3
@@ -395,6 +431,15 @@ namespace Super_Cartes_Infinies.Data
                     Cost = 5,
                     Rareté=Card.rareté.Rare,
                     ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/460.png"
+                },new Card
+                {
+                    Id = 493,
+                    Name = "Arceus",
+                    Attack = 8,
+                    Health = 8,
+                    Cost = 8,
+                    Rareté=Card.rareté.Légendaire,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/493.png"
                 },
                 #endregion
                 #region Gen5
@@ -425,6 +470,16 @@ namespace Super_Cartes_Infinies.Data
                     Cost = 7,
                     Rareté=Card.rareté.Légendaire,
                     ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/643.png"
+                },
+                new Card
+                {
+                    Id = 644,
+                    Name = "Zekrom",
+                    Attack = 6,
+                    Health = 8,
+                    Cost = 7,
+                    Rareté=Card.rareté.Légendaire,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/644.png"
                 },
                 #endregion
                 #region Gen6
@@ -500,6 +555,15 @@ namespace Super_Cartes_Infinies.Data
                     Cost = 5,
                     Rareté=Card.rareté.Épique,
                     ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/715.png"
+                },new Card
+                {
+                    Id = 716,
+                    Name = "Xerneas",
+                    Attack = 7,
+                    Health = 7,
+                    Cost = 6,
+                    Rareté=Card.rareté.Légendaire,
+                    ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/716.png"
                 }, new Card
                 {
                     Id = 717,

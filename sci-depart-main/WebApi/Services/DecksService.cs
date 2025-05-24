@@ -18,12 +18,13 @@ namespace WebApi.Services
 
         private ApplicationDbContext _dbContext;
         private CardsService _cardsService;
+        private PlayersService _playerService;
 
-
-        public DecksService(ApplicationDbContext dbContext, CardsService cardsService)
+        public DecksService(ApplicationDbContext dbContext, CardsService cardsService, PlayersService playersService)
         {
             _dbContext = dbContext;
             _cardsService = cardsService;
+            _playerService = playersService;
         }
 
         public async Task<Deck> AjoutDeck(string name, int playerId)
@@ -49,6 +50,12 @@ namespace WebApi.Services
 
 
 
+        }
+
+        public async Task<Player>GetPlayerFromUserId(string userId)
+        {
+            return _playerService.GetPlayerFromUserId(userId);
+        
         }
         public async Task<IEnumerable<Deck>> getDeck(int playerId)
         {
