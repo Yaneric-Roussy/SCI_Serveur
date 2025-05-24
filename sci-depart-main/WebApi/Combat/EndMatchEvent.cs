@@ -10,6 +10,9 @@ namespace Super_Cartes_Infinies.Combat
         public int WinningPlayerId { get; set; }
         public int MoneyReceivedByWinner { get { return 10; }} 
         public int MoneyReceivedByLoser { get { return 2; } }
+        public int EloWinner { get;set; }
+        public int EloLoser { get; set; }
+
 
         public EndMatchEvent(Match match, MatchPlayerData winningPlayerData, MatchPlayerData losingPlayerData)
         {
@@ -34,6 +37,8 @@ namespace Super_Cartes_Infinies.Combat
                 EloCalculator.CalculateELO(ref winnerElo, ref loserElo, EloCalculator.GameOutcome.Win);
                 winningPlayerData.Player.playerInfo.Elo = winnerElo;
                 losingPlayerData.Player.playerInfo.Elo = loserElo;
+                EloWinner = winnerElo;
+                EloLoser = loserElo;
             }
 
             string userId;
