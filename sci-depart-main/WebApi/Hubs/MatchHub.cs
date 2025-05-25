@@ -121,10 +121,11 @@ public class MatchHub : Hub
 
 
     }
-    public async Task sendmessage(string message, Match match)
+    public async Task sendmessage(string message, int matchid,string user)
     {
-        string groupName = $"match_{match.Id}";
-        await Clients.All.SendAsync("ReceiveMessage", message);
-        await Clients.Group(groupName).SendAsync("ReceiveChatMessage",message);
+        string groupName = $"match_{matchid}";
+        
+        await Clients.Group(groupName).SendAsync("ReceiveChatMessage",message,user);
     }
+
 }
