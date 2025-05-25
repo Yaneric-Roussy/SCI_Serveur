@@ -10,6 +10,8 @@ using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Models.Dtos;
 using Super_Cartes_Infinies.Services;
 using System.ComponentModel;
+using System.Data;
+using System.Reflection;
 
 namespace Super_Cartes_Infinies.Hubs;
 
@@ -118,5 +120,11 @@ public class MatchHub : Hub
         await Clients.All.SendAsync("GetActiveMatches", Matches);
 
 
+    }
+    public async Task sendmessage(string message, Match match)
+    {
+        string groupName = $"match_{match.Id}";
+        await Clients.All.SendAsync("ReceiveMessage", message);
+        await Clients.Group(groupName).SendAsync("ReceiveChatMessage",message);
     }
 }
