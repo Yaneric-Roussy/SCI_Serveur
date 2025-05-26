@@ -96,5 +96,7 @@ namespace MVCEtWebAPI.Controllers
         {
             return new string[] { "figue", "banane", "noix" };
         }
+
+
     }
 }

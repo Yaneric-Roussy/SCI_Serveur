@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Models.Models;
 using Super_Cartes_Infinies.Controllers;
 using Super_Cartes_Infinies.Data;
@@ -82,6 +83,13 @@ namespace WebApi.Controllers
         public async Task<ActionResult<Deck>> SetCourantDeck(int deckID, int PlayerID)
         {
             return Ok(await _deckService.SetCourantDeck(deckID, PlayerID));
+        }
+
+        [HttpGet]
+        public IActionResult ApplyMigrations()
+        {
+            _dbContext.Database.Migrate();
+            return Ok("La BD est maintenant à jour!");
         }
 
     }
