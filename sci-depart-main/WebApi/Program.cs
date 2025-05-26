@@ -21,6 +21,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDefaultIdentity<IdentityUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddSingleton<MatchmakingService>();
+builder.Services.AddHostedService<MatchmakingService>(p => p.GetService<MatchmakingService>());
+
 SymmetricSecurityKey signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("C'est tellement la meilleure cle qui a jamais ete cree dans l'histoire de l'humanite (doit etre longue)"));
 string serverAdress = "https://localhost:7179" +
     "";
@@ -73,6 +77,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 
 
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -92,6 +97,7 @@ builder.Services.AddScoped<MatchesService>();
 builder.Services.AddScoped<StartingCardsService>();
 builder.Services.AddScoped<MatchConfigurationService>();
 builder.Services.AddScoped<DecksService>();
+builder.Services.AddScoped<GeneratePairsService>();
 //builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 //    .AddEntityFrameworkStores<ApplicationDbContext>()
 //    .AddDefaultTokenProviders();
