@@ -1,14 +1,16 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Identity;
 using Models.Models;
 using Super_Cartes_Infinies.Models;
 
+
 namespace Super_Cartes_Infinies.Data
 {
     public class Seed
     {
+        
         public Seed() { }
 
         public static GameConfig[] SeedGameConfig()
@@ -646,6 +648,7 @@ namespace Super_Cartes_Infinies.Data
                 PasswordHash = hasher.HashPassword(null, "Passw0rd!"),
                 LockoutEnabled = true
             };
+      
 
             return new IdentityUser[] { admin };
         }
@@ -776,7 +779,7 @@ namespace Super_Cartes_Infinies.Data
                     Id = 3,
                     Name = "La céramique",
                     NbCard=5,
-                    Cost=2,
+                    Cost=5,
                     ImageUrl="https://m.media-amazon.com/images/I/61y74SPNLnL._AC_UF894,1000_QL80_.jpg",
                     Rareté = Pack.raretéPack.Rare,
                     Type = Pack.type.Super

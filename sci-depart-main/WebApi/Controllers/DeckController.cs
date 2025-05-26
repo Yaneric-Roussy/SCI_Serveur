@@ -59,16 +59,22 @@ namespace WebApi.Controllers
             return Ok(list);
         }
 
-        [HttpGet("{userId}")]
-        public async Task<ActionResult<Player>> GetVictoires(string userId)
+        [HttpGet]
+        public async Task<ActionResult<int>> GetVictoires()
         {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+                return Unauthorized();
             var player = await _deckService.GetPlayerFromUserId(userId);
             return Ok(player.Victoire);
         }
 
-        [HttpGet("{userId}")]
-        public async Task<ActionResult<Player>> GetDéfaites(string userId)
+        [HttpGet]
+        public async Task<ActionResult<int>> GetDéfaites()
         {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+                return Unauthorized();
             var player = await _deckService.GetPlayerFromUserId(userId);
             return Ok(player.Defaite);
         }
