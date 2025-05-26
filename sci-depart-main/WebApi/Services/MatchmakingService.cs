@@ -51,7 +51,7 @@ namespace WebApi.Services
                     await dbContext.SaveChangesAsync();
                     MatchesService matchesService = scope.ServiceProvider.GetRequiredService<MatchesService>();
                     await matchesService.PartMatch(pair);
-                    await _matchHub.Clients.User(pair.PlayerInfo1.UserId).SendAsync("FoundMatch", pair.PlayerInfo1.UserId);
+                    await _matchHub.Clients.User(pair.PlayerInfo2.UserId).SendAsync("FoundMatch", pair.PlayerInfo1.UserId);
                 }
                 
             }

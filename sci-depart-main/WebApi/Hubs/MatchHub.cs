@@ -45,16 +45,16 @@ public class MatchHub : Hub
 
     public async Task JoinMatch(bool fisrt)
     {
-        JoiningMatchData? joiningMatchData = await _matchesService.JoinMatch(userId,signalRId,null, fisrt);
-        if(joiningMatchData == null)
+        JoiningMatchData? joiningMatchData = await _matchesService.JoinMatch(userId, signalRId, null, fisrt);
+        if (joiningMatchData == null)
         {
             await Clients.Client(signalRId).SendAsync("JoiningMatchData", null);
         }
-        else if(joiningMatchData != null)
+        else if (joiningMatchData != null)
         {
             string groupName = WriteGroupName(joiningMatchData.Match.Id);
             await Groups.AddToGroupAsync(signalRId, groupName);
-            await Clients.Client(signalRId).SendAsync("JoiningMatchData", joiningMatchData);
+            await Clients.User(userId).SendAsync("joiningMatchData", joiningMatchData);
             if (joiningMatchData.IsStarted == false)
             {
                 //Ajout l'autre utilisateur au groupe puisque le match vient juste de commencer.
@@ -63,10 +63,19 @@ public class MatchHub : Hub
                 //--------------------
                 //await Groups.AddToGroupAsync(joiningMatchData.OtherPlayerConnectionId, groupName);
                 //await Clients.Client(joiningMatchData.OtherPlayerConnectionId).SendAsync("joiningMatchData", joiningMatchData);
+                if (userId == joiningMatchData.PlayerB.UserId)
+                {
+                    await Groups.AddToGroupAsync(joiningMatchData.PlayerA.UserId, groupName);
+                    joiningMatchData.IsStarted = true;
+                    await Clients.User(joiningMatchData.PlayerA.UserId).SendAsync("joiningMatchData", joiningMatchData);
+                }
+                else
+                {
+                    await Groups.AddToGroupAsync(joiningMatchData.PlayerB.UserId, groupName);
+                    joiningMatchData.IsStarted = true;
+                    await Clients.User(joiningMatchData.PlayerB.UserId).SendAsync("joiningMatchData", joiningMatchData);
+                }
 
-                await Groups.AddToGroupAsync(joiningMatchData.PlayerB.UserId, groupName);
-                joiningMatchData.IsStarted = true;
-                await Clients.User(joiningMatchData.PlayerB.UserId).SendAsync("joiningMatchData", joiningMatchData);
 
                 //await Clients.Users()
             }
