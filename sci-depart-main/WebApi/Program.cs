@@ -7,6 +7,7 @@ using Super_Cartes_Infinies.Data;
 using Super_Cartes_Infinies.Hubs;
 using Super_Cartes_Infinies.Services;
 using System.Text;
+using WebApi.Hubs;
 using WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -100,7 +101,7 @@ builder.Services.AddScoped<DecksService>();
 builder.Services.AddSignalR(options =>
 {
     options.EnableDetailedErrors = true;
-    options.MaximumReceiveMessageSize = 128 * 1024;
+    options.MaximumReceiveMessageSize = 326 * 1024;
 });
 
 builder.Services.AddControllers();
@@ -158,5 +159,6 @@ app.MapControllerRoute(
 );
 
 app.MapHub<MatchHub>("/matchHub");
+app.MapHub<Chat>("/Chat");
 
 app.Run();
