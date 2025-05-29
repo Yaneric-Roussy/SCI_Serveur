@@ -53,24 +53,6 @@ namespace Models.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cards",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Attack = table.Column<int>(type: "INTEGER", nullable: false),
-                    Health = table.Column<int>(type: "INTEGER", nullable: false),
-                    Cost = table.Column<int>(type: "INTEGER", nullable: false),
-                    ImageUrl = table.Column<string>(type: "TEXT", nullable: false),
-                    Rareté = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cards", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "GameConfig",
                 columns: table => new
                 {
@@ -117,6 +99,37 @@ namespace Models.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Power", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Spell",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Value = table.Column<int>(type: "INTEGER", nullable: false),
+                    Icone = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Spell", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Status",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Icone = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Status", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -247,25 +260,6 @@ namespace Models.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StartingCards",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CardId = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StartingCards", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_StartingCards_Cards_CardId",
-                        column: x => x.CardId,
-                        principalTable: "Cards",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Probabilities",
                 columns: table => new
                 {
@@ -288,30 +282,28 @@ namespace Models.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CardPower",
+                name: "Cards",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    CardId = table.Column<int>(type: "INTEGER", nullable: false),
-                    PowerId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Value = table.Column<int>(type: "INTEGER", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Attack = table.Column<int>(type: "INTEGER", nullable: false),
+                    Health = table.Column<int>(type: "INTEGER", nullable: false),
+                    Cost = table.Column<int>(type: "INTEGER", nullable: false),
+                    ImageUrl = table.Column<string>(type: "TEXT", nullable: false),
+                    Rareté = table.Column<int>(type: "INTEGER", nullable: false),
+                    IsSpell = table.Column<bool>(type: "INTEGER", nullable: false),
+                    SpellId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CardPower", x => x.Id);
+                    table.PrimaryKey("PK_Cards", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CardPower_Cards_CardId",
-                        column: x => x.CardId,
-                        principalTable: "Cards",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CardPower_Power_PowerId",
-                        column: x => x.PowerId,
-                        principalTable: "Power",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Cards_Spell_SpellId",
+                        column: x => x.SpellId,
+                        principalTable: "Spell",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -374,6 +366,52 @@ namespace Models.Migrations
                         name: "FK_PlayerInfos_Players_PlayerId",
                         column: x => x.PlayerId,
                         principalTable: "Players",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CardPower",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CardId = table.Column<int>(type: "INTEGER", nullable: false),
+                    PowerId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Value = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CardPower", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CardPower_Cards_CardId",
+                        column: x => x.CardId,
+                        principalTable: "Cards",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CardPower_Power_PowerId",
+                        column: x => x.PowerId,
+                        principalTable: "Power",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StartingCards",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CardId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StartingCards", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StartingCards_Cards_CardId",
+                        column: x => x.CardId,
+                        principalTable: "Cards",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -489,6 +527,32 @@ namespace Models.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PlayableCardStatus",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Value = table.Column<int>(type: "INTEGER", nullable: false),
+                    StatusId = table.Column<int>(type: "INTEGER", nullable: false),
+                    PlayableCardId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlayableCardStatus", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PlayableCardStatus_PlayableCard_PlayableCardId",
+                        column: x => x.PlayableCardId,
+                        principalTable: "PlayableCard",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PlayableCardStatus_Status_StatusId",
+                        column: x => x.StatusId,
+                        principalTable: "Status",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -499,26 +563,26 @@ namespace Models.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "11111111-1111-1111-1111-111111111111", 0, "75576d4a-ae8f-4c92-8560-d57bcb32e156", "admin@admin.com", true, true, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEPSUlpfcppP1KRkf8btd2qVbtyPOBtQSFAPEs5Ucc/aufI1/gbD7Ej69YlyBA9vDZA==", null, false, "d931727e-710a-4547-a679-d207c5df1186", false, "admin@admin.com" },
-                    { "User1Id", 0, "a3d3868c-bdbc-42b6-baa3-330a10a51c80", null, false, false, null, null, null, null, null, false, "1f3d5970-0e5f-4b53-a752-fc193b6fed3d", false, null },
-                    { "User2Id", 0, "325a1619-3f8b-4cee-96ec-8e0688ec9ecb", null, false, false, null, null, null, null, null, false, "0f1f6698-ed9d-4f3b-b83b-2174e296d7f9", false, null }
+                    { "11111111-1111-1111-1111-111111111111", 0, "5bcc81a8-6064-4011-8a30-0765fa61f829", "admin@admin.com", true, true, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEMgH9iyaHLC7URFWscaZlRobVNrVHj9GcN/04FQDVP0gm8Uw3hnOVrnAlkSD1g0D5w==", null, false, "5b611a33-bc2e-4751-be6a-692abf148704", false, "admin@admin.com" },
+                    { "User1Id", 0, "486fdeaa-5a9b-4426-a8ca-47563ab718dc", null, false, false, null, null, null, null, null, false, "996e7f7d-ab5c-4886-b190-f3a9689739fd", false, null },
+                    { "User2Id", 0, "b128daf2-8210-4a0c-8716-2efa29d3260e", null, false, false, null, null, null, null, null, false, "f4f8327a-26cd-430c-aa82-0942661ef0f6", false, null }
                 });
 
             migrationBuilder.InsertData(
                 table: "Cards",
-                columns: new[] { "Id", "Attack", "Cost", "Health", "ImageUrl", "Name", "Rareté" },
+                columns: new[] { "Id", "Attack", "Cost", "Health", "ImageUrl", "IsSpell", "Name", "Rareté", "SpellId" },
                 values: new object[,]
                 {
-                    { 1, 3, 3, 3, "https://i.pinimg.com/originals/a8/16/49/a81649bd4b0f032ce633161c5a076b87.jpg", "Chat Dragon", 0 },
-                    { 2, 2, 3, 5, "https://i0.wp.com/thediscerningcat.com/wp-content/uploads/2021/02/tabby-cat-wearing-sunglasses.jpg", "Chat Awesome", 0 },
-                    { 3, 2, 1, 1, "https://cdn.wallpapersafari.com/27/53/SZ8PO9.jpg", "Chatton Laser", 1 },
-                    { 4, 8, 4, 4, "https://wallpapers.com/images/hd/epic-cat-poster-baavft05ylgta4j8.jpg", "Chat Spacial", 1 },
-                    { 5, 7, 5, 7, "https://i.etsystatic.com/6230905/r/il/32aa5a/3474618751/il_fullxfull.3474618751_mfvf.jpg", "Chat Guerrier", 2 },
-                    { 6, 4, 2, 2, "https://store.playstation.com/store/api/chihiro/00_09_000/container/AU/en/99/EP2402-CUSA05624_00-ETH0000000002875/0/image?_version=00_09_000&platform=chihiro&bg_color=000000&opacity=100&w=720&h=720", "Chat Laser", 2 },
-                    { 7, 6, 4, 3, "https://images.squarespace-cdn.com/content/51b3dc8ee4b051b96ceb10de/1394662654865-JKOZ7ZFF39247VYDTGG9/hilarious-jedi-cats-fight-video-preview.jpg?content-type=image%2Fjpeg", "Jedi Chat", 3 },
-                    { 8, 1, 2, 9, "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c89c9a3c-7848-4bd5-9306-417c97096ae5/dh8sghm-7bebd975-51f2-4728-87bc-fb3cef176af5.jpg/v1/fit/w_750,h_1000,q_70,strp/another_lucifur_blob_by_slugyyycat_dh8sghm-375w-2x.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTAwMCIsInBhdGgiOiJcL2ZcL2M4OWM5YTNjLTc4NDgtNGJkNS05MzA2LTQxN2M5NzA5NmFlNVwvZGg4c2dobS03YmViZDk3NS01MWYyLTQ3MjgtODdiYy1mYjNjZWYxNzZhZjUuanBnIiwid2lkdGgiOiI8PTc1MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.7oGugpkEX4yqfhiOXlo4TfqzatOuHaCu2aEi-Lnw_40", "Blob Chat", 3 },
-                    { 9, 5, 2, 1, "https://townsquare.media/site/142/files/2011/08/jedicats.jpg?w=980&q=75", "Jedi Chatton", 3 },
-                    { 10, 6, 2, 1, "https://cdn.theatlantic.com/thumbor/fOZjgqHH0RmXA1A5ek-yDz697W4=/133x0:2091x1020/1200x625/media/img/mt/2015/12/RTRD62Q/original.jpg", "Chat Furtif", 2 }
+                    { 1, 3, 3, 3, "https://i.pinimg.com/originals/a8/16/49/a81649bd4b0f032ce633161c5a076b87.jpg", false, "Chat Dragon", 0, null },
+                    { 2, 2, 3, 5, "https://i0.wp.com/thediscerningcat.com/wp-content/uploads/2021/02/tabby-cat-wearing-sunglasses.jpg", false, "Chat Awesome", 0, null },
+                    { 3, 2, 1, 1, "https://cdn.wallpapersafari.com/27/53/SZ8PO9.jpg", false, "Chatton Laser", 1, null },
+                    { 4, 8, 4, 4, "https://wallpapers.com/images/hd/epic-cat-poster-baavft05ylgta4j8.jpg", false, "Chat Spacial", 1, null },
+                    { 5, 7, 5, 7, "https://i.etsystatic.com/6230905/r/il/32aa5a/3474618751/il_fullxfull.3474618751_mfvf.jpg", false, "Chat Guerrier", 2, null },
+                    { 6, 4, 2, 2, "https://store.playstation.com/store/api/chihiro/00_09_000/container/AU/en/99/EP2402-CUSA05624_00-ETH0000000002875/0/image?_version=00_09_000&platform=chihiro&bg_color=000000&opacity=100&w=720&h=720", false, "Chat Laser", 2, null },
+                    { 7, 6, 4, 3, "https://images.squarespace-cdn.com/content/51b3dc8ee4b051b96ceb10de/1394662654865-JKOZ7ZFF39247VYDTGG9/hilarious-jedi-cats-fight-video-preview.jpg?content-type=image%2Fjpeg", false, "Jedi Chat", 3, null },
+                    { 8, 1, 2, 9, "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c89c9a3c-7848-4bd5-9306-417c97096ae5/dh8sghm-7bebd975-51f2-4728-87bc-fb3cef176af5.jpg/v1/fit/w_750,h_1000,q_70,strp/another_lucifur_blob_by_slugyyycat_dh8sghm-375w-2x.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTAwMCIsInBhdGgiOiJcL2ZcL2M4OWM5YTNjLTc4NDgtNGJkNS05MzA2LTQxN2M5NzA5NmFlNVwvZGg4c2dobS03YmViZDk3NS01MWYyLTQ3MjgtODdiYy1mYjNjZWYxNzZhZjUuanBnIiwid2lkdGgiOiI8PTc1MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.7oGugpkEX4yqfhiOXlo4TfqzatOuHaCu2aEi-Lnw_40", false, "Blob Chat", 3, null },
+                    { 9, 5, 2, 1, "https://townsquare.media/site/142/files/2011/08/jedicats.jpg?w=980&q=75", false, "Jedi Chatton", 3, null },
+                    { 10, 6, 2, 1, "https://cdn.theatlantic.com/thumbor/fOZjgqHH0RmXA1A5ek-yDz697W4=/133x0:2091x1020/1200x625/media/img/mt/2015/12/RTRD62Q/original.jpg", false, "Chat Furtif", 2, null }
                 });
 
             migrationBuilder.InsertData(
@@ -544,7 +608,30 @@ namespace Models.Migrations
                     { 1, "Permet à une carte d’attaquer en « premier » et de ne pas recevoir de dégât si elle tue la carte de l’adversaire.", "🥇", "First strike" },
                     { 2, "Lorsqu’une carte défend, elle inflige X de dégâts AVANT de recevoir des dégâts. Si l’attaquant est tué par ces dégâts, l’attaque s’arrête et le défenseur ne reçoit pas de dégâts.", "🌹", "Thorns" },
                     { 3, "soigne les cartes alliées de X incluant elle-même AVANT d’attaquer (mais les cartes ne peuvent pas avoir plus de health qu’au départ.)", "💖", "Heal" },
-                    { 4, "Augmente de X les dégâts que la carte inflige quand elle attaque.", "🐱‍🏍", "Attack boost" }
+                    { 4, "Augmente de X les dégâts que la carte inflige quand elle attaque.", "🐱‍🏍", "Attack boost" },
+                    { 5, "Inverse l'attaque et la défense de toutes les cartes en jeu. Il se produit avant que la carte attaque.", "💥", "Chaos" },
+                    { 6, "Ajoute une valeur de poison à la carte attaquée. Le poison diminue ensuite la vie d’une carte de la valeur du poison à la fin de son activation.", "🧪", "Poison" },
+                    { 7, "Empêche une carte d’agir pendant son activation durant X tours. Mais elle reçoit quand même les dégâts de poison", "💫", "Stunned" },
+                    { 8, "Donne l'invulnérabilité à la carte durant X tours. La carte ne peut pas prendre de dégâts, même des sorts.", "🛡", "Protection" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Spell",
+                columns: new[] { "Id", "Description", "Icone", "Name", "Value" },
+                values: new object[,]
+                {
+                    { 1, "Fait X dégâts à TOUTES les cartes en jeu.", "🌎", "Earthquake", 2 },
+                    { 2, "Fait 1 à 6 de dégâts à une carte adverse (au hazard).", "🤕", "Random Pain", 0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Status",
+                columns: new[] { "Id", "Description", "Icone", "Name" },
+                values: new object[,]
+                {
+                    { 1, "La carte est poisoned, elle prend du dégât de poison.", "🧪", "Poisoned" },
+                    { 2, "La carte est stunned, elle ne peut pas prendre d'action.", "💫", "Stunned" },
+                    { 3, "Donne l'invulnérabilité à la carte durant X tours. La carte ne peut pas prendre de dégâts, même des sorts.", "🛡", "Protected" }
                 });
 
             migrationBuilder.InsertData(
@@ -562,10 +649,20 @@ namespace Models.Migrations
                     { 3, 1, 4, 4 },
                     { 4, 2, 2, 2 },
                     { 5, 2, 3, 1 },
-                    { 6, 3, 1, 0 },
+                    { 6, 3, 5, 0 },
                     { 7, 4, 4, 5 },
-                    { 8, 5, 2, 3 },
-                    { 9, 6, 3, 2 }
+                    { 8, 5, 6, 2 },
+                    { 9, 6, 7, 2 },
+                    { 10, 7, 8, 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cards",
+                columns: new[] { "Id", "Attack", "Cost", "Health", "ImageUrl", "IsSpell", "Name", "Rareté", "SpellId" },
+                values: new object[,]
+                {
+                    { 11, 0, 2, 0, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR936kxkL3CDGYOfTwzxYl8nAZ_KE3GzXk6GQ&s", true, "Random Pain", 1, 2 },
+                    { 12, 0, 2, 0, "https://catpedia.wiki/images/5/59/Milly.png", true, "Earthquake", 1, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -603,7 +700,9 @@ namespace Models.Migrations
                     { 6, 6 },
                     { 7, 7 },
                     { 8, 8 },
-                    { 9, 9 }
+                    { 9, 9 },
+                    { 10, 11 },
+                    { 11, 12 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -652,6 +751,11 @@ namespace Models.Migrations
                 name: "IX_CardPower_PowerId",
                 table: "CardPower",
                 column: "PowerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cards_SpellId",
+                table: "Cards",
+                column: "SpellId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Decks_PlayerId",
@@ -719,6 +823,16 @@ namespace Models.Migrations
                 column: "MatchPlayerDataId3");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PlayableCardStatus_PlayableCardId",
+                table: "PlayableCardStatus",
+                column: "PlayableCardId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlayableCardStatus_StatusId",
+                table: "PlayableCardStatus",
+                column: "StatusId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PlayerInfos_PlayerId",
                 table: "PlayerInfos",
                 column: "PlayerId",
@@ -771,7 +885,7 @@ namespace Models.Migrations
                 name: "OwnedCard");
 
             migrationBuilder.DropTable(
-                name: "PlayableCard");
+                name: "PlayableCardStatus");
 
             migrationBuilder.DropTable(
                 name: "PlayerInfos");
@@ -792,13 +906,22 @@ namespace Models.Migrations
                 name: "Decks");
 
             migrationBuilder.DropTable(
-                name: "MatchPlayersData");
+                name: "PlayableCard");
+
+            migrationBuilder.DropTable(
+                name: "Status");
 
             migrationBuilder.DropTable(
                 name: "Packs");
 
             migrationBuilder.DropTable(
                 name: "Cards");
+
+            migrationBuilder.DropTable(
+                name: "MatchPlayersData");
+
+            migrationBuilder.DropTable(
+                name: "Spell");
 
             migrationBuilder.DropTable(
                 name: "Players");

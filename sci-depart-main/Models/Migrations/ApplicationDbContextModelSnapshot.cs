@@ -146,15 +146,15 @@ namespace Models.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "75576d4a-ae8f-4c92-8560-d57bcb32e156",
+                            ConcurrencyStamp = "5bcc81a8-6064-4011-8a30-0765fa61f829",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPSUlpfcppP1KRkf8btd2qVbtyPOBtQSFAPEs5Ucc/aufI1/gbD7Ej69YlyBA9vDZA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMgH9iyaHLC7URFWscaZlRobVNrVHj9GcN/04FQDVP0gm8Uw3hnOVrnAlkSD1g0D5w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d931727e-710a-4547-a679-d207c5df1186",
+                            SecurityStamp = "5b611a33-bc2e-4751-be6a-692abf148704",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         },
@@ -162,22 +162,22 @@ namespace Models.Migrations
                         {
                             Id = "User1Id",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a3d3868c-bdbc-42b6-baa3-330a10a51c80",
+                            ConcurrencyStamp = "486fdeaa-5a9b-4426-a8ca-47563ab718dc",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1f3d5970-0e5f-4b53-a752-fc193b6fed3d",
+                            SecurityStamp = "996e7f7d-ab5c-4886-b190-f3a9689739fd",
                             TwoFactorEnabled = false
                         },
                         new
                         {
                             Id = "User2Id",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "325a1619-3f8b-4cee-96ec-8e0688ec9ecb",
+                            ConcurrencyStamp = "b128daf2-8210-4a0c-8716-2efa29d3260e",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0f1f6698-ed9d-4f3b-b83b-2174e296d7f9",
+                            SecurityStamp = "f4f8327a-26cd-430c-aa82-0942661ef0f6",
                             TwoFactorEnabled = false
                         });
                 });
@@ -335,7 +335,7 @@ namespace Models.Migrations
                         {
                             Id = 6,
                             CardId = 3,
-                            PowerId = 1,
+                            PowerId = 5,
                             Value = 0
                         },
                         new
@@ -349,14 +349,21 @@ namespace Models.Migrations
                         {
                             Id = 8,
                             CardId = 5,
-                            PowerId = 2,
-                            Value = 3
+                            PowerId = 6,
+                            Value = 2
                         },
                         new
                         {
                             Id = 9,
                             CardId = 6,
-                            PowerId = 3,
+                            PowerId = 7,
+                            Value = 2
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CardId = 7,
+                            PowerId = 8,
                             Value = 2
                         });
                 });
@@ -478,6 +485,30 @@ namespace Models.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Models.Models.PlayableCardStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("PlayableCardId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("StatusId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayableCardId");
+
+                    b.HasIndex("StatusId");
+
+                    b.ToTable("PlayableCardStatus");
+                });
+
             modelBuilder.Entity("Models.Models.Power", b =>
                 {
                     b.Property<int>("Id")
@@ -528,6 +559,34 @@ namespace Models.Migrations
                             Description = "Augmente de X les dégâts que la carte inflige quand elle attaque.",
                             IconeURL = "🐱‍🏍",
                             Name = "Attack boost"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Inverse l'attaque et la défense de toutes les cartes en jeu. Il se produit avant que la carte attaque.",
+                            IconeURL = "💥",
+                            Name = "Chaos"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Ajoute une valeur de poison à la carte attaquée. Le poison diminue ensuite la vie d’une carte de la valeur du poison à la fin de son activation.",
+                            IconeURL = "🧪",
+                            Name = "Poison"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Empêche une carte d’agir pendant son activation durant X tours. Mais elle reçoit quand même les dégâts de poison",
+                            IconeURL = "💫",
+                            Name = "Stunned"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "Donne l'invulnérabilité à la carte durant X tours. La carte ne peut pas prendre de dégâts, même des sorts.",
+                            IconeURL = "🛡",
+                            Name = "Protection"
                         });
                 });
 
@@ -606,6 +665,50 @@ namespace Models.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Models.Models.Spell", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Icone")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Spell");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Fait X dégâts à TOUTES les cartes en jeu.",
+                            Icone = "🌎",
+                            Name = "Earthquake",
+                            Value = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Fait 1 à 6 de dégâts à une carte adverse (au hazard).",
+                            Icone = "🤕",
+                            Name = "Random Pain",
+                            Value = 0
+                        });
+                });
+
             modelBuilder.Entity("Models.Models.StartingCard", b =>
                 {
                     b.Property<int>("Id")
@@ -666,6 +769,62 @@ namespace Models.Migrations
                         {
                             Id = 9,
                             CardId = 9
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CardId = 11
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CardId = 12
+                        });
+                });
+
+            modelBuilder.Entity("Models.Models.Status", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Icone")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Status");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 2,
+                            Description = "La carte est stunned, elle ne peut pas prendre d'action.",
+                            Icone = "💫",
+                            Name = "Stunned"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Description = "La carte est poisoned, elle prend du dégât de poison.",
+                            Icone = "🧪",
+                            Name = "Poisoned"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Donne l'invulnérabilité à la carte durant X tours. La carte ne peut pas prendre de dégâts, même des sorts.",
+                            Icone = "🛡",
+                            Name = "Protected"
                         });
                 });
 
@@ -688,6 +847,9 @@ namespace Models.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsSpell")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -695,7 +857,12 @@ namespace Models.Migrations
                     b.Property<int>("Rareté")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("SpellId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("SpellId");
 
                     b.ToTable("Cards");
 
@@ -707,6 +874,7 @@ namespace Models.Migrations
                             Cost = 3,
                             Health = 3,
                             ImageUrl = "https://i.pinimg.com/originals/a8/16/49/a81649bd4b0f032ce633161c5a076b87.jpg",
+                            IsSpell = false,
                             Name = "Chat Dragon",
                             Rareté = 0
                         },
@@ -717,6 +885,7 @@ namespace Models.Migrations
                             Cost = 3,
                             Health = 5,
                             ImageUrl = "https://i0.wp.com/thediscerningcat.com/wp-content/uploads/2021/02/tabby-cat-wearing-sunglasses.jpg",
+                            IsSpell = false,
                             Name = "Chat Awesome",
                             Rareté = 0
                         },
@@ -727,6 +896,7 @@ namespace Models.Migrations
                             Cost = 1,
                             Health = 1,
                             ImageUrl = "https://cdn.wallpapersafari.com/27/53/SZ8PO9.jpg",
+                            IsSpell = false,
                             Name = "Chatton Laser",
                             Rareté = 1
                         },
@@ -737,6 +907,7 @@ namespace Models.Migrations
                             Cost = 4,
                             Health = 4,
                             ImageUrl = "https://wallpapers.com/images/hd/epic-cat-poster-baavft05ylgta4j8.jpg",
+                            IsSpell = false,
                             Name = "Chat Spacial",
                             Rareté = 1
                         },
@@ -747,6 +918,7 @@ namespace Models.Migrations
                             Cost = 5,
                             Health = 7,
                             ImageUrl = "https://i.etsystatic.com/6230905/r/il/32aa5a/3474618751/il_fullxfull.3474618751_mfvf.jpg",
+                            IsSpell = false,
                             Name = "Chat Guerrier",
                             Rareté = 2
                         },
@@ -757,6 +929,7 @@ namespace Models.Migrations
                             Cost = 2,
                             Health = 2,
                             ImageUrl = "https://store.playstation.com/store/api/chihiro/00_09_000/container/AU/en/99/EP2402-CUSA05624_00-ETH0000000002875/0/image?_version=00_09_000&platform=chihiro&bg_color=000000&opacity=100&w=720&h=720",
+                            IsSpell = false,
                             Name = "Chat Laser",
                             Rareté = 2
                         },
@@ -767,6 +940,7 @@ namespace Models.Migrations
                             Cost = 4,
                             Health = 3,
                             ImageUrl = "https://images.squarespace-cdn.com/content/51b3dc8ee4b051b96ceb10de/1394662654865-JKOZ7ZFF39247VYDTGG9/hilarious-jedi-cats-fight-video-preview.jpg?content-type=image%2Fjpeg",
+                            IsSpell = false,
                             Name = "Jedi Chat",
                             Rareté = 3
                         },
@@ -777,6 +951,7 @@ namespace Models.Migrations
                             Cost = 2,
                             Health = 9,
                             ImageUrl = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c89c9a3c-7848-4bd5-9306-417c97096ae5/dh8sghm-7bebd975-51f2-4728-87bc-fb3cef176af5.jpg/v1/fit/w_750,h_1000,q_70,strp/another_lucifur_blob_by_slugyyycat_dh8sghm-375w-2x.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTAwMCIsInBhdGgiOiJcL2ZcL2M4OWM5YTNjLTc4NDgtNGJkNS05MzA2LTQxN2M5NzA5NmFlNVwvZGg4c2dobS03YmViZDk3NS01MWYyLTQ3MjgtODdiYy1mYjNjZWYxNzZhZjUuanBnIiwid2lkdGgiOiI8PTc1MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.7oGugpkEX4yqfhiOXlo4TfqzatOuHaCu2aEi-Lnw_40",
+                            IsSpell = false,
                             Name = "Blob Chat",
                             Rareté = 3
                         },
@@ -787,6 +962,7 @@ namespace Models.Migrations
                             Cost = 2,
                             Health = 1,
                             ImageUrl = "https://townsquare.media/site/142/files/2011/08/jedicats.jpg?w=980&q=75",
+                            IsSpell = false,
                             Name = "Jedi Chatton",
                             Rareté = 3
                         },
@@ -797,8 +973,33 @@ namespace Models.Migrations
                             Cost = 2,
                             Health = 1,
                             ImageUrl = "https://cdn.theatlantic.com/thumbor/fOZjgqHH0RmXA1A5ek-yDz697W4=/133x0:2091x1020/1200x625/media/img/mt/2015/12/RTRD62Q/original.jpg",
+                            IsSpell = false,
                             Name = "Chat Furtif",
                             Rareté = 2
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Attack = 0,
+                            Cost = 2,
+                            Health = 0,
+                            ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR936kxkL3CDGYOfTwzxYl8nAZ_KE3GzXk6GQ&s",
+                            IsSpell = true,
+                            Name = "Random Pain",
+                            Rareté = 1,
+                            SpellId = 2
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Attack = 0,
+                            Cost = 2,
+                            Health = 0,
+                            ImageUrl = "https://catpedia.wiki/images/5/59/Milly.png",
+                            IsSpell = true,
+                            Name = "Earthquake",
+                            Rareté = 1,
+                            SpellId = 1
                         });
                 });
 
@@ -1111,6 +1312,21 @@ namespace Models.Migrations
                     b.Navigation("Player");
                 });
 
+            modelBuilder.Entity("Models.Models.PlayableCardStatus", b =>
+                {
+                    b.HasOne("Super_Cartes_Infinies.Models.PlayableCard", null)
+                        .WithMany("PlayableCardsStatus")
+                        .HasForeignKey("PlayableCardId");
+
+                    b.HasOne("Models.Models.Status", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Status");
+                });
+
             modelBuilder.Entity("Models.Models.Probability", b =>
                 {
                     b.HasOne("Models.Models.Pack", "Pack")
@@ -1131,6 +1347,15 @@ namespace Models.Migrations
                         .IsRequired();
 
                     b.Navigation("Card");
+                });
+
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.Card", b =>
+                {
+                    b.HasOne("Models.Models.Spell", "Spell")
+                        .WithMany()
+                        .HasForeignKey("SpellId");
+
+                    b.Navigation("Spell");
                 });
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Match", b =>
@@ -1233,6 +1458,11 @@ namespace Models.Migrations
                     b.Navigation("Graveyard");
 
                     b.Navigation("Hand");
+                });
+
+            modelBuilder.Entity("Super_Cartes_Infinies.Models.PlayableCard", b =>
+                {
+                    b.Navigation("PlayableCardsStatus");
                 });
 
             modelBuilder.Entity("Super_Cartes_Infinies.Models.Player", b =>
