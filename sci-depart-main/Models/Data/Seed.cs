@@ -67,6 +67,13 @@ namespace Super_Cartes_Infinies.Data
                     Name = "Poisoned",
                     Description = "La carte est poisoned, elle prend du dégât de poison.",
                     Icone = "🧪"
+                },
+                new Status
+                {
+                    Id = Status.PROTECTED_ID,
+                    Name = "Protected",
+                    Description = "Donne l'invulnérabilité à la carte durant X tours. La carte ne peut pas prendre de dégâts, même des sorts.",
+                    Icone = "🛡" 
                 }
             };
         }

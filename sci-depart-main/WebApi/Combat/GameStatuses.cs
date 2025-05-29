@@ -19,5 +19,13 @@ namespace WebApi.Combat
             Description = "La carte est étourdie, elle ne peut pas attaquer.",
             Icone = "💫"
         };
+
+        public static readonly Status Protected = new Status
+        {
+            Id = Status.PROTECTED_ID,
+            Name = "Protected",
+            Description = "Donne l'invulnérabilité à la carte durant X tours. La carte ne peut pas prendre de dégâts, même des sorts.",
+            Icone = "🛡"
+        };
     }
 }

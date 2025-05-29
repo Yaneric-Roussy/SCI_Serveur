@@ -1,4 +1,4 @@
-﻿using Models.Models;
+using Models.Models;
 using Super_Cartes_Infinies.Models;
 using WebApi.Combat;
 
@@ -38,11 +38,15 @@ namespace Super_Cartes_Infinies.Combat
             {
                 this.Events.Add(new PoisonedEvent(currentPlayerData, card));
             }
+            if (card.HasStatus(Status.PROTECTED_ID))
+            {
+                PowerIds.Add(Power.PROTECTION_ID);  //Comme ça on évite de réajouter le pouvoir. -YR
+                this.Events.Add(new ProtectedEvent(currentPlayerData, card));
+            }
             if (card.HasStatus(Status.STUNNED_ID))
             {
                 this.Events.Add(new StunnedEvent(currentPlayerData, card));
                 return; //On évite le reste, la carte est stunned       -YR
-                
             }
             if (card.HasPower(Power.ATTACK_BOOST_ID))
             {
@@ -54,6 +58,10 @@ namespace Super_Cartes_Infinies.Combat
             {
                 PowerIds.Add(Power.HEAL_ID);
                 this.Events.Add(new HealEvent(currentPlayerData, card));
+            }
+            if (card.HasPower(Power.PROTECTION_ID) && !PowerIds.Contains(Power.PROTECTION_ID))
+              {
+                this.Events.Add(new ProtectEvent(currentPlayerData, card));
             }
             if(ennemyCard != null) {
                 if (ennemyCard.HasPower(Power.THORNS_ID))

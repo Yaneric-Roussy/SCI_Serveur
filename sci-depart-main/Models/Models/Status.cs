@@ -10,6 +10,7 @@ namespace Models.Models
     {
         public const int POISONED_ID = 1;
         public const int STUNNED_ID = 2;
+        public const int PROTECTED_ID = 3;
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
