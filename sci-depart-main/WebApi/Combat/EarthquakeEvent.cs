@@ -23,10 +23,13 @@ namespace WebApi.Combat
 
         public void DamageCards(MatchPlayerData playerData, int damage)
         {
-            foreach (PlayableCard playableCard in playerData.BattleField)
+            var cardsToDamage = playerData.BattleField.ToList();
+
+            foreach (PlayableCard playableCard in cardsToDamage)
             {
                 Events.Add(new CardDamageEvent(playerData, damage, playableCard));
             }
         }
+
     }
 }
