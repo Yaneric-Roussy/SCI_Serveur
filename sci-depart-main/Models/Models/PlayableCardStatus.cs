@@ -13,6 +13,6 @@ namespace Models.Models
         public int Value { get; set; }
         public int StatusId { get; set; }
         [ValidateNever]
-        public virtual Status Status { get; set; }
+        public virtual Status Status { get; set; } = null!;
     }
 }
