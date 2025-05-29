@@ -56,7 +56,6 @@ public class MatchHub : Hub
         await Clients.Client(signalRId).SendAsync("JoiningMatchSpectator", joiningMatchData);
         await Clients.Group(groupName).SendAsync("test", "SPECTATEUR AREGR");
     }
-    public async Task JoinMatch()
 
     public async Task JoinMatch(bool fisrt)
 
