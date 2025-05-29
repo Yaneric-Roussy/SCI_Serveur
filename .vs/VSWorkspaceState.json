@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\sci-depart-main",
+    "\\sci-depart-main\\WebApi",
+    "\\sci-depart-main\\WebApi\\Hubs"
+  ],
+  "SelectedNode": "\\sci-depart-main\\WebApi\\Hubs\\MatchHub.cs",
+  "PreviewInSolutionExplorer": false
+}

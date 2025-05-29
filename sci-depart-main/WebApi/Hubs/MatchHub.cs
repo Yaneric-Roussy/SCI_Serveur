@@ -47,6 +47,7 @@ public class MatchHub : Hub
         //_userConnections[userId] = Context.ConnectionId!;
         await base.OnConnectedAsync();
     }
+
     public async Task RegarderPartie(int matchId)
     {
         JoiningMatchData? joiningMatchData = await _matchesService.JoinMatchSpectator(userId, matchId);
@@ -56,28 +57,59 @@ public class MatchHub : Hub
         await Clients.Group(groupName).SendAsync("test", "SPECTATEUR AREGR");
     }
     public async Task JoinMatch()
+
+    public async Task JoinMatch(bool fisrt)
+
     {
-        JoiningMatchData? joiningMatchData = await _matchesService.JoinMatch(userId,signalRId,null);
-        if(joiningMatchData == null)
+        JoiningMatchData? joiningMatchData = await _matchesService.JoinMatch(userId, signalRId, null, fisrt);
+        if (joiningMatchData == null)
         {
             await Clients.Client(signalRId).SendAsync("JoiningMatchData", null);
         }
-        else if(joiningMatchData != null)
+        else if (joiningMatchData != null)
         {
             string groupName = WriteGroupName(joiningMatchData.Match.Id);
-            if (joiningMatchData.OtherPlayerConnectionId != null)
+            await Groups.AddToGroupAsync(signalRId, groupName);
+            await Clients.User(userId).SendAsync("joiningMatchData", joiningMatchData);
+            if (joiningMatchData.IsStarted == false)
             {
                 //Ajout l'autre utilisateur au groupe puisque le match vient juste de commencer.
-                await Groups.AddToGroupAsync(joiningMatchData.OtherPlayerConnectionId, groupName);
-                await Clients.Client(joiningMatchData.OtherPlayerConnectionId).SendAsync("joiningMatchData", joiningMatchData);
+                //--------------------
+                //--Ancienne méthode--
+                //--------------------
+                //await Groups.AddToGroupAsync(joiningMatchData.OtherPlayerConnectionId, groupName);
+                //await Clients.Client(joiningMatchData.OtherPlayerConnectionId).SendAsync("joiningMatchData", joiningMatchData);
+                if (userId == joiningMatchData.PlayerB.UserId)
+                {
+                    await Groups.AddToGroupAsync(joiningMatchData.PlayerA.UserId, groupName);
+                    joiningMatchData.IsStarted = true;
+                    await Clients.User(joiningMatchData.PlayerA.UserId).SendAsync("joiningMatchData", joiningMatchData);
+                }
+                else
+                {
+                    await Groups.AddToGroupAsync(joiningMatchData.PlayerB.UserId, groupName);
+                    joiningMatchData.IsStarted = true;
+                    await Clients.User(joiningMatchData.PlayerB.UserId).SendAsync("joiningMatchData", joiningMatchData);
+                }
+
+
+                //await Clients.Users()
             }
             //Cette partie s'active tjrs et dois ajouter le user au groupe pour que s'il essaye de rejoin il fait tjrs partie du groupe.
             //Add both users to a group. Should happen every reload and at the start of the game
-            await Groups.AddToGroupAsync(signalRId, groupName);
-            await Clients.Client(signalRId).SendAsync("JoiningMatchData", joiningMatchData);
+
         }
     }
+    public async Task StopSearch()
+    {
+        PlayerInfo? pi = await _context.PlayerInfos.Where(p => p.UserId == userId).SingleOrDefaultAsync();
+        if(pi != null)
+        {
+            pi.Attente = null;
+            await _context.SaveChangesAsync();
+        }
 
+    }
     public async Task StartMatchEvent(Match match)
     {
         StartMatchEvent startMatchEvent = await _matchesService.StartMatch(userId, match.Id);
