@@ -23,6 +23,24 @@ namespace Super_Cartes_Infinies.Services
             _matchConfigurationService = matchConfigurationService;
         }
 
+
+        public async Task<JoiningMatchData?> JoinMatchSpectator(string userId, int specificMatchId)
+        {
+            Match? match = await _dbContext.Matches.FirstOrDefaultAsync(m => m.Id == specificMatchId);
+            if (match != null)
+            {
+                return new JoiningMatchData
+                {
+                    Match = match,
+                    PlayerA = match.PlayerDataA.Player,
+                    PlayerB = match.PlayerDataB.Player,
+                    IsStarted = true
+                };
+            }
+
+            return null;
+        }
+
         //// Cette fonction est assez flexible car elle peut simplement être appeler lorsqu'un user veut jouer un match
         //// Si le user a déjà un match en cours (Un match qui n'est pas terminé), on lui retourne l'information pour ce match
         //// Sinon on utilise le WaitingUserService pour essayer de trouver un autre user ou nous mettre en attente
@@ -90,6 +108,7 @@ namespace Super_Cartes_Infinies.Services
 
         //    return null;
         //}
+
 
         // Cette fonction est assez flexible car elle peut simplement être appeler lorsqu'un user veut jouer un match
         // Si le user a déjà un match en cours (Un match qui n'est pas terminé), on lui retourne l'information pour ce match

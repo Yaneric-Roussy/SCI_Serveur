@@ -1,5 +1,7 @@
-﻿using Models.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Models.Interfaces;
 using Models.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Super_Cartes_Infinies.Models
 {
@@ -37,6 +39,10 @@ namespace Super_Cartes_Infinies.Models
         public string UserBId { get; set; }
         public virtual MatchPlayerData PlayerDataA { get; set; }
         public virtual MatchPlayerData PlayerDataB { get; set; }
+
+        //[ValidateNever]
+        //[NotMapped]
+        //public virtual List<Player> Spectators { get; set; }
     }
 }
 

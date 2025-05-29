@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Identity;
 using Models.Models;
@@ -25,6 +26,56 @@ namespace Super_Cartes_Infinies.Data
             }
             };
 
+        }
+        public static Spell[] SeedSpells()
+        {
+            return new Spell[]
+            {
+                new Spell
+                {
+                    Id = Spell.EARTHQUAKE_ID,
+                    Name = "Earthquake",
+                    Description = "Fait X dégâts à TOUTES les cartes en jeu.",
+                    Value = 2,
+                    Icone = "🌎"
+                },
+                new Spell
+                {
+                    Id = Spell.RANDOM_PAIN_ID,
+                    Name = "Random Pain",
+                    Description = "Fait 1 à 6 de dégâts à une carte adverse (au hazard).",
+                    Value = 0,
+                    Icone = "🤕"
+                }
+            };
+        }
+
+        public static Status[] SeedStatus()
+        {
+            return new Status[]
+            {
+                new Status
+                {
+                    Id = Status.STUNNED_ID,
+                    Name = "Stunned",
+                    Description = "La carte est stunned, elle ne peut pas prendre d'action.",
+                    Icone = "💫"
+                },
+                new Status
+                {
+                    Id = Status.POISONED_ID,
+                    Name = "Poisoned",
+                    Description = "La carte est poisoned, elle prend du dégât de poison.",
+                    Icone = "🧪"
+                },
+                new Status
+                {
+                    Id = Status.PROTECTED_ID,
+                    Name = "Protected",
+                    Description = "Donne l'invulnérabilité à la carte durant X tours. La carte ne peut pas prendre de dégâts, même des sorts.",
+                    Icone = "🛡" 
+                }
+            };
         }
         public static CardPower[] SeedCardPowers()
         {
@@ -70,7 +121,7 @@ namespace Super_Cartes_Infinies.Data
                 {
                     Id = 6,
                     CardId = 3,
-                    PowerId = Power.FIRST_STRIKE_ID,
+                    PowerId = Power.CHAOS_ID,
                     Value = 0
                 }, new CardPower
                 {
@@ -83,14 +134,21 @@ namespace Super_Cartes_Infinies.Data
                 {
                     Id = 8,
                     CardId = 5,
-                    PowerId = Power.THORNS_ID,
-                    Value = 3
+                    PowerId = Power.POISON_ID,
+                    Value = 2
                 },
                 new CardPower
                 {
                     Id = 9,
                     CardId = 6,
-                    PowerId = Power.HEAL_ID,
+                    PowerId = Power.STUNNED_ID,
+                    Value = 2
+                },
+                new CardPower
+                {
+                    Id = 10,
+                    CardId = 7,
+                    PowerId = Power.PROTECTION_ID,
                     Value = 2
                 }
             };
@@ -126,6 +184,34 @@ namespace Super_Cartes_Infinies.Data
                     Name = "Attack boost",
                     Description ="Augmente de X les dégâts que la carte inflige quand elle attaque.",
                     IconeURL = "🐱‍🏍"
+                },
+                new Power
+                {
+                    Id = Power.CHAOS_ID,
+                    Name = "Chaos",
+                    Description = "Inverse l'attaque et la défense de toutes les cartes en jeu. Il se produit avant que la carte attaque.",
+                    IconeURL = "💥"
+                },
+                new Power
+                {
+                    Id = Power.POISON_ID,
+                    Name = "Poison",
+                    Description = "Ajoute une valeur de poison à la carte attaquée. Le poison diminue ensuite la vie d’une carte de la valeur du poison à la fin de son activation.",
+                    IconeURL = "🧪"
+                },
+                new Power
+                {
+                    Id = Power.STUNNED_ID,
+                    Name = "Stunned",
+                    Description = "Empêche une carte d’agir pendant son activation durant X tours. Mais elle reçoit quand même les dégâts de poison",
+                    IconeURL = "💫"
+                },
+                new Power
+                {
+                    Id = Power.PROTECTION_ID,
+                    Name = "Protection",
+                    Description = "Donne l'invulnérabilité à la carte durant X tours. La carte ne peut pas prendre de dégâts, même des sorts.",
+                    IconeURL = "🛡"
                 }
             };
         }
@@ -221,6 +307,28 @@ namespace Super_Cartes_Infinies.Data
                     Cost = 2,
                     Rareté=Card.rareté.Épique,
                     ImageUrl = "https://cdn.theatlantic.com/thumbor/fOZjgqHH0RmXA1A5ek-yDz697W4=/133x0:2091x1020/1200x625/media/img/mt/2015/12/RTRD62Q/original.jpg"
+                }, new Card //This card is a spell 
+                {
+                    Id = 11,
+                    Name = "Random Pain",
+                    Attack = 0,     //Ignored
+                    Health = 0,      //Ignored
+                    Cost = 2,
+                    Rareté = Card.rareté.Rare,
+                    ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR936kxkL3CDGYOfTwzxYl8nAZ_KE3GzXk6GQ&s",
+                    IsSpell = true,
+                    SpellId = Spell.RANDOM_PAIN_ID
+                }, new Card //This card is a spell 
+                {
+                    Id = 12,
+                    Name = "Earthquake",
+                    Attack = 0,     //Ignored
+                    Health = 0,      //Ignored
+                    Cost = 2,
+                    Rareté = Card.rareté.Rare,
+                    ImageUrl = "https://catpedia.wiki/images/5/59/Milly.png",
+                    IsSpell = true,
+                    SpellId = Spell.EARTHQUAKE_ID
                 }
             };
         }
@@ -305,6 +413,14 @@ namespace Super_Cartes_Infinies.Data
                 new {
                     Id = 9,
                     CardId = SeedCards()[8].Id  // Assigning the cardID value
+                },
+                new {
+                    Id = 10,
+                    CardId = SeedCards()[10].Id
+                },
+                new {
+                    Id = 11,
+                    CardId = SeedCards()[11].Id
                 }
 
             };
