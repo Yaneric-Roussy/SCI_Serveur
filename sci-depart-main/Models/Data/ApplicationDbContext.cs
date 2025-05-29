@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -68,6 +68,7 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Deck> Decks { get; set; } = default!;
     public DbSet<Power> Power { get; set; } = default!;
     public DbSet<CardPower> CardPower { get; set; } = default!;
+    public DbSet<PlayerInfo> PlayerInfos { get; set; } = default!;
     public DbSet<Status> Status { get; set; }
     public DbSet<Spell> Spell { get; set; }
 }
