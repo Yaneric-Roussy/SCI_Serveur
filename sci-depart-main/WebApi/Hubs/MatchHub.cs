@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Identity.Client;
 using Super_Cartes_Infinies.Combat;
@@ -9,6 +10,8 @@ using Super_Cartes_Infinies.Models;
 using Super_Cartes_Infinies.Models.Dtos;
 using Super_Cartes_Infinies.Services;
 using System.ComponentModel;
+using System.Data;
+using System.Reflection;
 
 namespace Super_Cartes_Infinies.Hubs;
 
@@ -17,6 +20,8 @@ public class MatchHub : Hub
 {
     ApplicationDbContext _context;
     MatchesService _matchesService;
+    List<Match> Matches = new List<Match>();
+
     public MatchHub(ApplicationDbContext context, MatchesService matchesService)
     {
         _context = context;
@@ -43,7 +48,17 @@ public class MatchHub : Hub
         await base.OnConnectedAsync();
     }
 
+    public async Task RegarderPartie(int matchId)
+    {
+        JoiningMatchData? joiningMatchData = await _matchesService.JoinMatchSpectator(userId, matchId);
+        string groupName = WriteGroupName(matchId);
+        await Groups.AddToGroupAsync(signalRId, groupName);
+        await Clients.Client(signalRId).SendAsync("JoiningMatchSpectator", joiningMatchData);
+        await Clients.Group(groupName).SendAsync("test", "SPECTATEUR AREGR");
+    }
+
     public async Task JoinMatch(bool fisrt)
+
     {
         JoiningMatchData? joiningMatchData = await _matchesService.JoinMatch(userId, signalRId, null, fisrt);
         if (joiningMatchData == null)
@@ -59,7 +74,7 @@ public class MatchHub : Hub
             {
                 //Ajout l'autre utilisateur au groupe puisque le match vient juste de commencer.
                 //--------------------
-                //--Ancienne méthode--
+                //--Ancienne mÃ©thode--
                 //--------------------
                 //await Groups.AddToGroupAsync(joiningMatchData.OtherPlayerConnectionId, groupName);
                 //await Clients.Client(joiningMatchData.OtherPlayerConnectionId).SendAsync("joiningMatchData", joiningMatchData);
@@ -130,4 +145,18 @@ public class MatchHub : Hub
         //_userConnections.Remove(userId);
         return base.OnDisconnectedAsync(exception); 
     }
+    public async Task AfficheMatches()
+    {
+        Matches = await _context.Matches.Where(m => m.IsMatchCompleted == false).ToListAsync();
+        await Clients.All.SendAsync("GetActiveMatches", Matches);
+
+
+    }
+    public async Task sendmessage(string message, int matchid,string user)
+    {
+        string groupName = $"match_{matchid}";
+        
+        await Clients.Group(groupName).SendAsync("ReceiveChatMessage",message,user);
+    }
+
 }
