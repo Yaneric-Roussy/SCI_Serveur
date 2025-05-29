@@ -1,5 +1,8 @@
-﻿using Models.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Models.Interfaces;
 using Models.Models;
+using System.Text.Json.Serialization;
 
 namespace Super_Cartes_Infinies.Models
 {
@@ -14,6 +17,7 @@ namespace Super_Cartes_Infinies.Models
 			Card = c;
             Health = c.Health;
             Attack = c.Attack;
+            PlayableCardsStatus = new List<PlayableCardStatus>();
         }
 
         public int Id { get; set; }
@@ -21,6 +25,40 @@ namespace Super_Cartes_Infinies.Models
 		public int Health { get; set; }
         public int Attack { get; set; }
         public int Index { get; set; }
+        [ValidateNever]
+        public virtual List<PlayableCardStatus> PlayableCardsStatus { get; set; } = new List<PlayableCardStatus>(); 
+        public bool HasStatus(int statusId)
+        {
+            return PlayableCardsStatus?.Any(pcs => pcs.StatusId == statusId || pcs.Status?.Id == statusId) ?? false;
+        }
+
+        public void AddStatusValue(int statusId, int value)
+        {
+            var existingStatus = PlayableCardsStatus.FirstOrDefault(pcs => pcs.StatusId == statusId || pcs.Status?.Id == statusId);
+            //We ignore Proctection status because dont want it to pile up (would make card invincible)         -YR
+            if(existingStatus != null && (statusId == Status.POISONED_ID || statusId == Status.STUNNED_ID))
+            {
+                existingStatus.Value += value;
+            }
+            if (existingStatus != null && statusId == Status.PROTECTED_ID && value < 0)
+            {
+                //Dont want card to be infinitely immortal so no extra adding       -YR
+                existingStatus.Value += value;
+            }
+            if (existingStatus == null)
+            {
+                PlayableCardsStatus.Add(new PlayableCardStatus
+                {
+                    Value = value,
+                    StatusId = statusId
+                });
+            }
+        }
+        public int GetStatusValue(int statusId)
+        {
+            var status = PlayableCardsStatus.FirstOrDefault(pcs => pcs.StatusId == statusId || pcs.Status?.Id == statusId);
+            return status?.Value ?? 0;
+        }
 
         public bool HasPower(int powerId)
         {
