@@ -1,4 +1,4 @@
-using Models.Models;
+﻿using Models.Models;
 using Super_Cartes_Infinies.Models;
 using WebApi.Combat;
 
@@ -36,6 +36,7 @@ namespace Super_Cartes_Infinies.Combat
             //Garder Poisoned en haut pour qu'il s'exécute quand même, même si la carte a stunned (changer logique si on déplace) -YR
             if (card.HasStatus(Status.POISONED_ID))
             {
+                PowerIds.Add(Power.POISON_ID);
                 this.Events.Add(new PoisonedEvent(currentPlayerData, card));
             }
             if (card.HasStatus(Status.PROTECTED_ID))
@@ -45,6 +46,7 @@ namespace Super_Cartes_Infinies.Combat
             }
             if (card.HasStatus(Status.STUNNED_ID))
             {
+                PowerIds.Add(Power.STUNNED_ID);
                 this.Events.Add(new StunnedEvent(currentPlayerData, card));
                 return; //On évite le reste, la carte est stunned       -YR
             }
@@ -77,11 +79,11 @@ namespace Super_Cartes_Infinies.Combat
                     //    this.Events.Add(new CardDamageEvent(currentPlayerData, ennemyCard.Attack, card));
                     //}
                 }
-                if (card.HasPower(Power.POISON_ID))
+                if (card.HasPower(Power.POISON_ID) && !PowerIds.Contains(Power.POISON_ID))
                 {
-                    Events.Add(new PoisonEvent(currentPlayerData, opposingPlayerData, card, ennemyCard));
+                    this.Events.Add(new PoisonEvent(currentPlayerData, opposingPlayerData, card, ennemyCard));
                 }
-                if (card.HasPower(Power.STUNNED_ID))
+                if (card.HasPower(Power.STUNNED_ID) && !PowerIds.Contains(Power.STUNNED_ID))
                 {
                     this.Events.Add(new StunEvent(currentPlayerData, opposingPlayerData, card, ennemyCard));
                 }

@@ -15,7 +15,15 @@ namespace Super_Cartes_Infinies.Combat
         public StunEvent(MatchPlayerData currentPlayerData, MatchPlayerData opposingPlayerData, PlayableCard playerCard, PlayableCard ennemyCard)
         {
             this.Events = new List<MatchEvent>();
-            int value = playerCard.GetPowerValue(Power.STUNNED_ID);
+            int value;
+            if (playerCard.HasStatus(Power.STUNNED_ID))
+            {
+                value = playerCard.GetStatusValue(Power.STUNNED_ID);
+            }
+            else
+            {
+                value = playerCard.GetPowerValue(Power.STUNNED_ID);
+            }
 
 
             //opposingPlayerData.BattleField.FirstOrDefault(c => c.Id == ennemyCard.Id).AddStatusValue(Status.POISONED_ID, value);

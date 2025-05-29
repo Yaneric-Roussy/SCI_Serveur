@@ -15,8 +15,15 @@ namespace Super_Cartes_Infinies.Combat
         public PoisonEvent(MatchPlayerData currentPlayerData, MatchPlayerData opposingPlayerData, PlayableCard playerCard, PlayableCard ennemyCard)
         {
             this.Events = new List<MatchEvent>();
-            int value = playerCard.GetPowerValue(Power.POISON_ID);
-
+            int value;
+            if (playerCard.HasStatus(Power.POISON_ID))
+            {
+                value = playerCard.GetStatusValue(Power.POISON_ID);
+            }
+            else
+            {
+                value = playerCard.GetPowerValue(Power.POISON_ID);
+            }
 
             //opposingPlayerData.BattleField.FirstOrDefault(c => c.Id == ennemyCard.Id).AddStatusValue(Status.POISONED_ID, value);
             ennemyCard.AddStatusValue(Status.POISONED_ID, value);
