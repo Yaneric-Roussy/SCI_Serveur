@@ -47,6 +47,12 @@ namespace WebApi.Controllers
             return Ok(await _deckService.GetAllCards());
         }
 
+        [HttpGet("{deckId}")]
+        public async Task<ActionResult<List<Card>>> GetAllCardFromDeck(int deckId)
+        {
+            return Ok(await _deckService.GetAllCardsFromDeck(deckId));
+        }
+
         [HttpGet("{userId}")]
         public async Task<ActionResult<List<OwnedCard>>> GetUserCards(string userId)
         {
@@ -54,6 +60,25 @@ namespace WebApi.Controllers
             return Ok(list);
         }
 
+        [HttpGet]
+        public async Task<ActionResult<int>> GetVictoires()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+                return Unauthorized();
+            var player = await _deckService.GetPlayerFromUserId(userId);
+            return Ok(player.Victoire);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<int>> GetDéfaites()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+                return Unauthorized();
+            var player = await _deckService.GetPlayerFromUserId(userId);
+            return Ok(player.Defaite);
+        }
         [HttpPost]
         public async Task<ActionResult>AjoutDcarte(int DeckID, int cardID)
         {

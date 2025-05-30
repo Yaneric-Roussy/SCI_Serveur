@@ -70,7 +70,7 @@ namespace Tests.Services
         [TestMethod()]
         public void AjoutDeckTest()
         {
-          DecksService decksService = new DecksService(_db, null);
+          DecksService decksService = new DecksService(_db, null, null);
             Deck deckAjouter = new Deck();
             deckAjouter.Name = "Deck 2";
             deckAjouter.Courant = false;
@@ -86,7 +86,7 @@ namespace Tests.Services
         [TestMethod()]
         public void DeleteDeckTest()
         {
-            DecksService decksService = new DecksService(_db, null);
+            DecksService decksService = new DecksService(_db, null, null);
             decksService.DeleteDeck(_db.Decks.FirstOrDefault(d => d.Id == 2));
             Assert.IsNull(_db.Decks.FirstOrDefault(d => d.Id == 2));
 
@@ -94,7 +94,7 @@ namespace Tests.Services
         [TestMethod]
         public void deleteDeckAuthorise()
         {
-            DecksService decksService = new DecksService(_db, null);
+            DecksService decksService = new DecksService(_db, null, null);
             Player player = new Player
             {
                 Id = 3,
@@ -124,7 +124,7 @@ namespace Tests.Services
         public async Task AddPlayerCard_AjouteCarteSiValide()
         {
             // Arrange
-            var decksService = new DecksService(_db, null);
+            var decksService = new DecksService(_db, null, null);
 
             // Ajout d'une carte
             var card = new Card { Id = 9, Name = "Carte Test" };
@@ -160,7 +160,7 @@ namespace Tests.Services
         public async Task DeletePlayerCarte_DeplaceCarteDansCarteSupprime()
         {
             // Arrange
-            var decksService = new DecksService(_db, null);
+            var decksService = new DecksService(_db, null, null);
 
             // Création de la carte
             var card = new Card { Id = 10, Name = "Carte Test" };

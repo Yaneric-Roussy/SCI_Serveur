@@ -408,6 +408,12 @@ namespace Super_Cartes_Infinies.Services
 
             return playCardEvent;
         }
+
+
+       public void Statdeckfin()
+        {
+
+        }
     }
 }
 

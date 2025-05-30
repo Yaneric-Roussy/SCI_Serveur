@@ -37,6 +37,8 @@ namespace Super_Cartes_Infinies.Controllers
                         return Ok(_cardsService.GetAllCards().OrderByDescending(i => i.Health));
                     case 2:
                         return Ok(_cardsService.GetAllCards().OrderByDescending(i => i.Cost));
+                    case 3:
+                        return Ok(_cardsService.GetAllCards().OrderByDescending(i => i.Id));
                 }
 
             }
@@ -52,6 +54,8 @@ namespace Super_Cartes_Infinies.Controllers
                     return Ok(_cardsService.GetAllCards().OrderBy(i => i.Health));
                 case 2:
                     return Ok(_cardsService.GetAllCards().OrderBy(i => i.Cost));
+                case 3:
+                    return Ok(_cardsService.GetAllCards().OrderBy(i => i.Id));
             }
             return BadRequest("Champ de tri invalide");
         }
@@ -77,20 +81,28 @@ namespace Super_Cartes_Infinies.Controllers
                 switch (champ)
                 {
                     case 0:
-                        return Ok(list.OrderByDescending(i => i.Attack));
+                        return Ok(list = list.OrderByDescending(i => i.Card.Attack));
                     case 1:
-                        return Ok(list.OrderByDescending(i => i.Health));
+                        return Ok(list = list.OrderByDescending(i => i.Card.Health));
                     case 2:
-                        return Ok(list.OrderByDescending(i => i.Cost));
+                        return Ok(list.OrderByDescending(i => i.Card.Cost));
+                    case 3:
+                        return Ok(list.OrderByDescending(i => i.Card.Id));
+                    case 4:
+                        return Ok(list.OrderByDescending(i => i.Card.Rareté));
                 }
             switch (champ)
             {
                 case 0:
-                    return Ok(list.OrderBy(i => i.Attack));
+                    return Ok(list.OrderBy(i => i.Card.Attack));
                 case 1:
-                    return Ok(list.OrderBy(i => i.Health));
+                    return Ok(list.OrderBy(i => i.Card.Health));
                 case 2:
-                    return Ok(list.OrderBy(i => i.Cost));
+                    return Ok(list.OrderBy(i => i.Card.Cost));
+                case 3:
+                    return Ok(list.OrderBy(i => i.Card.Id));
+                case 4:
+                    return Ok(list.OrderBy(i => i.Card.Rareté));
             }
             return BadRequest("Champ de tri invalide");
         }
