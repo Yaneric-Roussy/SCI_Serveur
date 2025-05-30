@@ -146,15 +146,15 @@ namespace Models.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5bcc81a8-6064-4011-8a30-0765fa61f829",
+                            ConcurrencyStamp = "b68d9422-8020-4a46-9c77-65ead53f3248",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMgH9iyaHLC7URFWscaZlRobVNrVHj9GcN/04FQDVP0gm8Uw3hnOVrnAlkSD1g0D5w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBh3C6vqLFf6PylEyENkKP9HzHrFvEtyr5gIUEkkB5g8W/9KWboWx9fn/ctnK2ohfw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5b611a33-bc2e-4751-be6a-692abf148704",
+                            SecurityStamp = "ae5ec06d-93f5-444a-9949-915ef2e60c7b",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         },
@@ -162,22 +162,22 @@ namespace Models.Migrations
                         {
                             Id = "User1Id",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "486fdeaa-5a9b-4426-a8ca-47563ab718dc",
+                            ConcurrencyStamp = "133d7864-7659-44da-b57d-91076a43d2d3",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "996e7f7d-ab5c-4886-b190-f3a9689739fd",
+                            SecurityStamp = "f0fb415a-7732-493c-bb6e-e56010a2afda",
                             TwoFactorEnabled = false
                         },
                         new
                         {
                             Id = "User2Id",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b128daf2-8210-4a0c-8716-2efa29d3260e",
+                            ConcurrencyStamp = "4be2c72d-04f9-4645-a2cc-54f4a9cb2f4e",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f4f8327a-26cd-430c-aa82-0942661ef0f6",
+                            SecurityStamp = "9a7dc564-f255-4fc0-9faf-e2058628fbbe",
                             TwoFactorEnabled = false
                         });
                 });
@@ -377,11 +377,17 @@ namespace Models.Migrations
                     b.Property<bool>("Courant")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Defaite")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("PlayerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Victoire")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -476,7 +482,7 @@ namespace Models.Migrations
                         new
                         {
                             Id = 3,
-                            Cost = 2,
+                            Cost = 5,
                             ImageUrl = "https://m.media-amazon.com/images/I/61y74SPNLnL._AC_UF894,1000_QL80_.jpg",
                             Name = "La céramique",
                             NbCard = 5,
@@ -773,12 +779,12 @@ namespace Models.Migrations
                         new
                         {
                             Id = 10,
-                            CardId = 11
+                            CardId = 26
                         },
                         new
                         {
                             Id = 11,
-                            CardId = 12
+                            CardId = 27
                         });
                 });
 
@@ -870,136 +876,574 @@ namespace Models.Migrations
                         new
                         {
                             Id = 1,
-                            Attack = 3,
-                            Cost = 3,
+                            Attack = 4,
+                            Cost = 4,
                             Health = 3,
-                            ImageUrl = "https://i.pinimg.com/originals/a8/16/49/a81649bd4b0f032ce633161c5a076b87.jpg",
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png",
                             IsSpell = false,
-                            Name = "Chat Dragon",
-                            Rareté = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Attack = 2,
-                            Cost = 3,
-                            Health = 5,
-                            ImageUrl = "https://i0.wp.com/thediscerningcat.com/wp-content/uploads/2021/02/tabby-cat-wearing-sunglasses.jpg",
-                            IsSpell = false,
-                            Name = "Chat Awesome",
-                            Rareté = 0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Attack = 2,
-                            Cost = 1,
-                            Health = 1,
-                            ImageUrl = "https://cdn.wallpapersafari.com/27/53/SZ8PO9.jpg",
-                            IsSpell = false,
-                            Name = "Chatton Laser",
+                            Name = "Bulbizarre",
                             Rareté = 1
                         },
                         new
                         {
-                            Id = 4,
-                            Attack = 8,
-                            Cost = 4,
+                            Id = 2,
+                            Attack = 5,
+                            Cost = 6,
                             Health = 4,
-                            ImageUrl = "https://wallpapers.com/images/hd/epic-cat-poster-baavft05ylgta4j8.jpg",
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png",
                             IsSpell = false,
-                            Name = "Chat Spacial",
+                            Name = "Herbizarre",
+                            Rareté = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Attack = 6,
+                            Cost = 8,
+                            Health = 5,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/003.png",
+                            IsSpell = false,
+                            Name = "Florizarre",
+                            Rareté = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Attack = 4,
+                            Cost = 4,
+                            Health = 3,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/004.png",
+                            IsSpell = false,
+                            Name = "Salamèche",
                             Rareté = 1
                         },
                         new
                         {
                             Id = 5,
-                            Attack = 7,
-                            Cost = 5,
-                            Health = 7,
-                            ImageUrl = "https://i.etsystatic.com/6230905/r/il/32aa5a/3474618751/il_fullxfull.3474618751_mfvf.jpg",
+                            Attack = 5,
+                            Cost = 6,
+                            Health = 4,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/005.png",
                             IsSpell = false,
-                            Name = "Chat Guerrier",
-                            Rareté = 2
+                            Name = "Reptincel",
+                            Rareté = 1
                         },
                         new
                         {
                             Id = 6,
-                            Attack = 4,
-                            Cost = 2,
-                            Health = 2,
-                            ImageUrl = "https://store.playstation.com/store/api/chihiro/00_09_000/container/AU/en/99/EP2402-CUSA05624_00-ETH0000000002875/0/image?_version=00_09_000&platform=chihiro&bg_color=000000&opacity=100&w=720&h=720",
+                            Attack = 7,
+                            Cost = 8,
+                            Health = 5,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/006.png",
                             IsSpell = false,
-                            Name = "Chat Laser",
+                            Name = "Dracaufeu",
                             Rareté = 2
                         },
                         new
                         {
                             Id = 7,
-                            Attack = 6,
+                            Attack = 3,
                             Cost = 4,
                             Health = 3,
-                            ImageUrl = "https://images.squarespace-cdn.com/content/51b3dc8ee4b051b96ceb10de/1394662654865-JKOZ7ZFF39247VYDTGG9/hilarious-jedi-cats-fight-video-preview.jpg?content-type=image%2Fjpeg",
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/007.png",
                             IsSpell = false,
-                            Name = "Jedi Chat",
-                            Rareté = 3
+                            Name = "Carapuce",
+                            Rareté = 1
                         },
                         new
                         {
                             Id = 8,
-                            Attack = 1,
-                            Cost = 2,
-                            Health = 9,
-                            ImageUrl = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c89c9a3c-7848-4bd5-9306-417c97096ae5/dh8sghm-7bebd975-51f2-4728-87bc-fb3cef176af5.jpg/v1/fit/w_750,h_1000,q_70,strp/another_lucifur_blob_by_slugyyycat_dh8sghm-375w-2x.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTAwMCIsInBhdGgiOiJcL2ZcL2M4OWM5YTNjLTc4NDgtNGJkNS05MzA2LTQxN2M5NzA5NmFlNVwvZGg4c2dobS03YmViZDk3NS01MWYyLTQ3MjgtODdiYy1mYjNjZWYxNzZhZjUuanBnIiwid2lkdGgiOiI8PTc1MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.7oGugpkEX4yqfhiOXlo4TfqzatOuHaCu2aEi-Lnw_40",
+                            Attack = 4,
+                            Cost = 6,
+                            Health = 4,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/008.png",
                             IsSpell = false,
-                            Name = "Blob Chat",
-                            Rareté = 3
+                            Name = "Carabaffe",
+                            Rareté = 1
                         },
                         new
                         {
                             Id = 9,
                             Attack = 5,
-                            Cost = 2,
-                            Health = 1,
-                            ImageUrl = "https://townsquare.media/site/142/files/2011/08/jedicats.jpg?w=980&q=75",
+                            Cost = 8,
+                            Health = 5,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/009.png",
                             IsSpell = false,
-                            Name = "Jedi Chatton",
-                            Rareté = 3
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Attack = 6,
-                            Cost = 2,
-                            Health = 1,
-                            ImageUrl = "https://cdn.theatlantic.com/thumbor/fOZjgqHH0RmXA1A5ek-yDz697W4=/133x0:2091x1020/1200x625/media/img/mt/2015/12/RTRD62Q/original.jpg",
-                            IsSpell = false,
-                            Name = "Chat Furtif",
+                            Name = "Tortank",
                             Rareté = 2
                         },
                         new
                         {
-                            Id = 11,
-                            Attack = 0,
-                            Cost = 2,
-                            Health = 0,
-                            ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR936kxkL3CDGYOfTwzxYl8nAZ_KE3GzXk6GQ&s",
-                            IsSpell = true,
-                            Name = "Random Pain",
-                            Rareté = 1,
-                            SpellId = 2
+                            Id = 25,
+                            Attack = 4,
+                            Cost = 3,
+                            Health = 3,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/025.png",
+                            IsSpell = false,
+                            Name = "Pikachu",
+                            Rareté = 0
                         },
                         new
                         {
-                            Id = 12,
-                            Attack = 0,
+                            Id = 26,
+                            Attack = 6,
+                            Cost = 5,
+                            Health = 4,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/026.png",
+                            IsSpell = false,
+                            Name = "Raichu",
+                            Rareté = 1
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Attack = 5,
                             Cost = 2,
-                            Health = 0,
-                            ImageUrl = "https://catpedia.wiki/images/5/59/Milly.png",
-                            IsSpell = true,
-                            Name = "Earthquake",
-                            Rareté = 1,
-                            SpellId = 1
+                            Health = 3,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/027_f2.png",
+                            IsSpell = false,
+                            Name = "Sabelette d'Alola",
+                            Rareté = 0
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Attack = 6,
+                            Cost = 3,
+                            Health = 5,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/028_f2.png",
+                            IsSpell = false,
+                            Name = "Sablaireau d'Alola",
+                            Rareté = 0
+                        },
+                        new
+                        {
+                            Id = 102,
+                            Attack = 4,
+                            Cost = 3,
+                            Health = 4,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/102.png",
+                            IsSpell = false,
+                            Name = "Noeunoeuf",
+                            Rareté = 0
+                        },
+                        new
+                        {
+                            Id = 103,
+                            Attack = 6,
+                            Cost = 5,
+                            Health = 6,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/103.png",
+                            IsSpell = false,
+                            Name = "Noadkoko",
+                            Rareté = 1
+                        },
+                        new
+                        {
+                            Id = 111,
+                            Attack = 5,
+                            Cost = 4,
+                            Health = 5,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/111.png",
+                            IsSpell = false,
+                            Name = "Rhinocorne",
+                            Rareté = 0
+                        },
+                        new
+                        {
+                            Id = 112,
+                            Attack = 8,
+                            Cost = 8,
+                            Health = 7,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/112.png",
+                            IsSpell = false,
+                            Name = "Rhinoféros",
+                            Rareté = 1
+                        },
+                        new
+                        {
+                            Id = 150,
+                            Attack = 9,
+                            Cost = 9,
+                            Health = 5,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/150.png",
+                            IsSpell = false,
+                            Name = "Mewtwo",
+                            Rareté = 3
+                        },
+                        new
+                        {
+                            Id = 151,
+                            Attack = 6,
+                            Cost = 6,
+                            Health = 6,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/151.png",
+                            IsSpell = false,
+                            Name = "Mew",
+                            Rareté = 3
+                        },
+                        new
+                        {
+                            Id = 201,
+                            Attack = 5,
+                            Cost = 3,
+                            Health = 3,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/201.png",
+                            IsSpell = false,
+                            Name = "Zarbi",
+                            Rareté = 0
+                        },
+                        new
+                        {
+                            Id = 203,
+                            Attack = 5,
+                            Cost = 4,
+                            Health = 5,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/203.png",
+                            IsSpell = false,
+                            Name = "Girafarig",
+                            Rareté = 0
+                        },
+                        new
+                        {
+                            Id = 249,
+                            Attack = 8,
+                            Cost = 7,
+                            Health = 7,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/249.png",
+                            IsSpell = false,
+                            Name = "Lugia",
+                            Rareté = 3
+                        },
+                        new
+                        {
+                            Id = 250,
+                            Attack = 8,
+                            Cost = 7,
+                            Health = 7,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/250.png",
+                            IsSpell = false,
+                            Name = "Ho-Oh",
+                            Rareté = 3
+                        },
+                        new
+                        {
+                            Id = 273,
+                            Attack = 3,
+                            Cost = 2,
+                            Health = 3,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/273.png",
+                            IsSpell = false,
+                            Name = "Grainipiot",
+                            Rareté = 0
+                        },
+                        new
+                        {
+                            Id = 274,
+                            Attack = 5,
+                            Cost = 4,
+                            Health = 5,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/274.png",
+                            IsSpell = false,
+                            Name = "Pifeuil",
+                            Rareté = 0
+                        },
+                        new
+                        {
+                            Id = 275,
+                            Attack = 6,
+                            Cost = 5,
+                            Health = 6,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/275.png",
+                            IsSpell = false,
+                            Name = "Tengalice",
+                            Rareté = 1
+                        },
+                        new
+                        {
+                            Id = 287,
+                            Attack = 4,
+                            Cost = 3,
+                            Health = 4,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/287.png",
+                            IsSpell = false,
+                            Name = "Parecool",
+                            Rareté = 0
+                        },
+                        new
+                        {
+                            Id = 288,
+                            Attack = 5,
+                            Cost = 4,
+                            Health = 5,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/288.png",
+                            IsSpell = false,
+                            Name = "Vigoroth ",
+                            Rareté = 0
+                        },
+                        new
+                        {
+                            Id = 289,
+                            Attack = 10,
+                            Cost = 9,
+                            Health = 9,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/289.png",
+                            IsSpell = false,
+                            Name = "Monaflèmit",
+                            Rareté = 1
+                        },
+                        new
+                        {
+                            Id = 384,
+                            Attack = 9,
+                            Cost = 9,
+                            Health = 7,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/384.png",
+                            IsSpell = false,
+                            Name = "Rayquaza",
+                            Rareté = 3
+                        },
+                        new
+                        {
+                            Id = 459,
+                            Attack = 4,
+                            Cost = 3,
+                            Health = 4,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/459.png",
+                            IsSpell = false,
+                            Name = "Blizzi",
+                            Rareté = 0
+                        },
+                        new
+                        {
+                            Id = 460,
+                            Attack = 6,
+                            Cost = 5,
+                            Health = 6,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/460.png",
+                            IsSpell = false,
+                            Name = "Blizzaroi",
+                            Rareté = 1
+                        },
+                        new
+                        {
+                            Id = 493,
+                            Attack = 8,
+                            Cost = 8,
+                            Health = 8,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/493.png",
+                            IsSpell = false,
+                            Name = "Arceus",
+                            Rareté = 3
+                        },
+                        new
+                        {
+                            Id = 570,
+                            Attack = 4,
+                            Cost = 3,
+                            Health = 3,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/570.png",
+                            IsSpell = false,
+                            Name = "Zorua",
+                            Rareté = 1
+                        },
+                        new
+                        {
+                            Id = 571,
+                            Attack = 7,
+                            Cost = 5,
+                            Health = 4,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/571.png",
+                            IsSpell = false,
+                            Name = "Zoroark",
+                            Rareté = 2
+                        },
+                        new
+                        {
+                            Id = 643,
+                            Attack = 8,
+                            Cost = 7,
+                            Health = 6,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/643.png",
+                            IsSpell = false,
+                            Name = "Reshiram",
+                            Rareté = 3
+                        },
+                        new
+                        {
+                            Id = 644,
+                            Attack = 6,
+                            Cost = 7,
+                            Health = 8,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/644.png",
+                            IsSpell = false,
+                            Name = "Zekrom",
+                            Rareté = 3
+                        },
+                        new
+                        {
+                            Id = 656,
+                            Attack = 4,
+                            Cost = 3,
+                            Health = 3,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/656.png",
+                            IsSpell = false,
+                            Name = "Grenousse",
+                            Rareté = 1
+                        },
+                        new
+                        {
+                            Id = 657,
+                            Attack = 4,
+                            Cost = 3,
+                            Health = 4,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/657.png",
+                            IsSpell = false,
+                            Name = "Croâporal",
+                            Rareté = 1
+                        },
+                        new
+                        {
+                            Id = 658,
+                            Attack = 6,
+                            Cost = 5,
+                            Health = 5,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/658_f2.png",
+                            IsSpell = false,
+                            Name = "Amphinobi",
+                            Rareté = 2
+                        },
+                        new
+                        {
+                            Id = 661,
+                            Attack = 3,
+                            Cost = 2,
+                            Health = 3,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/661.png",
+                            IsSpell = false,
+                            Name = "Passerouge",
+                            Rareté = 0
+                        },
+                        new
+                        {
+                            Id = 662,
+                            Attack = 5,
+                            Cost = 3,
+                            Health = 4,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/662.png",
+                            IsSpell = false,
+                            Name = "Braisillon",
+                            Rareté = 1
+                        },
+                        new
+                        {
+                            Id = 663,
+                            Attack = 5,
+                            Cost = 5,
+                            Health = 5,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/663.png",
+                            IsSpell = false,
+                            Name = "Flambusard",
+                            Rareté = 1
+                        },
+                        new
+                        {
+                            Id = 714,
+                            Attack = 3,
+                            Cost = 2,
+                            Health = 3,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/714.png",
+                            IsSpell = false,
+                            Name = "Sonistrelle",
+                            Rareté = 0
+                        },
+                        new
+                        {
+                            Id = 715,
+                            Attack = 5,
+                            Cost = 5,
+                            Health = 5,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/715.png",
+                            IsSpell = false,
+                            Name = "Bruyverne",
+                            Rareté = 2
+                        },
+                        new
+                        {
+                            Id = 716,
+                            Attack = 7,
+                            Cost = 6,
+                            Health = 7,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/716.png",
+                            IsSpell = false,
+                            Name = "Xerneas",
+                            Rareté = 3
+                        },
+                        new
+                        {
+                            Id = 717,
+                            Attack = 8,
+                            Cost = 7,
+                            Health = 8,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/717.png",
+                            IsSpell = false,
+                            Name = "Yveltal",
+                            Rareté = 3
+                        },
+                        new
+                        {
+                            Id = 720,
+                            Attack = 7,
+                            Cost = 6,
+                            Health = 5,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/720.png",
+                            IsSpell = false,
+                            Name = "Hoopa",
+                            Rareté = 3
+                        },
+                        new
+                        {
+                            Id = 802,
+                            Attack = 8,
+                            Cost = 6,
+                            Health = 6,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/802.png",
+                            IsSpell = false,
+                            Name = "Marshadow",
+                            Rareté = 3
+                        },
+                        new
+                        {
+                            Id = 885,
+                            Attack = 4,
+                            Cost = 2,
+                            Health = 2,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/885.png",
+                            IsSpell = false,
+                            Name = "Fantyrm",
+                            Rareté = 0
+                        },
+                        new
+                        {
+                            Id = 886,
+                            Attack = 5,
+                            Cost = 4,
+                            Health = 4,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/886.png",
+                            IsSpell = false,
+                            Name = "Dispareptil",
+                            Rareté = 1
+                        },
+                        new
+                        {
+                            Id = 887,
+                            Attack = 8,
+                            Cost = 6,
+                            Health = 6,
+                            ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/887.png",
+                            IsSpell = false,
+                            Name = "Lanssorien",
+                            Rareté = 2
                         });
                 });
 
@@ -1147,6 +1591,9 @@ namespace Models.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Defaite")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Money")
                         .HasColumnType("INTEGER");
 
@@ -1158,6 +1605,9 @@ namespace Models.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Victoire")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
@@ -1168,16 +1618,20 @@ namespace Models.Migrations
                         new
                         {
                             Id = 1,
+                            Defaite = 0,
                             Money = 20,
                             Name = "Test player 1",
-                            UserId = "User1Id"
+                            UserId = "User1Id",
+                            Victoire = 0
                         },
                         new
                         {
                             Id = 2,
+                            Defaite = 0,
                             Money = 20,
                             Name = "Test player 2",
-                            UserId = "User2Id"
+                            UserId = "User2Id",
+                            Victoire = 0
                         });
                 });
 

@@ -714,7 +714,7 @@ namespace Super_Cartes_Infinies.Data
 
                     ImageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/887.png"
                 },
-
+                #endregion
             };
         }
 

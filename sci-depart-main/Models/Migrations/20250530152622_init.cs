@@ -246,7 +246,9 @@ namespace Models.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     UserId = table.Column<string>(type: "TEXT", nullable: false),
-                    Money = table.Column<int>(type: "INTEGER", nullable: false)
+                    Money = table.Column<int>(type: "INTEGER", nullable: false),
+                    Victoire = table.Column<int>(type: "INTEGER", nullable: false),
+                    Defaite = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -314,7 +316,9 @@ namespace Models.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     PlayerId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Courant = table.Column<bool>(type: "INTEGER", nullable: false)
+                    Courant = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Victoire = table.Column<int>(type: "INTEGER", nullable: false),
+                    Defaite = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -563,9 +567,9 @@ namespace Models.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "11111111-1111-1111-1111-111111111111", 0, "5bcc81a8-6064-4011-8a30-0765fa61f829", "admin@admin.com", true, true, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEMgH9iyaHLC7URFWscaZlRobVNrVHj9GcN/04FQDVP0gm8Uw3hnOVrnAlkSD1g0D5w==", null, false, "5b611a33-bc2e-4751-be6a-692abf148704", false, "admin@admin.com" },
-                    { "User1Id", 0, "486fdeaa-5a9b-4426-a8ca-47563ab718dc", null, false, false, null, null, null, null, null, false, "996e7f7d-ab5c-4886-b190-f3a9689739fd", false, null },
-                    { "User2Id", 0, "b128daf2-8210-4a0c-8716-2efa29d3260e", null, false, false, null, null, null, null, null, false, "f4f8327a-26cd-430c-aa82-0942661ef0f6", false, null }
+                    { "11111111-1111-1111-1111-111111111111", 0, "b68d9422-8020-4a46-9c77-65ead53f3248", "admin@admin.com", true, true, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEBh3C6vqLFf6PylEyENkKP9HzHrFvEtyr5gIUEkkB5g8W/9KWboWx9fn/ctnK2ohfw==", null, false, "ae5ec06d-93f5-444a-9949-915ef2e60c7b", false, "admin@admin.com" },
+                    { "User1Id", 0, "133d7864-7659-44da-b57d-91076a43d2d3", null, false, false, null, null, null, null, null, false, "f0fb415a-7732-493c-bb6e-e56010a2afda", false, null },
+                    { "User2Id", 0, "4be2c72d-04f9-4645-a2cc-54f4a9cb2f4e", null, false, false, null, null, null, null, null, false, "9a7dc564-f255-4fc0-9faf-e2058628fbbe", false, null }
                 });
 
             migrationBuilder.InsertData(
@@ -573,16 +577,58 @@ namespace Models.Migrations
                 columns: new[] { "Id", "Attack", "Cost", "Health", "ImageUrl", "IsSpell", "Name", "Rareté", "SpellId" },
                 values: new object[,]
                 {
-                    { 1, 3, 3, 3, "https://i.pinimg.com/originals/a8/16/49/a81649bd4b0f032ce633161c5a076b87.jpg", false, "Chat Dragon", 0, null },
-                    { 2, 2, 3, 5, "https://i0.wp.com/thediscerningcat.com/wp-content/uploads/2021/02/tabby-cat-wearing-sunglasses.jpg", false, "Chat Awesome", 0, null },
-                    { 3, 2, 1, 1, "https://cdn.wallpapersafari.com/27/53/SZ8PO9.jpg", false, "Chatton Laser", 1, null },
-                    { 4, 8, 4, 4, "https://wallpapers.com/images/hd/epic-cat-poster-baavft05ylgta4j8.jpg", false, "Chat Spacial", 1, null },
-                    { 5, 7, 5, 7, "https://i.etsystatic.com/6230905/r/il/32aa5a/3474618751/il_fullxfull.3474618751_mfvf.jpg", false, "Chat Guerrier", 2, null },
-                    { 6, 4, 2, 2, "https://store.playstation.com/store/api/chihiro/00_09_000/container/AU/en/99/EP2402-CUSA05624_00-ETH0000000002875/0/image?_version=00_09_000&platform=chihiro&bg_color=000000&opacity=100&w=720&h=720", false, "Chat Laser", 2, null },
-                    { 7, 6, 4, 3, "https://images.squarespace-cdn.com/content/51b3dc8ee4b051b96ceb10de/1394662654865-JKOZ7ZFF39247VYDTGG9/hilarious-jedi-cats-fight-video-preview.jpg?content-type=image%2Fjpeg", false, "Jedi Chat", 3, null },
-                    { 8, 1, 2, 9, "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c89c9a3c-7848-4bd5-9306-417c97096ae5/dh8sghm-7bebd975-51f2-4728-87bc-fb3cef176af5.jpg/v1/fit/w_750,h_1000,q_70,strp/another_lucifur_blob_by_slugyyycat_dh8sghm-375w-2x.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTAwMCIsInBhdGgiOiJcL2ZcL2M4OWM5YTNjLTc4NDgtNGJkNS05MzA2LTQxN2M5NzA5NmFlNVwvZGg4c2dobS03YmViZDk3NS01MWYyLTQ3MjgtODdiYy1mYjNjZWYxNzZhZjUuanBnIiwid2lkdGgiOiI8PTc1MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.7oGugpkEX4yqfhiOXlo4TfqzatOuHaCu2aEi-Lnw_40", false, "Blob Chat", 3, null },
-                    { 9, 5, 2, 1, "https://townsquare.media/site/142/files/2011/08/jedicats.jpg?w=980&q=75", false, "Jedi Chatton", 3, null },
-                    { 10, 6, 2, 1, "https://cdn.theatlantic.com/thumbor/fOZjgqHH0RmXA1A5ek-yDz697W4=/133x0:2091x1020/1200x625/media/img/mt/2015/12/RTRD62Q/original.jpg", false, "Chat Furtif", 2, null }
+                    { 1, 4, 4, 3, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png", false, "Bulbizarre", 1, null },
+                    { 2, 5, 6, 4, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png", false, "Herbizarre", 1, null },
+                    { 3, 6, 8, 5, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/003.png", false, "Florizarre", 2, null },
+                    { 4, 4, 4, 3, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/004.png", false, "Salamèche", 1, null },
+                    { 5, 5, 6, 4, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/005.png", false, "Reptincel", 1, null },
+                    { 6, 7, 8, 5, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/006.png", false, "Dracaufeu", 2, null },
+                    { 7, 3, 4, 3, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/007.png", false, "Carapuce", 1, null },
+                    { 8, 4, 6, 4, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/008.png", false, "Carabaffe", 1, null },
+                    { 9, 5, 8, 5, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/009.png", false, "Tortank", 2, null },
+                    { 25, 4, 3, 3, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/025.png", false, "Pikachu", 0, null },
+                    { 26, 6, 5, 4, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/026.png", false, "Raichu", 1, null },
+                    { 27, 5, 2, 3, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/027_f2.png", false, "Sabelette d'Alola", 0, null },
+                    { 28, 6, 3, 5, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/028_f2.png", false, "Sablaireau d'Alola", 0, null },
+                    { 102, 4, 3, 4, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/102.png", false, "Noeunoeuf", 0, null },
+                    { 103, 6, 5, 6, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/103.png", false, "Noadkoko", 1, null },
+                    { 111, 5, 4, 5, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/111.png", false, "Rhinocorne", 0, null },
+                    { 112, 8, 8, 7, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/112.png", false, "Rhinoféros", 1, null },
+                    { 150, 9, 9, 5, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/150.png", false, "Mewtwo", 3, null },
+                    { 151, 6, 6, 6, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/151.png", false, "Mew", 3, null },
+                    { 201, 5, 3, 3, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/201.png", false, "Zarbi", 0, null },
+                    { 203, 5, 4, 5, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/203.png", false, "Girafarig", 0, null },
+                    { 249, 8, 7, 7, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/249.png", false, "Lugia", 3, null },
+                    { 250, 8, 7, 7, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/250.png", false, "Ho-Oh", 3, null },
+                    { 273, 3, 2, 3, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/273.png", false, "Grainipiot", 0, null },
+                    { 274, 5, 4, 5, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/274.png", false, "Pifeuil", 0, null },
+                    { 275, 6, 5, 6, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/275.png", false, "Tengalice", 1, null },
+                    { 287, 4, 3, 4, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/287.png", false, "Parecool", 0, null },
+                    { 288, 5, 4, 5, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/288.png", false, "Vigoroth ", 0, null },
+                    { 289, 10, 9, 9, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/289.png", false, "Monaflèmit", 1, null },
+                    { 384, 9, 9, 7, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/384.png", false, "Rayquaza", 3, null },
+                    { 459, 4, 3, 4, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/459.png", false, "Blizzi", 0, null },
+                    { 460, 6, 5, 6, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/460.png", false, "Blizzaroi", 1, null },
+                    { 493, 8, 8, 8, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/493.png", false, "Arceus", 3, null },
+                    { 570, 4, 3, 3, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/570.png", false, "Zorua", 1, null },
+                    { 571, 7, 5, 4, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/571.png", false, "Zoroark", 2, null },
+                    { 643, 8, 7, 6, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/643.png", false, "Reshiram", 3, null },
+                    { 644, 6, 7, 8, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/644.png", false, "Zekrom", 3, null },
+                    { 656, 4, 3, 3, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/656.png", false, "Grenousse", 1, null },
+                    { 657, 4, 3, 4, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/657.png", false, "Croâporal", 1, null },
+                    { 658, 6, 5, 5, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/658_f2.png", false, "Amphinobi", 2, null },
+                    { 661, 3, 2, 3, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/661.png", false, "Passerouge", 0, null },
+                    { 662, 5, 3, 4, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/662.png", false, "Braisillon", 1, null },
+                    { 663, 5, 5, 5, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/663.png", false, "Flambusard", 1, null },
+                    { 714, 3, 2, 3, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/714.png", false, "Sonistrelle", 0, null },
+                    { 715, 5, 5, 5, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/715.png", false, "Bruyverne", 2, null },
+                    { 716, 7, 6, 7, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/716.png", false, "Xerneas", 3, null },
+                    { 717, 8, 7, 8, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/717.png", false, "Yveltal", 3, null },
+                    { 720, 7, 6, 5, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/720.png", false, "Hoopa", 3, null },
+                    { 802, 8, 6, 6, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/802.png", false, "Marshadow", 3, null },
+                    { 885, 4, 2, 2, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/885.png", false, "Fantyrm", 0, null },
+                    { 886, 5, 4, 4, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/886.png", false, "Dispareptil", 1, null },
+                    { 887, 8, 6, 6, "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/887.png", false, "Lanssorien", 2, null }
                 });
 
             migrationBuilder.InsertData(
@@ -597,7 +643,7 @@ namespace Models.Migrations
                 {
                     { 1, 1, "https://www.realite-virtuelle.com/wp-content/uploads/2021/02/rayquaza-tout-savoir-guide.jpg", "Le platre", 3, 0, 0 },
                     { 2, 2, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZahnOokotXrBgjZ2ywo9aQaw7oLO-JqE1rA&s", "La brique", 4, 0, 1 },
-                    { 3, 2, "https://m.media-amazon.com/images/I/61y74SPNLnL._AC_UF894,1000_QL80_.jpg", "La céramique", 5, 1, 2 }
+                    { 3, 5, "https://m.media-amazon.com/images/I/61y74SPNLnL._AC_UF894,1000_QL80_.jpg", "La céramique", 5, 1, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -657,21 +703,12 @@ namespace Models.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Cards",
-                columns: new[] { "Id", "Attack", "Cost", "Health", "ImageUrl", "IsSpell", "Name", "Rareté", "SpellId" },
-                values: new object[,]
-                {
-                    { 11, 0, 2, 0, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR936kxkL3CDGYOfTwzxYl8nAZ_KE3GzXk6GQ&s", true, "Random Pain", 1, 2 },
-                    { 12, 0, 2, 0, "https://catpedia.wiki/images/5/59/Milly.png", true, "Earthquake", 1, 1 }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Players",
-                columns: new[] { "Id", "Money", "Name", "UserId" },
+                columns: new[] { "Id", "Defaite", "Money", "Name", "UserId", "Victoire" },
                 values: new object[,]
                 {
-                    { 1, 20, "Test player 1", "User1Id" },
-                    { 2, 20, "Test player 2", "User2Id" }
+                    { 1, 0, 20, "Test player 1", "User1Id", 0 },
+                    { 2, 0, 20, "Test player 2", "User2Id", 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -701,8 +738,8 @@ namespace Models.Migrations
                     { 7, 7 },
                     { 8, 8 },
                     { 9, 9 },
-                    { 10, 11 },
-                    { 11, 12 }
+                    { 10, 26 },
+                    { 11, 27 }
                 });
 
             migrationBuilder.CreateIndex(
