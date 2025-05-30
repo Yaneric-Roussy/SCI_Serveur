@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Models.Models;
 using Super_Cartes_Infinies.Models;
 using WebApi.Combat;
 
@@ -42,13 +43,26 @@ namespace Super_Cartes_Infinies.Combat
             }
 
             string userId;
+
             if (match.PlayerDataA.PlayerId == winningPlayerData.PlayerId)
                 userId = match.UserAId;
-
             else
                 userId = match.UserBId;
+           
+            victoiredéfaite(losingPlayerData, winningPlayerData);
+           
+          
+
 
             match.WinnerUserId = userId;
+        }
+
+        void victoiredéfaite(MatchPlayerData perdant, MatchPlayerData gagnant)
+        {
+            perdant.Player.Defaite++;
+            perdant.Player.listeDeck.Where(i => i.Courant).First().Defaite++;
+            gagnant.Player.Victoire++;
+            gagnant.Player.listeDeck.Where(i => i.Courant).First().Victoire++;
         }
     }
 }
