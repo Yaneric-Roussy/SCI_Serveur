@@ -124,7 +124,6 @@ namespace Tests.Combat
 
             _currentPlayerData.BattleField.Add(_playableCardA);
             // On n'ajoute PAS la carte B sur le BattleField
-
             new PlayerEndTurnEvent(_match, _currentPlayerData, _opposingPlayerData, NB_MANA_PER_TURN);
 
             // L'adversaire n'a plus de health

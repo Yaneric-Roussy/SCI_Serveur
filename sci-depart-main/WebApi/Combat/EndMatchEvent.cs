@@ -57,12 +57,14 @@ namespace Super_Cartes_Infinies.Combat
             match.WinnerUserId = userId;
         }
 
-        void victoiredéfaite(MatchPlayerData perdant, MatchPlayerData gagnant)
+        public void victoiredéfaite(MatchPlayerData perdant, MatchPlayerData gagnant)
         {
             perdant.Player.Defaite++;
-            perdant.Player.listeDeck.Where(i => i.Courant).First().Defaite++;
+            if(perdant.Player.listeDeck != null)
+                perdant.Player.listeDeck.Where(i => i.Courant).First().Defaite++;
             gagnant.Player.Victoire++;
-            gagnant.Player.listeDeck.Where(i => i.Courant).First().Victoire++;
+            if(gagnant.Player.listeDeck != null)
+                gagnant.Player.listeDeck.Where(i => i.Courant).First().Victoire++;
         }
     }
 }
