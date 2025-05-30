@@ -1,4 +1,5 @@
-﻿using Super_Cartes_Infinies.Models;
+﻿using Models.Models;
+using Super_Cartes_Infinies.Models;
 
 namespace Super_Cartes_Infinies.Combat
 {
@@ -9,6 +10,7 @@ namespace Super_Cartes_Infinies.Combat
         public int PlayerId { get; set; }
         public int Dps { get; set; }
         public int CardInt { get; set; }
+        public PlayableCard PlayerCard { get; set; }
 
         public CardDamageEvent(MatchPlayerData PlayerData, int dps, PlayableCard cardDefending )
         {
@@ -18,8 +20,13 @@ namespace Super_Cartes_Infinies.Combat
             PlayerId = PlayerData.PlayerId ;
             Dps = dps;
             CardInt = cardDefending.Id;
+            PlayerCard = cardDefending;
 
-            cardDefending.Health -= dps;
+            //Protection saves card from ANY ATTACKS                -YR
+            if (!cardDefending.HasStatus(Status.PROTECTED_ID))
+            {
+                cardDefending.Health -= dps;
+            }
             
             if (cardDefending.Health <= 0)
             {

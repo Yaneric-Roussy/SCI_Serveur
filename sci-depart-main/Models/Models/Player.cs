@@ -22,6 +22,9 @@ namespace Super_Cartes_Infinies.Models
 		public virtual List<OwnedCard> OwnedCards { get; set; } = null!;
 		public virtual List<Deck> listeDeck { get; set; } = null;
 
+		//public int? PlayerInfoId { get; set; }
+		public virtual PlayerInfo? playerInfo { get; set; } = null!;
+
     }
 }
 

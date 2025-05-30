@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Models.Models;
 using Super_Cartes_Infinies.Models;
 
@@ -31,6 +32,8 @@ public class ApplicationDbContext : IdentityDbContext
         builder.Entity<IdentityUserRole<string>>().HasData(Seed.SeedUserRoles());
         builder.Entity<IdentityUser>().HasData(Seed.SeedTestUsers());
         builder.Entity<Player>().HasData(Seed.SeedTestPlayers());
+        builder.Entity<Spell>().HasData(Seed.SeedSpells());
+        builder.Entity<Status>().HasData(Seed.SeedStatus());
 
         // Lorsque le modèle de données se complexifient, il faut éventuellement utiliser Fluent API
         // https://learn.microsoft.com/en-us/ef/ef6/modeling/code-first/fluent/types-and-properties
@@ -65,5 +68,8 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Deck> Decks { get; set; } = default!;
     public DbSet<Power> Power { get; set; } = default!;
     public DbSet<CardPower> CardPower { get; set; } = default!;
+    public DbSet<PlayerInfo> PlayerInfos { get; set; } = default!;
+    public DbSet<Status> Status { get; set; }
+    public DbSet<Spell> Spell { get; set; }
 }
 

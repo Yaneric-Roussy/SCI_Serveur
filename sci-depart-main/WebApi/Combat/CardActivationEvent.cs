@@ -1,5 +1,6 @@
 ﻿using Models.Models;
 using Super_Cartes_Infinies.Models;
+using WebApi.Combat;
 
 namespace Super_Cartes_Infinies.Combat
 {
@@ -15,6 +16,40 @@ namespace Super_Cartes_Infinies.Combat
             this.CardId = card.Id;
             this.PowerIds = new List<int>();
 
+            if (card.Card.IsSpell)
+            {
+                if(card.Card.SpellId == Spell.EARTHQUAKE_ID)
+                {
+                    this.Events.Add(new EarthquakeEvent(currentPlayerData, opposingPlayerData, card));
+                    //On "tue" la carte (un sort finit d'exister après avoir été utilisé)       -YR
+                    this.Events.Add(new CardDeathEvent(currentPlayerData, card));
+                    return;
+                }
+                if(card.Card.SpellId == Spell.RANDOM_PAIN_ID)
+                {
+                    this.Events.Add(new RandomPainEvent(currentPlayerData, opposingPlayerData, card));
+                    //On "tue" la carte (un sort finit d'exister après avoir été utilisé)       -YR
+                    this.Events.Add(new CardDeathEvent(currentPlayerData, card));
+                    return;
+                }
+            }
+            //Garder Poisoned en haut pour qu'il s'exécute quand même, même si la carte a stunned (changer logique si on déplace) -YR
+            if (card.HasStatus(Status.POISONED_ID))
+            {
+                PowerIds.Add(Power.POISON_ID);
+                this.Events.Add(new PoisonedEvent(currentPlayerData, card));
+            }
+            if (card.HasStatus(Status.PROTECTED_ID))
+            {
+                PowerIds.Add(Power.PROTECTION_ID);  //Comme ça on évite de réajouter le pouvoir. -YR
+                this.Events.Add(new ProtectedEvent(currentPlayerData, card));
+            }
+            if (card.HasStatus(Status.STUNNED_ID))
+            {
+                PowerIds.Add(Power.STUNNED_ID);
+                this.Events.Add(new StunnedEvent(currentPlayerData, card));
+                return; //On évite le reste, la carte est stunned       -YR
+            }
             if (card.HasPower(Power.ATTACK_BOOST_ID))
             {
                 PowerIds.Add(Power.ATTACK_BOOST_ID);
@@ -25,6 +60,10 @@ namespace Super_Cartes_Infinies.Combat
             {
                 PowerIds.Add(Power.HEAL_ID);
                 this.Events.Add(new HealEvent(currentPlayerData, card));
+            }
+            if (card.HasPower(Power.PROTECTION_ID) && !PowerIds.Contains(Power.PROTECTION_ID))
+              {
+                this.Events.Add(new ProtectEvent(currentPlayerData, card));
             }
             if(ennemyCard != null) {
                 if (ennemyCard.HasPower(Power.THORNS_ID))
@@ -40,6 +79,14 @@ namespace Super_Cartes_Infinies.Combat
                     //    this.Events.Add(new CardDamageEvent(currentPlayerData, ennemyCard.Attack, card));
                     //}
                 }
+                if (card.HasPower(Power.POISON_ID) && !PowerIds.Contains(Power.POISON_ID))
+                {
+                    this.Events.Add(new PoisonEvent(currentPlayerData, opposingPlayerData, card, ennemyCard));
+                }
+                if (card.HasPower(Power.STUNNED_ID) && !PowerIds.Contains(Power.STUNNED_ID))
+                {
+                    this.Events.Add(new StunEvent(currentPlayerData, opposingPlayerData, card, ennemyCard));
+                }
             }
             if ((!card.HasPower(Power.FIRST_STRIKE_ID) || ennemyCard == null) && currentPlayerData.BattleField.Contains(card))
             {
@@ -48,6 +95,10 @@ namespace Super_Cartes_Infinies.Combat
             if (card.HasPower(Power.ATTACK_BOOST_ID))
             {
                 card.Attack -= card.GetPowerValue(Power.ATTACK_BOOST_ID);
+            }
+            if (card.HasPower(Power.CHAOS_ID))
+            {
+                Events.Add(new ChaosEvent(currentPlayerData, opposingPlayerData));
             }
             //if (ennemyCard == null)
             //{
